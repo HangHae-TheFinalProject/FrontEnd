@@ -7,7 +7,7 @@ const Modal = ({ onClose, content }) => {
   return (
     <ModalPortal>
       <div className="background" onClick={onClose}>
-        <div classname="content">
+        <div classname="content" onClick={(event)=>{event.stopPropagation()}}>
           {content}
         </ div>
       </div>
