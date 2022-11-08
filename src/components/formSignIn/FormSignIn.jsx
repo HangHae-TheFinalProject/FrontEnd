@@ -25,8 +25,8 @@ export default function FormSignIn() {
         password: password,
       })
       .then((res) => {
-        if (res.data.success) {
-          console.log('요깅', res.data.datd.email);
+        if (res.data.statusCode === '0') {
+          console.log('요깅', res);
           setCookie('token', res.request.getResponseHeader('authorization'), {
             path: '/',
           });
@@ -36,12 +36,12 @@ export default function FormSignIn() {
             { path: '/' }
           );
           sessionStorage.setItem('email', res.data.data.email);
+          nav('/');
         } else {
           alert(res.data.error);
         }
       });
   };
-  axios.post();
 
   return (
     <>
