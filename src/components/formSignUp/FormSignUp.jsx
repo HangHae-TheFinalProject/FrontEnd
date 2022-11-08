@@ -13,12 +13,18 @@ export default function FormSignUp() {
 
   const joinOnClickHandler = () => {
     axios
-      .post('url/lier/signup', {
-        nickname: name,
-        email: mail,
-        password: password,
-        passwordConfirm: passwordConfirm,
-      })
+      .post(
+        'https://haetae.shop/lier/signup',
+        {
+          nickname: name,
+          email: mail,
+          password: password,
+          passwordConfirm: passwordConfirm,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res.data.success) {
           alert(res.data.data);
