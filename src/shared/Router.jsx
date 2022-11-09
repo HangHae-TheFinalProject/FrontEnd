@@ -4,7 +4,7 @@ import Detail from '../pages/social/Detail';
 import List from '../pages/social/List';
 import Write from '../pages/social/Write';
 import GameRoom from '../pages/GameRoom';
-import Lobby from '../pages/Lobby';
+import Lobby from '../pages/lobby/Lobby';
 import Missing from '../pages/Missing';
 import MyPage from '../pages/MyPage';
 import SignIn from '../pages/SignIn';
@@ -21,6 +21,7 @@ export default function Router() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/lobby' element={<Lobby />} />
         <Route path='/gameroom' element={<GameRoom />} />
+        <Route path='/gameroom/:id' element={<GameRoom />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/social/list' element={<List />} />
         <Route path='/social/write' element={<Write />} />

@@ -1,0 +1,25 @@
+.roomBox{
+  width: 20vw;
+  height: 20vw;
+  min-width: 300px;
+  min-height: 300px;
+
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.roomInfoBox{
+  text-align: center;
+}
+
+
+// modal
+.sectionModal{
+  width: 500px;
+  height: 100px;
+  background-color: white;
+
+}
