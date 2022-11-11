@@ -26,10 +26,11 @@ export default function FormSignUp() {
         }
       )
       .then((res) => {
-        if (res.data.success) {
+        console.log(res);
+        if (res.data.statusMsg) {
           alert(res.data.data);
         } else {
-          alert(res.data.error.massage);
+          alert(res.data.error);
         }
       });
   };

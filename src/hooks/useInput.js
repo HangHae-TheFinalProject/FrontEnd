@@ -5,7 +5,6 @@ const useInput = (initialValue = '') => {
 
   const handler = (event) => {
     setValue(event.target.value);
-    console.log(event.target.value);
   };
 
   return [value, handler, setValue];
