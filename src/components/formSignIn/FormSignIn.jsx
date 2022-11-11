@@ -28,15 +28,13 @@ export default function FormSignIn() {
       .then((res) => {
         if (res.data.statusCode === '0') {
           console.log('요깅', res);
-          setCookie('token', res.request.getResponseHeader('authorization'), {
-            path: '/',
-          });
+          setCookie('token', res.request.getResponseHeader('authorization'));
           setCookie(
             'refreshtoken',
-            res.request.getResponseHeader('refresh-token'),
-            { path: '/' }
+            res.request.getResponseHeader('refresh-token')
           );
           sessionStorage.setItem('email', res.data.data.email);
+          alert(res.data.statusMsg);
           nav('/');
         } else {
           alert(res.data.error);
@@ -58,13 +56,11 @@ export default function FormSignIn() {
             onChange={setEmail}
           ></input>
 
-          <p>이메일이 틀렸습니다.</p>
           <input
             type="text"
             placeholder="  비밀번호를 입력해주세요."
             onChange={setPassword}
           ></input>
-          <p>비밀번호가 틀렸습니다.</p>
         </div>
 
         <div className="divButtonBox">

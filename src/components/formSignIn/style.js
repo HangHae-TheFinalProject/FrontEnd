@@ -24,6 +24,7 @@ export const DivSignIn = styled.div`
       height: 25px;
       border: none;
       border-radius: 5px;
+      margin-top: 10px;
     }
 
     p {
