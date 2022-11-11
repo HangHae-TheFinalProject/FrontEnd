@@ -5,6 +5,7 @@ import { DivSignIn } from './style';
 
 import useInput from '../../hooks/useInput';
 import axios from 'axios';
+import GoogleButton from '../googleButton/GoogleButton';
 
 export default function FormSignIn() {
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -56,6 +57,7 @@ export default function FormSignIn() {
             placeholder="  이메일을 입력해주세요."
             onChange={setEmail}
           ></input>
+
           <p>이메일이 틀렸습니다.</p>
           <input
             type="text"
@@ -67,7 +69,7 @@ export default function FormSignIn() {
 
         <div className="divButtonBox">
           <button onClick={loginOnClickHandler}>로그인</button>
-          <button>구글로그인</button>
+          <GoogleButton></GoogleButton>
         </div>
 
         <div className="divSignUpBox">
