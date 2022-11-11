@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Detail from '../pages/social/Detail';
 import List from '../pages/social/List';
 import Write from '../pages/social/Write';
-import GameRoom from '../pages/GameRoom';
+import GameRoom from '../pages/gameroom/GameRoom';
 import Lobby from '../pages/lobby/Lobby';
 import Missing from '../pages/Missing';
 import MyPage from '../pages/MyPage';
