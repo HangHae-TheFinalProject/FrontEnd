@@ -1,10 +1,11 @@
+import FormLogOut from '../commponents/formLogOut/FormLogOut';
+
 function Main() {
-
-
-
-  return <>
-    <h1>Main</h1>
-  </>
+  return (
+    <>
+      <FormLogOut></FormLogOut>
+    </>
+  );
 }
 
 export default Main;
