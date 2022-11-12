@@ -1,9 +1,7 @@
-import FormSignIn from '../components/formSignUp/FormSignUp';
-
 function SignIn() {
   return (
     <>
-      <FormSignIn></FormSignIn>
+      <h1> SignIn </h1>
     </>
   );
 }
