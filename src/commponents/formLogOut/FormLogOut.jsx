@@ -4,7 +4,11 @@ import instance from '../../shared/Request';
 
 export default function FormLogOut() {
   const logOutClickHandler = async () => {
-    await instance.post('https://haetae.shop/lier/logout');
+    try {
+      await instance.post('https://haetae.shop/lier/logout');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
