@@ -1,9 +1,11 @@
+import FormSignIn from '../components/formSignUp/FormSignUp';
+
 function SignIn() {
-
-
-  return <>
-    <h1> SignIn </h1>
-  </>
+  return (
+    <>
+      <FormSignIn></FormSignIn>
+    </>
+  );
 }
 
 export default SignIn;
