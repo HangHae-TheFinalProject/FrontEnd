@@ -5,6 +5,7 @@ import { DivSignIn } from './style';
 
 import useInput from '../../hooks/useInput';
 import axios from 'axios';
+import GoogleLogin from '../googleLogin/GoogleLogin';
 
 export default function FormSignIn() {
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -65,7 +66,7 @@ export default function FormSignIn() {
 
         <div className="divButtonBox">
           <button onClick={loginOnClickHandler}>로그인</button>
-          <button> 구글로그인</button>
+          <GoogleLogin></GoogleLogin>
         </div>
 
         <div className="divSignUpBox">
