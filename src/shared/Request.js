@@ -14,4 +14,9 @@ const instance = axios.create({
   },
 });
 
+export const chat = axios.create({
+  baseURL: process.env.REACT_APP_BASEURL,
+  headers: {},
+});
+
 export default instance;
