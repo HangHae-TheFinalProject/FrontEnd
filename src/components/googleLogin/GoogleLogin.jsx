@@ -26,11 +26,11 @@ export default function GoogleLogin() {
               })
               .then((res) => {
                 setCookie(
-                  'token',
+                  'access_token',
                   res.request.getResponseHeader('authorization')
                 );
                 setCookie(
-                  'refreshtoken',
+                  'refresh_token',
                   res.request.getResponseHeader('refresh-token')
                 );
               });
