@@ -13,105 +13,118 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOff from '@material-ui/icons/HighlightOff';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-export default class StreamComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { nickname: this.props.user.getNickname(), showForm: false, mutedSound: false, isFormValid: true };
-        this.handleChange = this.handleChange.bind(this);
-        this.handlePressKey = this.handlePressKey.bind(this);
-        this.toggleNicknameForm = this.toggleNicknameForm.bind(this);
-        this.toggleSound = this.toggleSound.bind(this);
-    }
+import { useState } from 'react';
 
-    handleChange(event) {
-        this.setState({ nickname: event.target.value });
+export default function StreamComponent(props) {
+    const [state, setState] = useState({
+        nickname: props.user.getNickname(),
+        showForm: false,
+        mutedSound: false,
+        isFormValid: true
+    });
+
+    const handleChange = (event) => {
+        setState({
+            ...state,
+            nickname: event.target.value
+        });
         event.preventDefault();
     }
 
-    toggleNicknameForm() {
-        if (this.props.user.isLocal()) {
-            this.setState({ showForm: !this.state.showForm });
+    const toggleNicknameForm = () => {
+        if (props.user.isLocal()) {
+            setState({
+                ...state,
+                showForm: !state.showForm
+            });
         }
     }
 
-    toggleSound() {
-        this.setState({ mutedSound: !this.state.mutedSound });
+    const toggleSound = () => {
+        setState({
+            ...state,
+            mutedSound: !state.mutedSound
+        });
     }
 
-    handlePressKey(event) {
+    const handlePressKey = (event) => {
         if (event.key === 'Enter') {
-            console.log(this.state.nickname);
-            if (this.state.nickname.length >= 3 && this.state.nickname.length <= 20) {
-                this.props.handleNickname(this.state.nickname);
-                this.toggleNicknameForm();
-                this.setState({ isFormValid: true });
+            console.log(state.nickname);
+            if (state.nickname.length >= 3 && state.nickname.length <= 20) {
+                props.handleNickname(state.nickname);
+                toggleNicknameForm();
+                setState({
+                    ...state,
+                    isFormValid: true
+                });
             } else {
-                this.setState({ isFormValid: false });
+                setState({
+                    ...state,
+                    isFormValid: false
+                });
             }
         }
     }
 
-    render() {
-        return (
-            <div className="OT_widget-container">
-                <div className="pointer nickname">
-                    {this.state.showForm ? (
-                        <FormControl id="nicknameForm">
-                            <IconButton color="inherit" id="closeButton" onClick={this.toggleNicknameForm}>
-                                <HighlightOff />
-                            </IconButton>
-                            <InputLabel htmlFor="name-simple" id="label">
-                                Nickname
-                            </InputLabel>
-                            <Input
-                                color="inherit"
-                                id="input"
-                                value={this.state.nickname}
-                                onChange={this.handleChange}
-                                onKeyPress={this.handlePressKey}
-                                required
-                            />
-                            {!this.state.isFormValid && this.state.nickname.length <= 3 && (
-                                <FormHelperText id="name-error-text">Nickname is too short!</FormHelperText>
-                            )}
-                            {!this.state.isFormValid && this.state.nickname.length >= 20 && (
-                                <FormHelperText id="name-error-text">Nickname is too long!</FormHelperText>
-                            )}
-                        </FormControl>
-                    ) : (
-                        <div onClick={this.toggleNicknameForm}>
-                            <span id="nickname">{this.props.user.getNickname()}</span>
-                            {this.props.user.isLocal() && <span id=""> (edit)</span>}
-                        </div>
-                    )}
-                </div>
-
-                {this.props.user !== undefined && this.props.user.getStreamManager() !== undefined ? (
-                    <div className="streamComponent">
-                        <OvVideoComponent user={this.props.user} mutedSound={this.state.mutedSound} />
-                        <div id="statusIcons">
-                            {!this.props.user.isVideoActive() ? (
-                                <div id="camIcon">
-                                    <VideocamOff id="statusCam" />
-                                </div>
-                            ) : null}
-
-                            {!this.props.user.isAudioActive() ? (
-                                <div id="micIcon">
-                                    <MicOff id="statusMic" />
-                                </div>
-                            ) : null}
-                        </div>
-                        <div>
-                            {!this.props.user.isLocal() && (
-                                <IconButton id="volumeButton" onClick={this.toggleSound}>
-                                    {this.state.mutedSound ? <VolumeOff color="secondary" /> : <VolumeUp />}
-                                </IconButton>
-                            )}
-                        </div>
+    return (
+        <div className="OT_widget-container">
+            <div className="pointer nickname">
+                {state.showForm ? (
+                    <FormControl id="nicknameForm">
+                        <IconButton color="inherit" id="closeButton" onClick={toggleNicknameForm}>
+                            <HighlightOff />
+                        </IconButton>
+                        <InputLabel htmlFor="name-simple" id="label">
+                            Nickname
+                        </InputLabel>
+                        <Input
+                            color="inherit"
+                            id="input"
+                            value={state.nickname}
+                            onChange={handleChange}
+                            onKeyPress={handlePressKey}
+                            required
+                        />
+                        {!state.isFormValid && state.nickname.length <= 3 && (
+                            <FormHelperText id="name-error-text">Nickname is too short!</FormHelperText>
+                        )}
+                        {!state.isFormValid && state.nickname.length >= 20 && (
+                            <FormHelperText id="name-error-text">Nickname is too long!</FormHelperText>
+                        )}
+                    </FormControl>
+                ) : (
+                    <div onClick={toggleNicknameForm}>
+                        <span id="nickname">{props.user.getNickname()}</span>
+                        {props.user.isLocal() && <span id=""> (edit)</span>}
                     </div>
-                ) : null}
+                )}
             </div>
-        );
-    }
+
+            {props.user !== undefined && props.user.getStreamManager() !== undefined ? (
+                <div className="streamComponent">
+                    <OvVideoComponent user={props.user} mutedSound={state.mutedSound} />
+                    <div id="statusIcons">
+                        {!props.user.isVideoActive() ? (
+                            <div id="camIcon">
+                                <VideocamOff id="statusCam" />
+                            </div>
+                        ) : null}
+
+                        {!props.user.isAudioActive() ? (
+                            <div id="micIcon">
+                                <MicOff id="statusMic" />
+                            </div>
+                        ) : null}
+                    </div>
+                    <div>
+                        {!props.user.isLocal() && (
+                            <IconButton id="volumeButton" onClick={toggleSound}>
+                                {state.mutedSound ? <VolumeOff color="secondary" /> : <VolumeUp />}
+                            </IconButton>
+                        )}
+                    </div>
+                </div>
+            ) : null}
+        </div>
+    );
 }

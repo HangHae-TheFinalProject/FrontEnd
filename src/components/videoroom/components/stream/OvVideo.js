@@ -1,42 +1,37 @@
-import React, { Component } from 'react';
+import { useEffect, useRef } from 'react';
 import './StreamComponent.css';
 
-export default class OvVideoComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.videoRef = React.createRef();
-    }
+export default function OvVideoComponent(props) {
+    const videoRef = useRef();
 
-    componentDidMount() {
-        if (this.props && this.props.user.streamManager && !!this.videoRef) {
-            console.log('PROPS: ', this.props);
-            this.props.user.getStreamManager().addVideoElement(this.videoRef.current);
+    useEffect(() => {
+        if (props && props.user.streamManager && !!videoRef) {
+            console.log('PROPS: ', props);
+            props.user.getStreamManager().addVideoElement(videoRef.current);
         }
 
-        if (this.props && this.props.user.streamManager.session && this.props.user && !!this.videoRef) {
-            this.props.user.streamManager.session.on('signal:userChanged', (event) => {
+        if (props && props.user.streamManager.session && props.user && !!videoRef) {
+            props.user.streamManager.session.on('signal:userChanged', (event) => {
                 const data = JSON.parse(event.data);
                 if (data.isScreenShareActive !== undefined) {
-                    this.props.user.getStreamManager().addVideoElement(this.videoRef.current);
+                    props.user.getStreamManager().addVideoElement(videoRef.current);
                 }
             });
         }
-    }
+    }, [])
 
-    componentDidUpdate(props) {
-        if (props && !!this.videoRef) {
-            this.props.user.getStreamManager().addVideoElement(this.videoRef.current);
+    useEffect(() => {
+        if (props && !!videoRef) {
+            props.user.getStreamManager().addVideoElement(videoRef.current);
         }
-    }
+    },)
 
-    render() {
-        return (
-            <video
-                autoPlay={true}
-                id={'video-' + this.props.user.getStreamManager().stream.streamId}
-                ref={this.videoRef}
-                muted={this.props.mutedSound}
-            />
-        );
-    }
+    return (
+        <video
+            autoPlay={true}
+            id={'video-' + props.user.getStreamManager().stream.streamId}
+            ref={videoRef}
+            muted={props.mutedSound}
+        />
+    );
 }

@@ -35,12 +35,15 @@ class VideoRoomComponent extends Component {
             currentVideoDevice: undefined,
         };
 
+        this.isMute = false;
+
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
         this.onbeforeunload = this.onbeforeunload.bind(this);
         this.updateLayout = this.updateLayout.bind(this);
         this.camStatusChanged = this.camStatusChanged.bind(this);
         this.micStatusChanged = this.micStatusChanged.bind(this);
+        this.micToggleMuted = this.micToggleMuted.bind(this);
         this.nicknameChanged = this.nicknameChanged.bind(this);
         this.toggleFullscreen = this.toggleFullscreen.bind(this);
         this.switchCamera = this.switchCamera.bind(this);
@@ -224,9 +227,19 @@ class VideoRoomComponent extends Component {
     }
 
     micStatusChanged() {
+        if(this.isMute) return;
         localUser.setAudioActive(!localUser.isAudioActive());
         localUser.getStreamManager().publishAudio(localUser.isAudioActive());
         this.sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
+        this.setState({ localUser: localUser });
+    }
+
+    // Custom
+    micToggleMuted(){
+        this.isMute = !this.isMute;
+        localUser.setAudioActive(!this.isMute);
+        localUser.getStreamManager().publishAudio(!this.isMute);
+        this.sendSignalUserChanged({ isAudioActive: !this.isMute });
         this.setState({ localUser: localUser });
     }
 
@@ -510,6 +523,7 @@ class VideoRoomComponent extends Component {
                     switchCamera={this.switchCamera}
                     leaveSession={this.leaveSession}
                     toggleChat={this.toggleChat}
+                    micToggleMuted={this.micToggleMuted}
                 />
 
                 <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />
