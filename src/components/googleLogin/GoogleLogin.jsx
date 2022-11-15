@@ -1,8 +1,12 @@
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 export default function GoogleLogin() {
   const nav = useNavigate();
+  const [cookie, setCookie, removeCookie] = useCookies();
+
   return (
     <>
       <div>
@@ -13,15 +17,30 @@ export default function GoogleLogin() {
           scope="openid profile email"
           discoveryDocs="claims_supported"
           access_type="offline"
-          onResolve={({ provider, data }) => {
+          onResolve={async ({ provider, data }) => {
+            await axios
+              .post('https://haetae.shop/lier/auth/login', null, {
+                headers: {
+                  accesstoken: data.access_token,
+                },
+              })
+              .then((res) => {
+                setCookie(
+                  'token',
+                  res.request.getResponseHeader('authorization')
+                );
+                setCookie(
+                  'refreshtoken',
+                  res.request.getResponseHeader('refresh-token')
+                );
+              });
+
             nav('/');
-            console.log('요깅', provider, data);
           }}
-          onReject={(err) => {
-            console.log(err);
+          onReject={(error) => {
+            console.log('실패', error);
           }}
         >
-          {' '}
           <GoogleLoginButton />
         </LoginSocialGoogle>
       </div>
