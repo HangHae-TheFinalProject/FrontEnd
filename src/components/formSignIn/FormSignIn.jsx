@@ -5,6 +5,7 @@ import { DivSignIn } from './style';
 
 import useInput from '../../hooks/useInput';
 import axios from 'axios';
+import GoogleLogin from '../googleLogin/GoogleLogin';
 
 export default function FormSignIn() {
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -27,9 +28,12 @@ export default function FormSignIn() {
       .then((res) => {
         if (res.data.statusCode === '0') {
           console.log('요깅', res);
-          setCookie('token', res.request.getResponseHeader('authorization'));
           setCookie(
-            'refreshtoken',
+            'access_token',
+            res.request.getResponseHeader('authorization')
+          );
+          setCookie(
+            'refresh_token',
             res.request.getResponseHeader('refresh-token')
           );
           sessionStorage.setItem('email', res.data.data.email);
@@ -37,7 +41,6 @@ export default function FormSignIn() {
           nav('/');
         } else {
           console.log(res.data.error);
-          alert(res.data.error);
         }
       });
   };
@@ -57,7 +60,7 @@ export default function FormSignIn() {
           ></input>
 
           <input
-            type="text"
+            type="password"
             placeholder="  비밀번호를 입력해주세요."
             onChange={setPassword}
           ></input>
@@ -65,7 +68,7 @@ export default function FormSignIn() {
 
         <div className="divButtonBox">
           <button onClick={loginOnClickHandler}>로그인</button>
-          <button> 구글로그인</button>
+          <GoogleLogin></GoogleLogin>
         </div>
 
         <div className="divSignUpBox">
