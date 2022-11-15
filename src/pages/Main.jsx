@@ -1,3 +1,4 @@
+
 import FormLogOut from '../commponents/formLogOut/FormLogOut';
 
 function Main() {
@@ -6,6 +7,7 @@ function Main() {
       <FormLogOut></FormLogOut>
     </>
   );
+
 }
 
 export default Main;

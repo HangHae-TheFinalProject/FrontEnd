@@ -1,0 +1,20 @@
+.sectionRoomList{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+  gap: 15px;
+  width: 100%;
+
+}
+
+.arrowBox{
+  width: 25px;
+  color: black;
+}
+
+a{
+  text-decoration: none;
+}
