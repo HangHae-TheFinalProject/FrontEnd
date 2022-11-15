@@ -10,18 +10,18 @@ import MyPage from '../pages/MyPage';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Main from '../pages/Main';
-import Chat from '../components/chat/Chat';
+import ChatRoom from '../components/chat/ChatRoom';
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Chat />} />
-        {/* <Route path="/" element={<Main />} /> */}
+        <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/gameroom" element={<GameRoom />} />
+        <Route path="/chatroom/:id" element={<ChatRoom />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/social/list" element={<List />} />
         <Route path="/social/write" element={<Write />} />

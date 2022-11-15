@@ -1,30 +1,38 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
+import { useParams } from 'react-router-dom';
+import { Cookies } from 'react-cookie';
+
+const baseURL = process.env.REACT_APP_BASEURL;
+const connectHeaders = {
+  Authorization: new Cookies().get('access_token'),
+  'Refresh-Token': new Cookies().get('refresh_token'),
+};
 
 const Chat = () => {
   // <대연,승재> useParam으로 roomId를 확인
+  const { id } = useParams();
   const client = useRef({});
+
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState('');
 
-  // useEffect(() => {
-  //   connect();
-  //   return () => disconnect();
-  // }, []);
+  const username = sessionStorage.getItem('username');
 
-  // useEffect를 사용 connect를 작동(?)
+  // connect를 실행시키기 위한 useEffect
+  useEffect(() => {
+    connect();
+    return () => disconnect();
+  }, []);
+
   const connect = () => {
     client.current = new StompJs.Client({
       // brokerURL은 웹소켓 서버로 직접 접속
       // brokerURL: '',
-      webSocketFactory: () => new SockJs(process.env.REACT_APP_WEBSOCKET),
-      // <대연,승재> 클론 카카오톡 access, refresh-token을 담아서 보내서 권한을 확인
-      connectHeaders: {
-        // login: '',
-        // passcord: '',
-      },
-      // 에러 메시지들..?
+      webSocketFactory: () => new SockJs(`${baseURL}/ws-stomp`),
+      connectHeaders,
+      // 디버그 메시지들..?
       debug: function (str) {
         console.log(str);
       },
@@ -46,13 +54,11 @@ const Chat = () => {
   const subscribe = () => {
     client.current.subscribe(
       // 특정 채팅방에 구독하기
-      `/sub/chat/room/72bbb204-4158-4fad-b294-0189ec150760`,
+      `/sub/chat/room/${id}`,
       // body에 담아 보낼 메세지(?)
       ({ body }) => {
-        const newMessage = JSON.parse(body).message;
-        setChatMessages(newMessage);
-      },
-      { sender: 'user' }
+        setChatMessages((newMessage) => [...newMessage, JSON.parse(body)]);
+      }
     );
   };
 
@@ -69,8 +75,8 @@ const Chat = () => {
       // type: 타입(?), roomId: 방번호, sender: 보내는이, message: input
       body: JSON.stringify({
         type: 'TALK',
-        roomId: '72bbb204-4158-4fad-b294-0189ec150760',
-        sender: 'user',
+        roomId: id,
+        sender: username,
         message: message,
       }),
     });
@@ -80,13 +86,13 @@ const Chat = () => {
 
   return (
     <>
-      {/* {chatMessages && chatMessages.length > 0 && (
+      {chatMessages && chatMessages.length > 0 && (
         <ul>
-          {chatMessages.map((newMessage, index) => (
-            <li key={index}>{newMessage.message}</li>
+          {chatMessages?.map((newMessage, index) => (
+            <li key={index}>{`${username}: ${newMessage.message}`}</li>
           ))}
         </ul>
-      )} */}
+      )}
       <input
         type="text"
         placeholder="내용을 입력하세요."
@@ -100,16 +106,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-// 소켓 연결하는 방법
-// const socket = new WebSocket('ws://WebSocket');
-
-// 소켓이 연결되면 연결 ok
-// socket.onopen = () => {
-//   console.log('연결 성공!');
-// };
-
-// 소켓이 연결되면 서버로 메세지를 보낼 수 있음
-// socket.addEventListener('open', (event) => {
-//   socket.send('연결 성공!');
-// });
