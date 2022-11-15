@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
-const access_token = new Cookies().get('token');
-const refresh_token = new Cookies().get('refreshtoken');
+const access_token = new Cookies().get('access_token');
+const refresh_token = new Cookies().get('refresh_token');
 
-axios.defaults.headers.common['authorization'] = `${access_token}`;
-axios.defaults.headers.common['refresh-token'] = `${refresh_token}`;
+axios.defaults.headers.common['auth'] = `${access_token}`;
+axios.defaults.headers.common['refresh'] = `${refresh_token}`;
 
 const instance = axios.create({
-  // baseURL: '',
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
   },
