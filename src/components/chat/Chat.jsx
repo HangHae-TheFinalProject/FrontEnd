@@ -26,6 +26,7 @@ const Chat = () => {
     return () => disconnect();
   }, []);
 
+  // stomp 연결
   const connect = () => {
     client.current = new StompJs.Client({
       // brokerURL은 웹소켓 서버로 직접 접속
@@ -47,10 +48,12 @@ const Chat = () => {
     client.current.activate();
   };
 
+  // stomp 연결 취소
   const disconnect = () => {
     client.current.deactivate();
   };
 
+  // stomp 구독
   const subscribe = () => {
     client.current.subscribe(
       // 특정 채팅방에 구독하기
@@ -62,6 +65,7 @@ const Chat = () => {
     );
   };
 
+  // stomp 메세지
   const publish = (message) => {
     // 연결이 되지 않으면 return
     if (!client.current.connected) {
