@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLoginButton } from 'react-social-login-buttons';
 import { LoginSocialGoogle } from 'reactjs-social-login';
+
 export default function GoogleLogin() {
   const nav = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -41,7 +41,8 @@ export default function GoogleLogin() {
             console.log('실패', error);
           }}
         >
-          <GoogleLoginButton />
+          <button className="googleBtn">구글로그인</button>
+          {/* <GoogleLoginButton className="googleBtn" /> */}
         </LoginSocialGoogle>
       </div>
     </>
