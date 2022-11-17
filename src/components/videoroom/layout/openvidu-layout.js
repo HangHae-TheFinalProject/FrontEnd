@@ -1,3 +1,8 @@
+// --------------------------------
+// Video 정상동작 확인 후 삭제예정
+// --------------------------------
+
+
 import $ from 'jquery';
 
 class OpenViduLayout {
@@ -10,10 +15,10 @@ class OpenViduLayout {
       // If this is the parent of a subscriber or publisher then we need
       // to force the mutation observer on the publisher or subscriber to
       // trigger to get it to fix it's layout
-      const oldWidth = sub.style.width;
-      sub.style.width = width + 'px';
+      // const oldWidth = sub.style.width;
+      // sub.style.width = width + 'px';
       // sub.style.height = height + 'px';
-      sub.style.width = oldWidth || '';
+      // sub.style.width = oldWidth || '';
     }
   }
 
@@ -224,7 +229,7 @@ class OpenViduLayout {
         if (fixedRatio) {
           targetWidth = Math.floor(targetHeight / this.getVideoRatio(elem));
         }
-        elem.style.position = 'absolute';
+        // elem.style.position = 'absolute';
         // $(elem).css('position', 'absolute');
         const actualWidth =
           targetWidth -
@@ -252,7 +257,7 @@ class OpenViduLayout {
   }
 
  filterDisplayNone(element) {
-    return element.style.display !== 'none';
+    // return element.style.display !== 'none';
   }
 
   updateLayout() {

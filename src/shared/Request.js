@@ -14,4 +14,8 @@ const instance = axios.create({
   },
 });
 
+export const chat = axios.create({
+  headers: {},
+});
+
 export default instance;

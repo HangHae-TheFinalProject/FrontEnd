@@ -1,18 +1,63 @@
 import { useParams } from 'react-router-dom';
 import VideoRoomComponent from '../../components/videoroom/components/VideoRoomComponent';
 import './style.scss';
+import { useEffect, useState } from 'react';
+import instance from '../../shared/Request';
+import ChatRoomList from '../../components/chatRoomList/ChatRoomList'
 
 function GameRoom() {
   const { id } = useParams();
+  const [stageNumber, setStageNumber] = useState(0);
+  const [muted, setMuted] = useState(false);
+  const leaveRoom = async () => {
+    try {
+      // instance.delete(`/lier/room/${id}/exit`);
+    } catch (error) {
+      alert(error.data.message);
+    }
+  }
 
-  return <div className='gameRoomSection'>
-    <div className='videoSection'>
-      <VideoRoomComponent openviduServerUrl='https://cheiks.shop' />
+  useEffect(() => {
+
+    return () => {
+      leaveRoom();
+    };
+  }, [])
+
+  return (
+    <div className="section">
+      <div className='gameRoomSection'>
+        <div className='headerSection'>
+          <div className='headerBox'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="34" fill="none"><path fill="#D9D9D9" stroke="gray" strokeWidth="2" d="M2 17 25 1 10.712 17 25 33 2 17Z"/></svg>
+            방 나가기
+            </div>
+          <div>Timer</div>
+          <div className='headerBox'>
+            <a href='#'>
+              <div className='btncircle'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="28" fill="none"><path fill="#fff" fillOpacity=".7" d="M10.272.947a13.32 13.32 0 0 1 5.455-.003 5.323 5.323 0 0 0 2.607 3.816 5.324 5.324 0 0 0 4.61.348 13.322 13.322 0 0 1 2.723 4.727 5.325 5.325 0 0 0-2 4.165c0 1.685.781 3.188 2.003 4.165a13.39 13.39 0 0 1-2.728 4.724 5.324 5.324 0 0 0-4.608.348 5.325 5.325 0 0 0-2.606 3.814c-1.798.378-3.655.38-5.454.005a5.325 5.325 0 0 0-2.607-3.82 5.323 5.323 0 0 0-4.61-.347 13.321 13.321 0 0 1-2.723-4.728 5.325 5.325 0 0 0 2-4.162A5.324 5.324 0 0 0 .33 9.833 13.39 13.39 0 0 1 3.06 5.11a5.324 5.324 0 0 0 4.608-.348A5.324 5.324 0 0 0 10.272.948V.947ZM13 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" /></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div className="bodySection">
+          <div className='videoSection'>
+            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted}/>
+          </div>
+          <div className='boardSection'>
+            <div className="gameBoard">
+
+            </div>
+            <div className="chatBoard">
+              <ChatRoomList />
+            </div>
+            <input className='btnGameStart' type='button' value='GameStart' onClick={() => { }} />
+          </div>
+        </div>
+      </div>
     </div>
-    <div className='textSection'>
-      
-    </div>
-  </div>
+  )
 }
 
 export default GameRoom;

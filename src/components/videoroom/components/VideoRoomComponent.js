@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './VideoRoomComponent.css';
+import './VideoRoomComponent.scss';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/StreamComponent';
 // import DialogExtensionComponent from './dialog-extension/DialogExtension';
@@ -20,7 +20,7 @@ class VideoRoomComponent extends Component {
             : 'https://' + window.location.hostname + ':4443';
         this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : 'MY_SECRET';
         this.hasBeenUpdated = false;
-        this.layout = new OpenViduLayout();
+        // this.layout = new OpenViduLayout();
         let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
         let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
         this.remotes = [];
@@ -70,7 +70,7 @@ class VideoRoomComponent extends Component {
             animate: true, // Whether you want to animate the transitions
         };
 
-        this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
+        // this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
         window.addEventListener('beforeunload', this.onbeforeunload);
         // window.addEventListener('resize', this.updateLayout);
         // window.addEventListener('resize', this.checkSize);
@@ -104,11 +104,9 @@ class VideoRoomComponent extends Component {
 
     connectToSession() {
         if (this.props.token !== undefined) {
-            console.log('token received: ', this.props.token);
             this.connect(this.props.token);
         } else {
             this.getToken().then((token) => {
-                console.log(token);
                 this.connect(token);
             }).catch((error) => {
                 if (this.props.error) {
@@ -303,7 +301,6 @@ class VideoRoomComponent extends Component {
             remoteUsers.forEach((user) => {
                 if (user.getConnectionId() === event.from.connectionId) {
                     const data = JSON.parse(event.data);
-                    console.log('EVENTO REMOTE: ', event.data);
                     if (data.isAudioActive !== undefined) {
                         user.setAudioActive(data.isAudioActive);
                     }
@@ -329,7 +326,7 @@ class VideoRoomComponent extends Component {
 
     updateLayout() {
         setTimeout(() => {
-            this.layout.updateLayout();
+            // this.layout.updateLayout();
         }, 20);
     }
 
@@ -471,7 +468,7 @@ class VideoRoomComponent extends Component {
             bigFirst: true,
             animate: true,
         };
-        this.layout.setLayoutOptions(openviduLayoutOptions);
+        // this.layout.setLayoutOptions(openviduLayoutOptions);
         this.updateLayout();
     }
 
@@ -484,7 +481,6 @@ class VideoRoomComponent extends Component {
         if (display === 'block') {
             this.setState({ chatDisplay: display, messageReceived: false });
         } else {
-            console.log('chat', display);
             this.setState({ chatDisplay: display });
         }
         this.updateLayout();
@@ -541,7 +537,6 @@ class VideoRoomComponent extends Component {
                     },
                 })
                 .then((response) => {
-                    console.log('CREATE SESION', response);
                     resolve(response.data.id);
                 })
                 .catch((response) => {
@@ -581,7 +576,6 @@ class VideoRoomComponent extends Component {
                     },
                 })
                 .then((response) => {
-                    console.log('TOKEN', response);
                     resolve(response.data.token);
                 })
                 .catch((error) => reject(error));
