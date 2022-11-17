@@ -35,7 +35,7 @@ export default function GoogleLogin() {
                 );
               });
 
-            nav('/');
+            nav('/lobby');
           }}
           onReject={(error) => {
             console.log('실패', error);

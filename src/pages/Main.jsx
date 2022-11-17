@@ -1,10 +1,10 @@
+import FormSignIn from '../components/formSignIn/FormSignIn';
 function Main() {
-
-
-
-  return <>
-    <h1>Main</h1>
-  </>
+  return (
+    <>
+      <FormSignIn></FormSignIn>
+    </>
+  );
 }
 
 export default Main;
