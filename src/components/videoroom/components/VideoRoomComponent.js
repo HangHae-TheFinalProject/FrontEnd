@@ -3,12 +3,12 @@ import axios from 'axios';
 import './VideoRoomComponent.css';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/StreamComponent';
-import DialogExtensionComponent from './dialog-extension/DialogExtension';
-import ChatComponent from './chat/ChatComponent';
+// import DialogExtensionComponent from './dialog-extension/DialogExtension';
+// import ChatComponent from './chat/ChatComponent';
 
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../models/user-model';
-import ToolbarComponent from './toolbar/ToolbarComponent';
+// import ToolbarComponent from './toolbar/ToolbarComponent';
 
 var localUser = new UserModel();
 
@@ -34,6 +34,7 @@ class VideoRoomComponent extends Component {
             chatDisplay: 'none',
             currentVideoDevice: undefined,
         };
+        this.isMute = this.props.isMute;
 
         this.isMute = false;
 
@@ -71,15 +72,15 @@ class VideoRoomComponent extends Component {
 
         this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
         window.addEventListener('beforeunload', this.onbeforeunload);
-        window.addEventListener('resize', this.updateLayout);
-        window.addEventListener('resize', this.checkSize);
+        // window.addEventListener('resize', this.updateLayout);
+        // window.addEventListener('resize', this.checkSize);
         this.joinSession();
     }
 
     componentWillUnmount() {
         window.removeEventListener('beforeunload', this.onbeforeunload);
-        window.removeEventListener('resize', this.updateLayout);
-        window.removeEventListener('resize', this.checkSize);
+        // window.removeEventListener('resize', this.updateLayout);
+        // window.removeEventListener('resize', this.checkSize);
         this.leaveSession();
     }
 
@@ -110,12 +111,12 @@ class VideoRoomComponent extends Component {
                 console.log(token);
                 this.connect(token);
             }).catch((error) => {
-                if(this.props.error){
+                if (this.props.error) {
                     this.props.error({ error: error.error, messgae: error.message, code: error.code, status: error.status });
                 }
                 console.log('There was an error getting the token:', error.code, error.message);
                 alert('There was an error getting the token:', error.message);
-              });
+            });
         }
     }
 
@@ -129,7 +130,7 @@ class VideoRoomComponent extends Component {
                 this.connectWebCam();
             })
             .catch((error) => {
-                if(this.props.error){
+                if (this.props.error) {
                     this.props.error({ error: error.error, messgae: error.message, code: error.code, status: error.status });
                 }
                 alert('There was an error connecting to the session:', error.message);
@@ -152,7 +153,7 @@ class VideoRoomComponent extends Component {
         });
 
         if (this.state.session.capabilities.publish) {
-            publisher.on('accessAllowed' , () => {
+            publisher.on('accessAllowed', () => {
                 this.state.session.publish(publisher).then(() => {
                     this.updateSubscribers();
                     this.localUserAccessAllowed = true;
@@ -227,7 +228,7 @@ class VideoRoomComponent extends Component {
     }
 
     micStatusChanged() {
-        if(this.isMute) return;
+        if (this.isMute) return;
         localUser.setAudioActive(!localUser.isAudioActive());
         localUser.getStreamManager().publishAudio(localUser.isAudioActive());
         this.sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
@@ -235,7 +236,7 @@ class VideoRoomComponent extends Component {
     }
 
     // Custom
-    micToggleMuted(){
+    micToggleMuted() {
         this.isMute = !this.isMute;
         localUser.setAudioActive(!this.isMute);
         localUser.getStreamManager().publishAudio(!this.isMute);
@@ -277,7 +278,7 @@ class VideoRoomComponent extends Component {
             const nickname = event.stream.connection.data.split('%')[0];
             newUser.setNickname(JSON.parse(nickname).clientData);
             this.remotes.push(newUser);
-            if(this.localUserAccessAllowed) {
+            if (this.localUserAccessAllowed) {
                 this.updateSubscribers();
             }
         });
@@ -372,11 +373,11 @@ class VideoRoomComponent extends Component {
     }
 
     async switchCamera() {
-        try{
+        try {
             const devices = await this.OV.getDevices()
             var videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-            if(videoDevices && videoDevices.length > 1) {
+            if (videoDevices && videoDevices.length > 1) {
 
                 var newVideoDevice = videoDevices.filter(device => device.deviceId !== this.state.currentVideoDevice.deviceId)
 
@@ -510,61 +511,20 @@ class VideoRoomComponent extends Component {
         var chatDisplay = { display: this.state.chatDisplay };
 
         return (
-            <div className="container" id="container">
-                <ToolbarComponent
-                    sessionId={mySessionId}
-                    user={localUser}
-                    showNotification={this.state.messageReceived}
-                    camStatusChanged={this.camStatusChanged}
-                    micStatusChanged={this.micStatusChanged}
-                    screenShare={this.screenShare}
-                    stopScreenShare={this.stopScreenShare}
-                    toggleFullscreen={this.toggleFullscreen}
-                    switchCamera={this.switchCamera}
-                    leaveSession={this.leaveSession}
-                    toggleChat={this.toggleChat}
-                    micToggleMuted={this.micToggleMuted}
-                />
-
-                <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />
-
-                <div id="layout" className="bounds">
-                    {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                        <div className="OT_root OT_publisher custom-class" id="localUser">
-                            <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
-                        </div>
-                    )}
-                    {this.state.subscribers.map((sub, i) => (
-                        <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
-                            <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
-                        </div>
-                    ))}
-                    {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                        <div className="OT_root OT_publisher custom-class" style={chatDisplay}>
-                            <ChatComponent
-                                user={localUser}
-                                chatDisplay={this.state.chatDisplay}
-                                close={this.toggleChat}
-                                messageReceived={this.checkNotification}
-                            />
-                        </div>
-                    )}
-                </div>
+            <div className='videoContainer'>
+                {localUser !== undefined && localUser.getStreamManager() !== undefined && (
+                    <div className='video' id="localUser">
+                        <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
+                    </div>
+                )}
+                {this.state.subscribers.map((sub, i) => (
+                    <div key={i} className='video' id="remoteUsers">
+                        <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
+                    </div>
+                ))}
             </div>
         );
     }
-
-    /**
-     * --------------------------
-     * SERVER-SIDE RESPONSIBILITY
-     * --------------------------
-     * These methods retrieve the mandatory user token from OpenVidu Server.
-     * This behaviour MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-     * the API REST, openvidu-java-client or openvidu-node-client):
-     *   1) Initialize a session in OpenVidu Server	(POST /api/sessions)
-     *   2) Generate a token in OpenVidu Server		(POST /api/tokens)
-     *   3) The token must be consumed in Session.connect() method
-     */
 
     getToken() {
         return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId));
@@ -596,11 +556,11 @@ class VideoRoomComponent extends Component {
                         if (
                             window.confirm(
                                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                                    this.OPENVIDU_SERVER_URL +
-                                    '"\n\nClick OK to navigate and accept it. ' +
-                                    'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                                    this.OPENVIDU_SERVER_URL +
-                                    '"',
+                                this.OPENVIDU_SERVER_URL +
+                                '"\n\nClick OK to navigate and accept it. ' +
+                                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                                this.OPENVIDU_SERVER_URL +
+                                '"',
                             )
                         ) {
                             window.location.assign(this.OPENVIDU_SERVER_URL + '/accept-certificate');
