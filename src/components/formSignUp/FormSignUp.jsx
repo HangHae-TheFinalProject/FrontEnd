@@ -1,20 +1,29 @@
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
+import instance from '../../shared/Request';
 import useInput from '../../hooks/useInput';
 import './style.scss';
 
 export default function FormSignUp() {
+
   const [name, setName] = useInput('');
   const [mail, setMail] = useInput('');
   const [password, setPassword] = useInput('');
   const [passwordConfirm, setPasswordConfirm] = useInput('');
-  const nav = useNavigate();
+
+  const [msgName, setMsgName] = useState('');
+  const [msgMail, setMsgMail] = useState('');
+  const [msgPassword, setMsgPassword] = useState('');
+  const [msgPasswordConfirm, setMsgPasswordConfirm] = useState('');
 
   const joinOnClickHandler = () => {
-    axios
+    if (!(nameCheck() && mailCheck() && passwordCheck() && passwordConfirmCheck())) {
+      alert('입력한 값을 확인해주세요.');
+      return;
+    }
+
+    instance
       .post(
-        'https://haetae.shop/lier/signup',
+        '/lier/signup',
         {
           nickname: name,
           email: mail,
@@ -35,9 +44,39 @@ export default function FormSignUp() {
       });
   };
 
-  const loginClick = () => {
-    nav('/SignIn');
-  };
+  const nameCheck = () => {
+    if (name) setMsgName('');
+    else setMsgName('이름을 입력해주세요.');
+
+    return name;
+  }
+
+  const mailCheck = () => {
+    const result = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(mail);
+
+    if (result) setMsgMail('');
+    else setMsgMail('메일 형식이 아닙니다.');
+
+    return result;
+  }
+
+  const passwordCheck = () => {
+    const result = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/.test(password);
+
+    if (result) setMsgPassword('');
+    else setMsgPassword('비밀번호 형식이 아닙니다.');
+
+    return result;
+  }
+
+  const passwordConfirmCheck = () => {
+    const result = password === passwordConfirm;
+
+    if (result) setMsgPasswordConfirm('');
+    else setMsgPasswordConfirm('비밀번호가 일치하지 않습니다.');
+
+    return result;
+  }
 
   return (
     <>
@@ -51,44 +90,50 @@ export default function FormSignUp() {
             <input
               type="text"
               onChange={setName}
+              onBlur={nameCheck}
               placeholder="이름을 입력하세요"
             ></input>
-            <p>비밀번호가 일치하지 않습니다</p>
-
+            <p>{msgName}</p>
+          </div>
+          <div className="divInputBox">
             <input
               type="text"
               onChange={setMail}
+              onBlur={mailCheck}
               placeholder="메일을 입력하세요"
             ></input>
-            <p>비밀번호가 일치하지 않습니다</p>
+            <p>{msgMail}</p>
           </div>
 
-          <div className="divInputPassword">
+          <div className="divInputBox">
             <input
               type="password"
               name="password"
+              onBlur={passwordCheck}
               placeholder="비밀번호를 입력하세요"
               onChange={setPassword}
             ></input>
-            <p>비밀번호가 일치하지 않습니다</p>
-
+            <p>{msgPassword}</p>
+          </div>
+          <div className='divInputBox'>
             <input
               type="password"
               placeholder="비밀번호를 입력하세요"
+              onBlur={passwordConfirmCheck}
               onChange={setPasswordConfirm}
             ></input>
-            {password !== passwordConfirm ? (
-              <p>비밀번호가 일치하지 않습니다</p>
-            ) : null}
+            <p>{msgPasswordConfirm}</p>
           </div>
 
           <div className="divSignUpBox">
             <button onClick={joinOnClickHandler}>회원가입</button>
             <div className="divLoginText">
               <p className="loginText">기존 라이어게임 참가자이신가요?</p>
-              <p className="loginBtn" onClick={loginClick}>
-                로그인
-              </p>
+              <a href='/'>
+                <p className="loginBtn">
+                  로그인
+                </p>
+              </a>
             </div>
           </div>
         </div>
