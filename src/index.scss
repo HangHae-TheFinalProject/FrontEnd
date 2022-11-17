@@ -1,22 +1,8 @@
-@mixin font-face($name, $file, $weight: noraml, $style: normal) {
-  @font-face {
-  font-family: "#{$name}";
-  src: url('./fonts/#{$file}.ttf') format('truetype');
-  font-weight: $weight;
-  font-style: $style;
-  }
-}
+@import url(./scss/_variable.scss);
+@import url(./scss/_reset.scss);
 
-@include font-face('Pretendard-Medium', 'Pretendard-Medium');
-@include font-face('Pretendard-Bold', 'Pretendard-Bold');
 
 body {
   margin: 0;
   font-family: Pretendard-Medium;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.boldfont {
-  font-family: Pretendard-Bold;
 }
