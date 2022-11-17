@@ -1,10 +1,11 @@
+import ChatRoomList from '../components/chatRoomList/ChatRoomList';
+
 function Main() {
-
-
-
-  return <>
-    <h1>Main</h1>
-  </>
+  return (
+    <>
+      <ChatRoomList />
+    </>
+  );
 }
 
 export default Main;
