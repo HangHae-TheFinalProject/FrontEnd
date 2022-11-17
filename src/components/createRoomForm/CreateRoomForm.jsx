@@ -1,21 +1,31 @@
-import axios from 'axios';
 import useInput from '../../hooks/useInput';
+import instance from '../../shared/Request';
+import { useNavigate } from 'react-router-dom';
 
 import './style.scss';
 
 // need to : 방 만들고 입장하는 기능
 function CreateRoomForm() {
+  const navigate = useNavigate();
   const DEFAULT_GAMEMODE = '1';
   const [title, titleHandler] = useInput('기본 방 제목');
   const [password, passwordHandler] = useInput();
   const [gamemode, gamomodeHandler] = useInput(DEFAULT_GAMEMODE);
   
-  const createRoomHandler = () => {
-    // axios.post('server', {
-    //   roomName: title,
-    //   roomPassword: password,
-    //   mode: gamemode
-    // })
+  const createRoomHandler = async () => {
+    try{
+      console.log(title, password, gamemode)
+      const { data } = await instance.post('/lier/room', {
+        roomName: title,
+        roomPassword: password,
+        mode: gamemode*1
+      })
+      navigate(`/gameroom/${data.data.roomId}`);
+      console.log(data)
+    } catch (error) {
+      alert('방 생성에 실패했습니다.');
+      navigate('/');
+    }
   }
 
   return <div className='createRoomBox'>

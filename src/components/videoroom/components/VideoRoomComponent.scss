@@ -1,0 +1,18 @@
+$videoiBoxWidth: 212px;
+$videoBoxGap: 24px;
+
+.videoContainer{
+  width: calc($videoiBoxWidth * 2 + $videoBoxGap);
+  height: 100%;
+  display: grid;
+  grid-template-columns: $videoiBoxWidth $videoiBoxWidth;
+  gap: 0px $videoBoxGap;
+  align-items: start;
+
+  background-color: black;
+}
+
+.video{
+  width: 170px;
+  height: 130px;
+}
