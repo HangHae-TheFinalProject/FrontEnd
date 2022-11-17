@@ -8,7 +8,7 @@ axios.defaults.headers.common['auth'] = `${access_token}`;
 axios.defaults.headers.common['refresh'] = `${refresh_token}`;
 
 const instance = axios.create({
-  baseURL: '',
+  baseURL: 'https://haetae.shop',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,9 +1,7 @@
-import axios from 'axios';
-import { Cookies, useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import instance from '../../shared/Request';
 
-export default function FormLogOut() {
+export default function FormLogout() {
   const nav = useNavigate();
   const logOutClickHandler = async () => {
     try {
