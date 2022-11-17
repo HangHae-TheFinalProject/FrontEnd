@@ -1,12 +1,14 @@
 
+import FormSignIn from '../components/formSignIn/FormSignIn';
 import FormLogOut from '../commponents/formLogOut/FormLogOut';
-
 function Main() {
   return (
     <>
-      <FormLogOut></FormLogOut>
+    <FormLogOut></FormLogOut>
+      <FormSignIn></FormSignIn>
     </>
   );
+
 
 }
 

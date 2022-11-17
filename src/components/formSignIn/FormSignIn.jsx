@@ -1,11 +1,10 @@
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
-import { DivSignIn } from './style';
-
 import useInput from '../../hooks/useInput';
 import axios from 'axios';
 import GoogleLogin from '../googleLogin/GoogleLogin';
+import './style.scss';
 
 export default function FormSignIn() {
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -38,44 +37,55 @@ export default function FormSignIn() {
           );
           sessionStorage.setItem('email', res.data.data.email);
           alert(res.data.statusMsg);
-          nav('/');
+          nav('/lobby');
         } else {
           console.log(res.data.error);
         }
       });
   };
 
+  // const regExp =
+  //   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
   return (
     <>
-      <DivSignIn>
-        <div className="divTitleBox">
-          <h2>로그인</h2>
-        </div>
+      <div className="signinBox">
+        <body className="bodySignin">
+          <div className="divTitleBox">
+            <h2>로그인</h2>
+          </div>
 
-        <div className="divInpuuBox">
-          <input
-            type="text"
-            placeholder="  이메일을 입력해주세요."
-            onChange={setEmail}
-          ></input>
+          <div className="divInputBox">
+            <input
+              type="text"
+              placeholder="  이메일을 입력해주세요."
+              onChange={setEmail}
+            ></input>
 
-          <input
-            type="password"
-            placeholder="  비밀번호를 입력해주세요."
-            onChange={setPassword}
-          ></input>
-        </div>
+            <p className="emailText">이메일 형식이 아닙니다.</p>
 
-        <div className="divButtonBox">
-          <button onClick={loginOnClickHandler}>로그인</button>
-          <GoogleLogin></GoogleLogin>
-        </div>
+            <input
+              type="password"
+              placeholder="  비밀번호를 입력해주세요."
+              onChange={setPassword}
+            ></input>
+          </div>
 
-        <div className="divSignUpBox">
-          <p>아직 라이어게임 참가자가 아니신가요?</p>
-          <p onClick={signUpClick}>회원가입</p>
-        </div>
-      </DivSignIn>
+          <div className="divButtonBox">
+            <button className="loginBtn" onClick={loginOnClickHandler}>
+              로그인
+            </button>
+            <GoogleLogin className="googleBtn"></GoogleLogin>
+          </div>
+
+          <div className="divSignUpBox">
+            <p className="joinText">아직 라이어게임 참가자가 아니신가요?</p>
+            <p className="joinBtn" onClick={signUpClick}>
+              회원가입
+            </p>
+          </div>
+        </body>
+      </div>
     </>
   );
 }
