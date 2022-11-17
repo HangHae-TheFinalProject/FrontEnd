@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import './StreamComponent.css';
+import './StreamComponent.scss';
 
 export default function OvVideoComponent(props) {
     const videoRef = useRef();
@@ -27,11 +27,11 @@ export default function OvVideoComponent(props) {
     },)
 
     return (
-        <video
-            autoPlay={true}
-            id={'video-' + props.user.getStreamManager().stream.streamId}
-            ref={videoRef}
-            muted={props.mutedSound}
-        />
+            <video
+                autoPlay={true}
+                id={'video-' + props.user.getStreamManager().stream.streamId}
+                ref={videoRef}
+                muted={props.mutedSound}
+            />
     );
 }
