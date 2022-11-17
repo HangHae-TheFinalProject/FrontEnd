@@ -1,5 +1,6 @@
 
 import Router from './shared/Router';
+import registerServiceWorker from './registerServiceWorker';
 
 function App() {
   return (
@@ -10,3 +11,4 @@ function App() {
 }
 
 export default App;
+registerServiceWorker();
