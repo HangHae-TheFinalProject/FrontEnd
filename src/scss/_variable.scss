@@ -10,7 +10,12 @@
 
 @include font-face('Pretendard-Bold', 'Pretendard-Bold');
 @include font-face('Pretendard-Medium', 'Pretendard-Medium');
+@include font-face('Pretendard-SemiBold', 'Pretendard-SemiBold');
 
 .fontBold {
   font-family: Pretendard-Bold;
+}
+
+.fontSemiBold {
+  font-family: Pretendard-SemiBold;
 }

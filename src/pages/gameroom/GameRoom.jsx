@@ -4,11 +4,16 @@ import './style.scss';
 import { useEffect, useState } from 'react';
 import instance from '../../shared/Request';
 import ChatRoomList from '../../components/chatRoomList/ChatRoomList'
+import GameBoard from '../../components/gameBoard/GameBoard';
+import gameRoomBackground from '../../images/png/gameRoomBackground.png';
+import GameTimer from '../../components/gameTimer/GameTimer';
+import btnGameStart from '../../images/png/btnGameStart.png';
 
 function GameRoom() {
   const { id } = useParams();
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
+  
   const leaveRoom = async () => {
     try {
       // instance.delete(`/lier/room/${id}/exit`);
@@ -26,13 +31,16 @@ function GameRoom() {
 
   return (
     <div className="section">
+      <img src={gameRoomBackground} className='background'/>
       <div className='gameRoomSection'>
         <div className='headerSection'>
           <div className='headerBox'>
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="34" fill="none"><path fill="#D9D9D9" stroke="gray" strokeWidth="2" d="M2 17 25 1 10.712 17 25 33 2 17Z"/></svg>
             방 나가기
             </div>
-          <div>Timer</div>
+          <div className='headerBox'>
+            <GameTimer />
+          </div>
           <div className='headerBox'>
             <a href='#'>
               <div className='btncircle'>
@@ -47,12 +55,12 @@ function GameRoom() {
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
-
+              <GameBoard />
             </div>
             <div className="chatBoard">
               <ChatRoomList />
             </div>
-            <input className='btnGameStart' type='button' value='GameStart' onClick={() => { }} />
+            <a href='#' onClick={() => { }}><img src={btnGameStart}/></a>
           </div>
         </div>
       </div>
