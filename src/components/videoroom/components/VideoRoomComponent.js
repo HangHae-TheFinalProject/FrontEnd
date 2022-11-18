@@ -509,12 +509,12 @@ class VideoRoomComponent extends Component {
         return (
             <div className='videoContainer'>
                 {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                    <div className='video' id="localUser">
+                    <div className='videoBox' id="localUser">
                         <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
                     </div>
                 )}
                 {this.state.subscribers.map((sub, i) => (
-                    <div key={i} className='video' id="remoteUsers">
+                    <div className='videoBox' key={i} id="remoteUsers">
                         <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
                     </div>
                 ))}

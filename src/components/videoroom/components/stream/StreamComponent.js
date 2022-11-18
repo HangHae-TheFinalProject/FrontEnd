@@ -69,9 +69,9 @@ export default function StreamComponent(props) {
     }
 
     return (
-        <div >
+        <div className='videoBox'>
             {props.user !== undefined && props.user.getStreamManager() !== undefined ? (
-                <div className='videoBox'>
+                <div>
                     <OvVideoComponent user={props.user} mutedSound={state.mutedSound} />
                     <img src={videoFrame} />
                     <div className='nicknameBox'>
