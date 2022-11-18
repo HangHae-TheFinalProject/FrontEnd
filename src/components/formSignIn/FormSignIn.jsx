@@ -12,7 +12,7 @@ export default function FormSignIn() {
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
 
-  const [msgMail , setMsgMail] = useState('');
+  const [msgMail, setMsgMail] = useState('');
   const nav = useNavigate();
 
   const mailCheck = () => {
@@ -31,28 +31,25 @@ export default function FormSignIn() {
         password: password,
       })
       .then((res) => {
-        if (res.data.statusCode === '0') {
-          setCookie(
-            'access_token',
-            res.request.getResponseHeader('authorization')
-          );
-          setCookie(
-            'refresh_token',
-            res.request.getResponseHeader('refresh-token')
-          );
-          sessionStorage.setItem('email', res.data.data.email);
-          alert(res.data.statusMsg);
-          nav('/lobby');
-        } else {
-          console.log(res.data.error);
-        }
+        setCookie(
+          'access_token',
+          res.request.getResponseHeader('authorization')
+        );
+        setCookie(
+          'refresh_token',
+          res.request.getResponseHeader('refresh-token')
+        );
+        sessionStorage.setItem('email', res.data.data.email);
+        sessionStorage.setItem('nickname', res.data.data.nickname);
+        alert(res.data.statusMsg);
+        nav('/lobby');
       });
   };
 
   return (
     <>
       <div className="signinBox">
-        <div className="bodySignin">  
+        <div className="bodySignin">
           <div className="divTitleBox">
             <h2>로그인</h2>
           </div>

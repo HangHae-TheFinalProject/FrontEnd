@@ -3,6 +3,9 @@ $mainWidth: 1180px;
 $videoSectionWidth: 448px;
 
 .section {
+  width: 100vw;
+  height: 100vh;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -23,6 +26,7 @@ $videoSectionWidth: 448px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .headerSection {
@@ -33,6 +37,7 @@ $videoSectionWidth: 448px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
 
   .headerBox{
     display: flex;
@@ -63,7 +68,7 @@ $videoSectionWidth: 448px;
   align-items: center;
 
   width: $mainWidth;
-  height: 100%;
+  height: calc(100% - $headerHeight);
 
   .videoSection {
     width: $videoSectionWidth;

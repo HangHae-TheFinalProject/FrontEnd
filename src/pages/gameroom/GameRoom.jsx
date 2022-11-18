@@ -3,41 +3,57 @@ import VideoRoomComponent from '../../components/videoroom/components/VideoRoomC
 import './style.scss';
 import { useEffect, useState } from 'react';
 import instance from '../../shared/Request';
-import ChatRoomList from '../../components/chatRoomList/ChatRoomList'
 import GameBoard from '../../components/gameBoard/GameBoard';
 import gameRoomBackground from '../../images/png/gameRoomBackground.png';
 import GameTimer from '../../components/gameTimer/GameTimer';
 import btnGameStart from '../../images/png/btnGameStart.png';
+import Chat from '../../components/chat/Chat';
+import { useNavigate } from 'react-router-dom';
 
 function GameRoom() {
   const { id } = useParams();
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
-  
+  const navigate = useNavigate();
+
   const leaveRoom = async () => {
     try {
-      // instance.delete(`/lier/room/${id}/exit`);
+      instance.delete(`/lier/room/${Number(id)}/exit`);
     } catch (error) {
       alert(error.data.message);
+    }
+    navigate('/lobby');
+  }
+  // Need to : 뒤로가기 예외처리
+
+  const enterRoom = async () => {
+    try{
+      const { data } = await instance.post(`/lier/room/${Number(id)}`);
+      console.log(data);
+      // need to : Redux
+    } catch(error){
+      alert(error.data.statusMsg);
     }
   }
 
   useEffect(() => {
-
+    enterRoom();
+    
     return () => {
-      leaveRoom();
+      // console.log('____Cleanup');
+      // leaveRoom();
     };
   }, [])
 
   return (
     <div className="section">
-      <img src={gameRoomBackground} className='background'/>
+      <img src={gameRoomBackground} className='background' />
       <div className='gameRoomSection'>
         <div className='headerSection'>
-          <div className='headerBox'>
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="34" fill="none"><path fill="#D9D9D9" stroke="gray" strokeWidth="2" d="M2 17 25 1 10.712 17 25 33 2 17Z"/></svg>
+          <a href="#" onClick={leaveRoom}><div className='headerBox'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="34" fill="none"><path fill="#D9D9D9" stroke="gray" strokeWidth="2" d="M2 17 25 1 10.712 17 25 33 2 17Z" /></svg>
             방 나가기
-            </div>
+          </div></a>
           <div className='headerBox'>
             <GameTimer />
           </div>
@@ -58,9 +74,9 @@ function GameRoom() {
               <GameBoard />
             </div>
             <div className="chatBoard">
-              <ChatRoomList />
+              <Chat id={id} />
             </div>
-            <a href='#' onClick={() => { }}><img src={btnGameStart}/></a>
+            <a href='#' onClick={() => { }}><img src={btnGameStart} /></a>
           </div>
         </div>
       </div>
