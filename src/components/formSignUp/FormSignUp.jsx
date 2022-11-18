@@ -44,13 +44,13 @@ export default function FormSignUp() {
         }
       )
       .then((res) => {
-        console.log(res);
         if (res.data.statusMsg) {
           alert(res.data.data);
           nav('/');
-        } else {
-          alert(res.data.error);
         }
+      })
+      .catch((error) => {
+        alert(error.response.data.statusMsg);
       });
   };
 

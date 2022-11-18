@@ -26,7 +26,7 @@ export default function GoogleLogin() {
                 },
               })
               .then((res) => {
-                console.log(res);
+                alert('로그인에 성공하였습니다.');
                 setCookie(
                   'access_token',
                   res.request.getResponseHeader('authorization')
@@ -42,7 +42,7 @@ export default function GoogleLogin() {
             nav('/lobby');
           }}
           onReject={(error) => {
-            console.log('실패', error);
+            alert('로그인에 실패하였습니다.');
           }}
         >
           <button className="googleBtn">

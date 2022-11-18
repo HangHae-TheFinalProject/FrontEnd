@@ -55,6 +55,9 @@ export default function FormSignIn() {
         sessionStorage.setItem('nickname', res.data.data.nickname);
         alert(res.data.statusMsg);
         nav('/lobby');
+      })
+      .catch((error) => {
+        alert(error.response.data.statusMsg);
       });
   };
 
