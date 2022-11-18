@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { LoginSocialGoogle } from 'reactjs-social-login';
-
+import { ReactComponent as GoogleIcon } from '../../images/svg/GoogleIcon.svg';
+import './style.scss';
 export default function GoogleLogin() {
   const nav = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -41,8 +42,10 @@ export default function GoogleLogin() {
             console.log('실패', error);
           }}
         >
-          <button className="googleBtn">구글로그인</button>
-          {/* <GoogleLoginButton className="googleBtn" /> */}
+          <button className="googleBtn">
+            <GoogleIcon className="icon" />
+            <h4 className="googleLogin">구글로그인</h4>
+          </button>
         </LoginSocialGoogle>
       </div>
     </>
