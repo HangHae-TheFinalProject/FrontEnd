@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { LoginSocialGoogle } from 'reactjs-social-login';
-
+import { ReactComponent as GoogleIcon } from '../../images/svg/GoogleIcon.svg';
+import './style.scss';
 export default function GoogleLogin() {
   const nav = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -25,6 +26,7 @@ export default function GoogleLogin() {
                 },
               })
               .then((res) => {
+                alert('로그인에 성공하였습니다.');
                 setCookie(
                   'access_token',
                   res.request.getResponseHeader('authorization')
@@ -33,16 +35,20 @@ export default function GoogleLogin() {
                   'refresh_token',
                   res.request.getResponseHeader('refresh-token')
                 );
+                sessionStorage.setItem('email', res.data.data.email);
+                sessionStorage.setItem('nickname', res.data.data.nickname);
               });
 
             nav('/lobby');
           }}
           onReject={(error) => {
-            console.log('실패', error);
+            alert('로그인에 실패하였습니다.');
           }}
         >
-          <button className="googleBtn">구글로그인</button>
-          {/* <GoogleLoginButton className="googleBtn" /> */}
+          <button className="googleBtn">
+            <GoogleIcon className="icon" />
+            <h4 className="googleLogin">구글로그인</h4>
+          </button>
         </LoginSocialGoogle>
       </div>
     </>
