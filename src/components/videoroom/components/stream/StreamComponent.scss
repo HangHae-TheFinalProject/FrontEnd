@@ -1,6 +1,10 @@
+$totalWidth: 212px;
+$totalHeight: 185px;
 
 .videoBox{
     position: relative;
+    width: $totalWidth;
+    height: $totalHeight;
 
     img {
         position: absolute;
