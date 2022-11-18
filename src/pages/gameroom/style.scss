@@ -1,4 +1,6 @@
 $headerHeight: 120px;
+$mainWidth: 1180px;
+$videoSectionWidth: 448px;
 
 .section {
   display: flex;
@@ -7,8 +9,14 @@ $headerHeight: 120px;
   align-items: center;
 }
 
+.background{
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
 .gameRoomSection {
-  width: 1180px;
+  width: $mainWidth;
   height: 100vh;
 
   display: flex;
@@ -20,7 +28,6 @@ $headerHeight: 120px;
 .headerSection {
   width: 100%;
   height: $headerHeight;
-  background-color: yellow;
 
   display: flex;
   flex-direction: row;
@@ -52,17 +59,15 @@ $headerHeight: 120px;
 .bodySection {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
-  width: 100%;
+  width: $mainWidth;
   height: 100%;
 
   .videoSection {
-    width: 50%;
+    width: $videoSectionWidth;
     height: 100%;
-    // position: relative;
-    background-color: red;
 
     display: flex;
     flex-direction: row;
@@ -71,23 +76,22 @@ $headerHeight: 120px;
   }
 
   .boardSection {
-    width: 50%;
+    width: calc($mainWidth - $videoSectionWidth);
     height: 100%;
-    background-color: blue;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .gameBoard {
       flex-basis: 350px;
       flex-grow: 1;
-      background-color: yellow;
     }
 
     .chatBoard {
       flex-basis: 350px;
       flex-grow: 1;
       height: 50%;
-      background-color: green;
     }
   }
 }

@@ -1,0 +1,40 @@
+@mixin contentBox {
+  width: 600px;
+  height: 230px;
+
+  position: absolute;
+  top: 33px;
+  left: 3px;
+}
+
+
+.gameBoardSection{
+  width: 606px;
+  height: 264px;
+
+  position: relative;
+
+  .gameBoardFrame{
+    width: 606px;
+    height: 264px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+  .gameBoardBackground{
+    @include contentBox;
+  }
+
+}
+
+.stage0{
+  @include contentBox;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+
+}
