@@ -1,18 +1,23 @@
+// --------------------------------
+// 삭제예정
+// --------------------------------
+
+
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { chat } from '../../shared/Request';
 import Chat from '../chat/Chat';
 
+import instance from '../../shared/Request';
+
 import './style.scss';
 
-const ChatRoom = ({ chatMessages }) => {
-  const { id } = useParams();
+const ChatRoom = ({ id }) => {
 
   // 방 입장 (권한 필요)
   const getChatRoom = async () => {
     try {
-      const { data } = await chat.get(
-        `http://13.125.214.86:8080/lier/chat/room/enter/${id}`
+      const { data } = await instance.get(
+        `/lier/chat/room/enter/${id}`
       );
       console.log(data);
       return data;

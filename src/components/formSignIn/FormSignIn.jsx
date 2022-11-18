@@ -16,8 +16,10 @@ export default function FormSignIn() {
 
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
+
   const [msgMail, setMsgMail] = useState('');
   const [show, setShow] = useState(false);
+
 
   const mailCheck = () => {
     const result = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
@@ -57,7 +59,9 @@ export default function FormSignIn() {
 
   return (
     <>
+
       <img src={gameRoomBackground} className="background" />
+
 
       <div className="signBox">
         <div className="bodySignin">

@@ -2,28 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
 import { useParams } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import './style.scss';
 
-const connectHeaders = {
-  Authorization: new Cookies().get('access_token'),
-  'Refresh-Token': new Cookies().get('refresh_token'),
-};
+const Chat = ({id}) => {
+  const [ cookie ] = useCookies();
 
-const Chat = () => {
-  const { id } = useParams();
+  const connectHeaders = {
+    'Authorization': cookie['access_token'],
+    'Refresh-Token': cookie['refresh_token']
+  };
+
   const client = useRef({});
 
-  const [participants, setParticipants] = useState([]);
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState('');
 
   const nickname = sessionStorage.getItem('nickname');
-
+  
   // stomp 연결
   const connect = () => {
+    console.log(connectHeaders);
+    console.log('connect')
     client.current = new StompJs.Client({
-      webSocketFactory: () => new SockJs('http://13.125.214.86:8080/ws-stomp'),
+      webSocketFactory: () => new SockJs('https://haetae.shop/ws-stomp'),
       connectHeaders,
       debug: function (str) {
         console.log(str);
@@ -41,18 +43,19 @@ const Chat = () => {
 
   // stomp 연결 취소
   const disconnect = () => {
+    console.log('disconnect');
     client.current.deactivate();
   };
 
   // stomp 구독
   const subscribe = () => {
+    console.log('subscribe')
     client.current.subscribe(
       // 특정 채팅방에 구독하기
       `/sub/chat/room/${id}`,
       // body에 담아 보낼 메세지(?)
       ({ body }) => {
-        const users = JSON.parse(body);
-        setParticipants(users);
+        console.log(body);
         setChatMessages((newMessage) => [...newMessage, JSON.parse(body)]);
       }
     );
@@ -83,6 +86,7 @@ const Chat = () => {
 
   // connect를 실행시키기 위한 useEffect
   useEffect(() => {
+    console.log(id);
     connect();
     return () => disconnect();
   }, []);
