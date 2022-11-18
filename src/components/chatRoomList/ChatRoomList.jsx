@@ -1,3 +1,7 @@
+// --------------------------------
+// 삭제예정
+// --------------------------------
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { chat } from '../../shared/Request';
