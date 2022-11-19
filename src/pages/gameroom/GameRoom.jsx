@@ -9,13 +9,17 @@ import GameTimer from '../../components/gameTimer/GameTimer';
 import btnGameStart from '../../images/png/btnGameStart.png';
 import Chat from '../../components/chat/Chat';
 import { useNavigate } from 'react-router-dom';
+import GamePopup from '../../components/gamePopup/GamePopup';
 
 function GameRoom() {
   const { id } = useParams();
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
-  const [timer, setTimer] = useState(15);
+  const [timer, setTimer] = useState(-1);
+  const [isPop, setIsPop] = useState(false);
   const navigate = useNavigate();
+
+  const closePopup = () => {setIsPop(false);}
 
   const leaveRoom = async () => {
     try {
@@ -68,19 +72,20 @@ function GameRoom() {
         </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
+            {/* <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} /> */}
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
               <GameBoard />
             </div>
             <div className="chatBoard">
-              <Chat id={id} />
+              {/* <Chat id={id} /> */}
             </div>
             <a href='#' onClick={() => { }}><img src={btnGameStart} /></a>
           </div>
         </div>
       </div>
+      {isPop ? <GamePopup closePopup={closePopup}/> : ''}
     </div>
   )
 }
