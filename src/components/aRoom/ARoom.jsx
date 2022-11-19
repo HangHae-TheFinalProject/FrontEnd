@@ -12,11 +12,15 @@ import room_04 from '../../images/rooms/room_04.jpg';
 import room_05 from '../../images/rooms/room_05.jpg';
 import room_06 from '../../images/rooms/room_06.jpg';
 
+import { useDispatch } from 'react-redux';
+import { setRoom } from '../../redux/modules/roomsSlice';
+
 function ARoom({ roomInfo }) {
   const MAX_NUMBER_OF_PERSON = 8;
   const ARR_MODE = ['', '일반', '바보'];
   const ARR_ROOM_IMAGE_LIST = [room_01, room_02, room_03, room_04, room_05, room_06];
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
 
@@ -31,6 +35,7 @@ function ARoom({ roomInfo }) {
       return
     }
 
+    dispatch(setRoom(roomInfo))
     navigate(`/gameroom/${roomInfo.id}`);
   }
 
@@ -48,14 +53,13 @@ function ARoom({ roomInfo }) {
 
 export default ARoom;
 
-
 function PasswordModal({ roomId, password }) {
   const navigate = useNavigate();
   const [value, inputHandler] = useInput();
 
   const confirm = () => {
     if (password !== value) {
-      alert('땡🔔')
+      alert('땡🔔');
       return
     }
     navigate(`/gameroom/${roomId}`);

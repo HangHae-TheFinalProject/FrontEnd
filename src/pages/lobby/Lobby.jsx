@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Modal from '../../elements/modal/Modal';
@@ -7,11 +7,13 @@ import CreateRoomForm from '../../components/createRoomForm/CreateRoomForm';
 
 import './style.scss'
 
-// need to : page nation
 function Lobby() {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
-  
+
+  useEffect(() => {
+    
+  }, [])
 
   return <div className='pagesection'>
     <div>
