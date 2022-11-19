@@ -14,6 +14,7 @@ function GameRoom() {
   const { id } = useParams();
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
+  const [timer, setTimer] = useState(15);
   const navigate = useNavigate();
 
   const leaveRoom = async () => {
@@ -27,18 +28,18 @@ function GameRoom() {
   // Need to : 뒤로가기 예외처리
 
   const enterRoom = async () => {
-    try{
+    try {
       const { data } = await instance.post(`/lier/room/${Number(id)}`);
       console.log(data);
       // need to : Redux
-    } catch(error){
+    } catch (error) {
       alert(error.data.statusMsg);
     }
   }
 
   useEffect(() => {
     enterRoom();
-    
+
     return () => {
       // console.log('____Cleanup');
       // leaveRoom();
@@ -55,7 +56,7 @@ function GameRoom() {
             방 나가기
           </div></a>
           <div className='headerBox'>
-            <GameTimer />
+            <GameTimer sec={timer} setSec={setTimer} />
           </div>
           <div className='headerBox'>
             <a href='#'>
@@ -67,7 +68,7 @@ function GameRoom() {
         </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted}/>
+            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
