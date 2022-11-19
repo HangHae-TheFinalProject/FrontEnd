@@ -1,0 +1,109 @@
+.background {
+  width: 100vw;
+  height: 100vh;
+}
+
+.signupBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+
+  margin: auto;
+}
+
+.signupBody {
+  width: 500px;
+  height: 714px;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.signupText {
+  width: 400px;
+  height: 135px;
+
+  font-size: 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+.signupInput {
+  width: 400px;
+  height: 90px;
+  p {
+    margin-top: 8px;
+    font-size: 14px;
+    float: left;
+
+    color: #ff264a;
+    font-weight: bold;
+    display: flex;
+    gap: 5px;
+  }
+  input {
+    background-color: white;
+    width: 400px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    opacity: 45%;
+    font-size: 14px;
+    padding-left: 20px;
+  }
+}
+
+.signupBtnBox {
+  margin-top: 31px;
+  button {
+    width: 400px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(167, 167, 167, 0.47),
+      rgba(65, 65, 65, 0.9945)
+    );
+    color: white;
+    font-size: 16px;
+  }
+}
+
+.loginText {
+  color: white;
+  opacity: 50%;
+  float: left;
+  margin-left: 40px;
+}
+
+.signinBtn {
+  font-weight: bold;
+  color: white;
+  float: left;
+  margin-left: 10px;
+}
+
+.divLoginText {
+  width: 400px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}

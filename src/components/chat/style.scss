@@ -1,0 +1,55 @@
+.ChatBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ChatOutputBox {
+  display: flex;
+  flex-direction: column-reverse;
+
+  width: 530px;
+  height: 350px;
+
+  margin-bottom: 20px;
+  padding: 10px 0 15px 20px;
+
+  border-radius: 5px;
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6em;
+  overflow-y: auto;
+}
+
+.ChatInputContainer {
+  display: flex;
+
+  width: 550px;
+  height: 50px;
+
+  gap: 15px;
+}
+
+.ChatInputBox {
+  width: 465px;
+  height: 50px;
+
+  padding-left: 20px;
+
+  border: 0px;
+  border-radius: 5px;
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
+
+  font-size: 16px;
+}
+
+.ChatInputButton {
+  width: 50px;
+  height: 50px;
+
+  border: 0px;
+  border-radius: 5px;
+}

@@ -1,7 +1,9 @@
+import FormSignIn from '../components/formSignIn/FormSignIn';
+
 function Main() {
   return (
     <>
-      <h1>Main..AWS Amplify Test</h1>
+      <FormSignIn></FormSignIn>
     </>
   );
 }
