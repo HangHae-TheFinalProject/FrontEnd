@@ -1,33 +1,35 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+import instance from "../../shared/Request";
 
 
 // need to : API connection
-
 const initialState = {
   rooms: [],
   room: {},
+  maxPage: 0,
   isLoading: false,
   error: null
 };
 
-export const __getRoom = createAsyncThunk(
-  'rooms/getRoom',
-  async (payload, thunkAPI) => {
-    try{
-      return thunkAPI.fulfillWithValue();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+// export const __getRoom = createAsyncThunk(
+//   'rooms/getRoom',
+//   async (payload, thunkAPI) => {
+//     try{
+//       return thunkAPI.fulfillWithValue();
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
 
 export const __getRooms = createAsyncThunk(
   'rooms/getRooms',
   async (payload, thunkAPI) => {
-    try{
-      return thunkAPI.fulfillWithValue();
+    try {
+      const { data } = await instance.get(`/lier/rooms/${payload}`)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      alert('방을 찾을 수 없습니다.');
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -36,28 +38,26 @@ export const __getRooms = createAsyncThunk(
 export const roomsSlice = createSlice({
   name: 'rooms',
   initialState,
-  reducers: {},
+  reducers: {
+    setRoom(state, action) {
+      state.room = action.payload;
+    }
+  },
   extraReducers: {
-    [__getRoom.pending]: (state) => {
+    [__getRooms.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [__getRoom.fulfilled]: (state) => {
+    [__getRooms.fulfilled]: (state, action) => {
+      state.rooms = action.payload.roomsInPage;
+      state.maxPage = action.payload.pageCnt;
       state.isLoading = false;
     },
-    [__getRoom.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    [__getRooms.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getRooms.fulfilled]: (state) => {
-      state.isLoading = false;
-    },
-    [__getRooms.rejected]: (state) => {
+    [__getRooms.rejected]: (state, action) => {
+      state.error = action.payload;
       state.isLoading = false;
     }
   }
 });
 
-export const {} = roomsSlice.actions;
+export const { setRoom } = roomsSlice.actions;
 export default roomsSlice.reducer;
