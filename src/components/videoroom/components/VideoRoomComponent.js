@@ -33,10 +33,8 @@ class VideoRoomComponent extends Component {
             subscribers: [],
             chatDisplay: 'none',
             currentVideoDevice: undefined,
+            isMute: this.props.isMute
         };
-        this.isMute = this.props.isMute;
-
-        this.isMute = false;
 
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
@@ -56,7 +54,15 @@ class VideoRoomComponent extends Component {
         this.checkSize = this.checkSize.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState) {          
+        if (this.props.isMute !== prevProps.isMute){
+            this.setState({isMute: this.props.isMute})
+            this.micToggleMuted();
+        }
+    }
+
     componentDidMount() {
+        
         const openViduLayoutOptions = {
             maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
             minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
