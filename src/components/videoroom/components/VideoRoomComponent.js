@@ -183,6 +183,9 @@ class VideoRoomComponent extends Component {
 
             });
           }
+        )
+    }
+    
 
   updateSubscribers() {
     var subscribers = this.remotes;
