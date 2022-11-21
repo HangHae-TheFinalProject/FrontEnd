@@ -4,8 +4,8 @@ import videoFrame from '../../../../images/svg/videoFrame.svg';
 import nicknameFrame from '../../../../images/svg/nicknameFrame.svg';
 import nicknameBackground from '../../../../images/svg/nicknameBackground.svg';
 
-import MicOff from '@material-ui/icons/MicOff';
-import VideocamOff from '@material-ui/icons/VideocamOff';
+// import MicOff from '@material-ui/icons/MicOff';
+// import VideocamOff from '@material-ui/icons/VideocamOff';
 // import VolumeUp from '@material-ui/icons/VolumeUp';
 // import VolumeOff from '@material-ui/icons/VolumeOff';
 // import FormControl from '@material-ui/core/FormControl';
@@ -18,68 +18,69 @@ import VideocamOff from '@material-ui/icons/VideocamOff';
 import { useState } from 'react';
 
 export default function StreamComponent(props) {
-    const [state, setState] = useState({
-        nickname: props.user.getNickname(),
-        showForm: false,
-        mutedSound: false,
-        isFormValid: true
+  const [state, setState] = useState({
+    nickname: props.user.getNickname(),
+    showForm: false,
+    mutedSound: false,
+    isFormValid: true,
+  });
+
+  const handleChange = (event) => {
+    setState({
+      ...state,
+      nickname: event.target.value,
     });
+    event.preventDefault();
+  };
 
-    const handleChange = (event) => {
+  const toggleNicknameForm = () => {
+    if (props.user.isLocal()) {
+      setState({
+        ...state,
+        showForm: !state.showForm,
+      });
+    }
+  };
+
+  const toggleSound = () => {
+    setState({
+      ...state,
+      mutedSound: !state.mutedSound,
+    });
+  };
+
+  const handlePressKey = (event) => {
+    if (event.key === 'Enter') {
+      console.log(state.nickname);
+      if (state.nickname.length >= 3 && state.nickname.length <= 20) {
+        props.handleNickname(state.nickname);
+        toggleNicknameForm();
         setState({
-            ...state,
-            nickname: event.target.value
+          ...state,
+          isFormValid: true,
         });
-        event.preventDefault();
-    }
-
-    const toggleNicknameForm = () => {
-        if (props.user.isLocal()) {
-            setState({
-                ...state,
-                showForm: !state.showForm
-            });
-        }
-    }
-
-    const toggleSound = () => {
+      } else {
         setState({
-            ...state,
-            mutedSound: !state.mutedSound
+          ...state,
+          isFormValid: false,
         });
+      }
     }
+  };
 
-    const handlePressKey = (event) => {
-        if (event.key === 'Enter') {
-            console.log(state.nickname);
-            if (state.nickname.length >= 3 && state.nickname.length <= 20) {
-                props.handleNickname(state.nickname);
-                toggleNicknameForm();
-                setState({
-                    ...state,
-                    isFormValid: true
-                });
-            } else {
-                setState({
-                    ...state,
-                    isFormValid: false
-                });
-            }
-        }
-    }
-
-    return (
-        <div className='videoBox'>
-            {props.user !== undefined && props.user.getStreamManager() !== undefined ? (
-                <div>
-                    <OvVideoComponent user={props.user} mutedSound={state.mutedSound} />
-                    <img src={videoFrame} />
-                    <div className='nicknameBox'>
-                        <img src={nicknameBackground} className='nicknameBackground'/>
-                        <div className="nickname boldfont">Hello</div>
-                        <img src={nicknameFrame} />
-                    </div>
-                    {/* <div id="statusIcons">
+  return (
+    <div className="videoBox">
+      {props.user !== undefined &&
+      props.user.getStreamManager() !== undefined ? (
+        <div>
+          <OvVideoComponent user={props.user} mutedSound={state.mutedSound} />
+          <img src={videoFrame} />
+          <div className="nicknameBox">
+            <img src={nicknameBackground} className="nicknameBackground" />
+            <div className="nickname boldfont">Hello</div>
+            <img src={nicknameFrame} />
+          </div>
+          {/* <div id="statusIcons">
                         {!props.user.isVideoActive() ? (
                             <div id="camIcon">
                                 <VideocamOff id="statusCam" />
@@ -91,8 +92,8 @@ export default function StreamComponent(props) {
                             </div>
                         ) : null}
                     </div> */}
-                </div>
-            ) : null}
         </div>
-    );
+      ) : null}
+    </div>
+  );
 }
