@@ -41,6 +41,11 @@ function GameRoom() {
     }
   }
 
+
+  const muteLocalMike = () => {
+    setMuted(state => !state);
+  }
+
   useEffect(() => {
     enterRoom();
 
@@ -72,14 +77,14 @@ function GameRoom() {
         </div>
         <div className="bodySection">
           <div className='videoSection'>
-            {/* <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} /> */}
+            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
               <GameBoard />
             </div>
             <div className="chatBoard">
-              {/* <Chat id={id} /> */}
+              <Chat id={id} />
             </div>
             <a href='#' onClick={() => { }}><img src={btnGameStart} /></a>
           </div>

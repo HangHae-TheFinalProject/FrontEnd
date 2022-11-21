@@ -13,199 +13,176 @@ import UserModel from '../models/user-model';
 var localUser = new UserModel();
 
 class VideoRoomComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
-      ? this.props.openviduServerUrl
-      : 'https://' + window.location.hostname + ':4443';
-    this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret
-      ? this.props.openviduSecret
-      : 'MY_SECRET';
-    this.hasBeenUpdated = false;
-    // this.layout = new OpenViduLayout();
-    let sessionName = this.props.sessionName
-      ? this.props.sessionName
-      : 'SessionA';
-    let userName = this.props.user
-      ? this.props.user
-      : 'OpenVidu_User' + Math.floor(Math.random() * 100);
-    this.remotes = [];
-    this.localUserAccessAllowed = false;
-    this.state = {
-      mySessionId: sessionName,
-      myUserName: userName,
-      session: undefined,
-      localUser: undefined,
-      subscribers: [],
-      chatDisplay: 'none',
-      currentVideoDevice: undefined,
-    };
-    this.isMute = this.props.isMute;
+    constructor(props) {
+        super(props);
+        this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
+            ? this.props.openviduServerUrl
+            : 'https://' + window.location.hostname + ':4443';
+        this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : 'MY_SECRET';
+        this.hasBeenUpdated = false;
+        // this.layout = new OpenViduLayout();
+        let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
+        let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+        this.remotes = [];
+        this.localUserAccessAllowed = false;
+        this.state = {
+            mySessionId: sessionName,
+            myUserName: userName,
+            session: undefined,
+            localUser: undefined,
+            subscribers: [],
+            chatDisplay: 'none',
+            currentVideoDevice: undefined,
+            isMute: this.props.isMute
+        };
 
-    this.isMute = false;
+        this.joinSession = this.joinSession.bind(this);
+        this.leaveSession = this.leaveSession.bind(this);
+        this.onbeforeunload = this.onbeforeunload.bind(this);
+        this.updateLayout = this.updateLayout.bind(this);
+        this.camStatusChanged = this.camStatusChanged.bind(this);
+        this.micStatusChanged = this.micStatusChanged.bind(this);
+        this.micToggleMuted = this.micToggleMuted.bind(this);
+        this.nicknameChanged = this.nicknameChanged.bind(this);
+        this.toggleFullscreen = this.toggleFullscreen.bind(this);
+        this.switchCamera = this.switchCamera.bind(this);
+        this.screenShare = this.screenShare.bind(this);
+        this.stopScreenShare = this.stopScreenShare.bind(this);
+        this.closeDialogExtension = this.closeDialogExtension.bind(this);
+        this.toggleChat = this.toggleChat.bind(this);
+        this.checkNotification = this.checkNotification.bind(this);
+        this.checkSize = this.checkSize.bind(this);
+    }
 
-    this.joinSession = this.joinSession.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.updateLayout = this.updateLayout.bind(this);
-    this.camStatusChanged = this.camStatusChanged.bind(this);
-    this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.micToggleMuted = this.micToggleMuted.bind(this);
-    this.nicknameChanged = this.nicknameChanged.bind(this);
-    this.toggleFullscreen = this.toggleFullscreen.bind(this);
-    this.switchCamera = this.switchCamera.bind(this);
-    this.screenShare = this.screenShare.bind(this);
-    this.stopScreenShare = this.stopScreenShare.bind(this);
-    this.closeDialogExtension = this.closeDialogExtension.bind(this);
-    this.toggleChat = this.toggleChat.bind(this);
-    this.checkNotification = this.checkNotification.bind(this);
-    this.checkSize = this.checkSize.bind(this);
-  }
+    componentDidUpdate(prevProps, prevState) {          
+        if (this.props.isMute !== prevProps.isMute){
+            this.setState({isMute: this.props.isMute})
+            this.micToggleMuted();
+        }
+    }
 
-  componentDidMount() {
-    const openViduLayoutOptions = {
-      maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
-      minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
-      fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
-      bigClass: 'OV_big', // The class to add to elements that should be sized bigger
-      bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
-      bigFixedRatio: false, // fixedRatio for the big ones
-      bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
-      bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
-      bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
-      animate: true, // Whether you want to animate the transitions
-    };
+    componentDidMount() {
+        
+        const openViduLayoutOptions = {
+            maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
+            minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
+            fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
+            bigClass: 'OV_big', // The class to add to elements that should be sized bigger
+            bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
+            bigFixedRatio: false, // fixedRatio for the big ones
+            bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
+            bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
+            bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
+            animate: true, // Whether you want to animate the transitions
+        };
 
-    // this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
-    window.addEventListener('beforeunload', this.onbeforeunload);
-    // window.addEventListener('resize', this.updateLayout);
-    // window.addEventListener('resize', this.checkSize);
-    this.joinSession();
-  }
+        // this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
+        window.addEventListener('beforeunload', this.onbeforeunload);
+        // window.addEventListener('resize', this.updateLayout);
+        // window.addEventListener('resize', this.checkSize);
+        this.joinSession();
+    }
 
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.onbeforeunload);
-    // window.removeEventListener('resize', this.updateLayout);
-    // window.removeEventListener('resize', this.checkSize);
-    this.leaveSession();
-  }
+    componentWillUnmount() {
+        window.removeEventListener('beforeunload', this.onbeforeunload);
+        // window.removeEventListener('resize', this.updateLayout);
+        // window.removeEventListener('resize', this.checkSize);
+        this.leaveSession();
+    }
 
-  onbeforeunload(event) {
-    this.leaveSession();
-  }
+    onbeforeunload(event) {
+        this.leaveSession();
+    }
 
-  joinSession() {
-    this.OV = new OpenVidu();
+    joinSession() {
+        this.OV = new OpenVidu();
 
-    this.setState(
-      {
-        session: this.OV.initSession(),
-      },
-      () => {
-        this.subscribeToStreamCreated();
-        this.connectToSession();
-      }
-    );
-  }
+        this.setState(
+            {
+                session: this.OV.initSession(),
+            },
+            () => {
+                this.subscribeToStreamCreated();
+                this.connectToSession();
+            },
+        );
+    }
 
-  connectToSession() {
-    if (this.props.token !== undefined) {
-      this.connect(this.props.token);
-    } else {
-      this.getToken()
-        .then((token) => {
-          this.connect(token);
-        })
-        .catch((error) => {
-          if (this.props.error) {
-            this.props.error({
-              error: error.error,
-              messgae: error.message,
-              code: error.code,
-              status: error.status,
+    connectToSession() {
+        if (this.props.token !== undefined) {
+            this.connect(this.props.token);
+        } else {
+            this.getToken().then((token) => {
+                this.connect(token);
+            }).catch((error) => {
+                if (this.props.error) {
+                    this.props.error({ error: error.error, messgae: error.message, code: error.code, status: error.status });
+                }
+                console.log('There was an error getting the token:', error.code, error.message);
+                alert('There was an error getting the token:', error.message);
+            });
+        }
+    }
+
+    connect(token) {
+        this.state.session
+            .connect(
+                token,
+                { clientData: this.state.myUserName },
+            )
+            .then(() => {
+                this.connectWebCam();
+            })
+            .catch((error) => {
+                if (this.props.error) {
+                    this.props.error({ error: error.error, messgae: error.message, code: error.code, status: error.status });
+                }
+                alert('There was an error connecting to the session:', error.message);
+                console.log('There was an error connecting to the session:', error.code, error.message);
+            });
+    }
+
+    async connectWebCam() {
+        var devices = await this.OV.getDevices();
+        var videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+        let publisher = this.OV.initPublisher(undefined, {
+            audioSource: undefined,
+            videoSource: videoDevices[0].deviceId,
+            publishAudio: localUser.isAudioActive(),
+            publishVideo: localUser.isVideoActive(),
+            resolution: '640x480',
+            frameRate: 30,
+            insertMode: 'APPEND',
+        });
+
+        if (this.state.session.capabilities.publish) {
+            publisher.on('accessAllowed', () => {
+                this.state.session.publish(publisher).then(() => {
+                    this.updateSubscribers();
+                    this.localUserAccessAllowed = true;
+                    if (this.props.joinSession) {
+                        this.props.joinSession();
+                    }
+                });
+            });
+
+        }
+        localUser.setNickname(this.state.myUserName);
+        localUser.setConnectionId(this.state.session.connection.connectionId);
+        localUser.setScreenShareActive(false);
+        localUser.setStreamManager(publisher);
+        this.subscribeToUserChanged();
+        this.subscribeToStreamDestroyed();
+        this.sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
+
+        this.setState({ currentVideoDevice: videoDevices[0], localUser: localUser }, () => {
+            this.state.localUser.getStreamManager().on('streamPlaying', (e) => {
+                this.updateLayout();
+                publisher.videos[0].video.parentElement.classList.remove('custom-class');
+
             });
           }
-          console.log(
-            'There was an error getting the token:',
-            error.code,
-            error.message
-          );
-          alert('There was an error getting the token:', error.message);
-        });
-    }
-  }
-
-  connect(token) {
-    this.state.session
-      .connect(token, { clientData: this.state.myUserName })
-      .then(() => {
-        this.connectWebCam();
-      })
-      .catch((error) => {
-        if (this.props.error) {
-          this.props.error({
-            error: error.error,
-            messgae: error.message,
-            code: error.code,
-            status: error.status,
-          });
-        }
-        alert('There was an error connecting to the session:', error.message);
-        console.log(
-          'There was an error connecting to the session:',
-          error.code,
-          error.message
-        );
-      });
-  }
-
-  async connectWebCam() {
-    var devices = await this.OV.getDevices();
-    var videoDevices = devices.filter((device) => device.kind === 'videoinput');
-
-    let publisher = this.OV.initPublisher(undefined, {
-      audioSource: undefined,
-      videoSource: videoDevices[0].deviceId,
-      publishAudio: localUser.isAudioActive(),
-      publishVideo: localUser.isVideoActive(),
-      resolution: '640x480',
-      frameRate: 30,
-      insertMode: 'APPEND',
-    });
-
-    if (this.state.session.capabilities.publish) {
-      publisher.on('accessAllowed', () => {
-        this.state.session.publish(publisher).then(() => {
-          this.updateSubscribers();
-          this.localUserAccessAllowed = true;
-          if (this.props.joinSession) {
-            this.props.joinSession();
-          }
-        });
-      });
-    }
-    localUser.setNickname(this.state.myUserName);
-    localUser.setConnectionId(this.state.session.connection.connectionId);
-    localUser.setScreenShareActive(false);
-    localUser.setStreamManager(publisher);
-    this.subscribeToUserChanged();
-    this.subscribeToStreamDestroyed();
-    this.sendSignalUserChanged({
-      isScreenShareActive: localUser.isScreenShareActive(),
-    });
-
-    this.setState(
-      { currentVideoDevice: videoDevices[0], localUser: localUser },
-      () => {
-        this.state.localUser.getStreamManager().on('streamPlaying', (e) => {
-          this.updateLayout();
-          publisher.videos[0].video.parentElement.classList.remove(
-            'custom-class'
-          );
-        });
-      }
-    );
-  }
 
   updateSubscribers() {
     var subscribers = this.remotes;
@@ -275,9 +252,7 @@ class VideoRoomComponent extends Component {
     let localUser = this.state.localUser;
     localUser.setNickname(nickname);
     this.setState({ localUser: localUser });
-    this.sendSignalUserChanged({
-      nickname: this.state.localUser.getNickname(),
-    });
+    this.sendSignalUserChanged({ nickname: this.state.localUser.getNickname(), });
   }
 
   deleteSubscriber(stream) {
