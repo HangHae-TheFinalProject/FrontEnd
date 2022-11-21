@@ -1,14 +1,13 @@
-
 import Router from './shared/Router';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 function App() {
   return (
-  <>
-    <Router />
-  </>
+    <>
+      <Router />
+    </>
   );
 }
 
 export default App;
-registerServiceWorker();
+// registerServiceWorker();
