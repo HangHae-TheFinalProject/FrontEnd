@@ -16,7 +16,7 @@ export default function FormSignIn() {
 
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
-
+  // 유효성 검사
   const [msgMail, setMsgMail] = useState('');
   const [show, setShow] = useState(false);
 
@@ -61,10 +61,13 @@ export default function FormSignIn() {
       });
   };
 
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') loginOnClickHandler();
+  };
+
   return (
     <>
       <img src={gameRoomBackground} className="background" />
-
       <div className="signBox">
         <div className="bodySignin">
           <div className="divTitleBox">
@@ -76,11 +79,12 @@ export default function FormSignIn() {
                 <div className="mailInputBox">
                   <input
                     className="input"
-                    type="text"
+                    type="email"
                     placeholder="이메일을 입력해주세요."
                     onChange={setEmail}
                     onBlur={mailCheck}
-                  ></input>
+                    onKeyPress={onKeyPress}
+                  />
                   {show ? (
                     <h4 className="emailText">
                       <Redicon />
@@ -93,7 +97,8 @@ export default function FormSignIn() {
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
                   onChange={setPassword}
-                ></input>
+                  onKeyPress={onKeyPress}
+                />
               </div>
               <div className="divButtonBox">
                 <button className="loginBtn" onClick={loginOnClickHandler}>

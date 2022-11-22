@@ -10,7 +10,7 @@ const refresh_token = new Cookies().get('refresh_token');
 const instance = axios.create({
   baseURL: 'https://haetae.shop',
   headers: {
-    'authorization': access_token,
+    authorization: access_token,
     'refresh-token': refresh_token,
     'Content-Type': 'application/json',
   },
