@@ -9,7 +9,7 @@ import door1 from '../../images/png/door1.png';
 import door2 from '../../images/png/door2.png';
 import door3 from '../../images/png/door3.png';
 import door4 from '../../images/png/door4.png';
-import { ReactComponent as IcLook } from '../../images/svg/IcLock.svg';
+import { ReactComponent as IcLock } from '../../images/svg/IcLock.svg';
 import { ReactComponent as icArrowLeft } from '../../images/svg/icArrowLeft.svg';
 
 import { useDispatch } from 'react-redux';
@@ -55,8 +55,8 @@ function ARoom({ roomInfo }) {
         </a>
 
         <div className="roomName">
-          {roomInfo.roomPassword ? <IcLook /> : ''}
-          {roomInfo.roomName}
+          <p> {roomInfo.roomPassword ? <IcLock /> : ''}</p>
+          <p>{roomInfo.roomName}</p>
         </div>
 
         <span className="memderLength">

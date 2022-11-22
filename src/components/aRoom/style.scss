@@ -3,10 +3,11 @@
   height: 400px;
   min-width: 300px;
   min-height: 300px;
-  background-color: blue;
+
   text-align: center;
 
   img {
+    margin-top: 21px;
     width: 150px;
     height: 290px;
     object-fit: cover;
@@ -16,8 +17,19 @@
 .roomInfoBox {
   text-align: center;
 }
+
 .roomName {
+  margin-top: 35px;
+  margin-bottom: 7px;
   color: white;
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p {
+    margin-left: 3px;
+  }
 }
 
 .memderLength {
@@ -27,10 +39,14 @@
 .modeCheck {
   width: 52px;
   height: 28px;
+  padding-top: 4px;
   background-color: #d9d9d9;
-  border-radius: 2px;
+  border-radius: 7px;
   font-size: 16px;
   text-align: center;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 // modal

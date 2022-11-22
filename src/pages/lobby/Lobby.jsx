@@ -17,7 +17,7 @@ function Lobby() {
 
   return (
     <div className="pagesection">
-      {/* <img src={lobbyBackGround} className="background" /> */}
+      <img src={lobbyBackGround} className="background" />
       <div>
         <input
           type="button"
