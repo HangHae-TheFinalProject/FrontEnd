@@ -9,6 +9,8 @@ import door1 from '../../images/png/door1.png';
 import door2 from '../../images/png/door2.png';
 import door3 from '../../images/png/door3.png';
 import door4 from '../../images/png/door4.png';
+import { ReactComponent as IcLook } from '../../images/svg/IcLock.svg';
+import { ReactComponent as icArrowLeft } from '../../images/svg/icArrowLeft.svg';
 
 import { useDispatch } from 'react-redux';
 import { setRoom } from '../../redux/modules/roomsSlice';
@@ -41,18 +43,25 @@ function ARoom({ roomInfo }) {
     <>
       <div className="roomBox">
         <div className="roomInfoBox">
-          {roomInfo.roomPassword ? '🔒' : ''}
-          <span className="memderLength">
-            ({roomInfo.member.length}/{MAX_NUMBER_OF_PERSON})
-          </span>
+          <div className="modeCheck">{roomInfo.mode}</div>
           <span>{ARR_MODE[roomInfo.mode]}</span>
         </div>
+
         <a href="#" onClick={joinRoom}>
           <img
+            className="doorImg"
             src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
           />
         </a>
-        <div className="roomName">{roomInfo.roomName}</div>
+
+        <div className="roomName">
+          {roomInfo.roomPassword ? <IcLook /> : ''}
+          {roomInfo.roomName}
+        </div>
+
+        <span className="memderLength">
+          ({roomInfo.member.length}/{MAX_NUMBER_OF_PERSON})
+        </span>
         {openModal && (
           <Modal
             onClose={() => setOpenModal(false)}

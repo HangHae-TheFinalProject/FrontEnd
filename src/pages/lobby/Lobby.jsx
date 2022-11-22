@@ -5,6 +5,7 @@ import Modal from '../../elements/modal/Modal';
 import RoomList from '../../components/roomList/RoomList';
 import CreateRoomForm from '../../components/createRoomForm/CreateRoomForm';
 import lobbyBackGround from '../../images/png/lobbyBackGround.png';
+import roomMakerBtn from '../../images/png/roomMakerBtn.png';
 
 import './style.scss';
 
@@ -16,13 +17,8 @@ function Lobby() {
 
   return (
     <div className="pagesection">
-      <img src={lobbyBackGround} className="background" />
+      {/* <img src={lobbyBackGround} className="background" /> */}
       <div>
-        <input
-          type="button"
-          value="방만들기"
-          onClick={() => setOpenModal(true)}
-        />
         <input
           type="button"
           value="커뮤니티"
@@ -41,6 +37,13 @@ function Lobby() {
           content={<CreateRoomForm />}
         />
       )}
+
+      <img
+        src={roomMakerBtn}
+        type="button"
+        value="방만들기"
+        onClick={() => setOpenModal(true)}
+      />
     </div>
   );
 }
