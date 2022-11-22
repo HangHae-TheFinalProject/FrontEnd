@@ -43,7 +43,6 @@ export const roomsSlice = createSlice({
   extraReducers: {
     [__getRooms.pending]: (state, action) => {
       state.isLoading = true;
-      console.log(action);
     },
     [__getRooms.fulfilled]: (state, action) => {
       state.rooms = action.payload.roomsInPage;
