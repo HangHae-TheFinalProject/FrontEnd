@@ -36,7 +36,7 @@ export default GameBoard;
 
 function WaitStartBoard() {
 
-  return <div className='stageText'>
+  return <div className='stageText fontLightBold'>
     <span>게임을 시작하기 전입니다.</span>
   </div>
 

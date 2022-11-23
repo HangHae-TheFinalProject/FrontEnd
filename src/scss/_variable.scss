@@ -11,6 +11,8 @@
 @include font-face('Pretendard-Bold', 'Pretendard-Bold');
 @include font-face('Pretendard-Medium', 'Pretendard-Medium');
 @include font-face('Pretendard-SemiBold', 'Pretendard-SemiBold');
+@include font-face('HeirofLightRegular', 'HeirofLightRegular');
+@include font-face('HeirofLightBold', 'HeirofLightBold');
 
 .fontBold {
   font-family: Pretendard-Bold;
@@ -18,4 +20,12 @@
 
 .fontSemiBold {
   font-family: Pretendard-SemiBold;
+}
+
+.fontLight{
+  font-family: HeirofLightRegular;
+}
+
+.fontLightBold{
+  font-family: HeirofLightBold;
 }
