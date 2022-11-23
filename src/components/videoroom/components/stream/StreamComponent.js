@@ -39,7 +39,7 @@ export default function StreamComponent(props) {
     useEffect(() => {
         console.log(props)
         console.log(memberSpotlight + '/' + sessionStorage.getItem('nickname'));
-        if(memberSpotlight === sessionStorage.getItem('nickname')) {
+        if(memberSpotlight === state.nickname) {
             setState({
                 ...state,
                 myTurn: true
