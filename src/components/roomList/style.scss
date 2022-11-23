@@ -7,9 +7,15 @@
   width: 100%;
 }
 
-.arrowBox {
-  width: 25px;
+.arrowBoxL {
+  width: 200px;
   color: black;
+  padding-left: 150px;
+}
+.arrowBoxR {
+  width: 200px;
+  color: black;
+  padding-right: 200px;
 }
 
 a {
@@ -26,4 +32,3 @@ a {
   align-items: center;
   gap: 15px;
 }
-

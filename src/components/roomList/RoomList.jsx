@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { __getRooms } from '../../redux/modules/roomsSlice';
 import { useSelector } from 'react-redux';
-
+import { ReactComponent as IcArrowLeft } from '../../images/svg/icArrowLeft.svg';
+import { ReactComponent as IcArrowRight } from '../../images/svg/icArrowRight.svg';
 // need to : API connection & redux
+
 function RoomList() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -28,7 +30,7 @@ function RoomList() {
   return (
     <div className="sectionRoomList">
       <a href="#" onClick={pageUp}>
-        <div className="arrowBox">{page > 1 ? '◀' : ''}</div>
+        <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
       </a>
       <div className="roomListBox">
         {rooms?.map((aroom) => {
@@ -36,7 +38,9 @@ function RoomList() {
         })}
       </div>
       <a href="#" onClick={pageDown}>
-        <div className="arrowBox">{page < maxPage ? '▶' : ''}</div>
+        <div className="arrowBoxR">
+          {page < maxPage ? <IcArrowRight /> : ''}
+        </div>
       </a>
     </div>
   );
