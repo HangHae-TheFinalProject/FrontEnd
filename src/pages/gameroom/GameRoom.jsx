@@ -54,7 +54,7 @@ function GameRoom() {
   const [cookie] = useCookies();
 
   // const [isMaster, setIsMaster] = useState(useSelector(state => state.room.owner) === sessionStorage.getItem('nickname'));
-  const isMaster = useState(useSelector(state => state.room.owner) === sessionStorage.getItem('nickname'));
+  const isMaster = useState(useSelector(state => state.rooms.owner) === sessionStorage.getItem('nickname'));
   const [isLiar, setIsLiar] = useState(true);
 
   const closePopup = () => { setIsPop(false); }
