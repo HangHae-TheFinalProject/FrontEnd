@@ -520,21 +520,19 @@ function GameRoom() {
         </div>
         <div className="bodySection">
           <div className='videoSection'>
-            {/* <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} /> */}
+            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
               <GameBoard stageNumber={stageNumber} isLiar={isLiar} item={item} govote={govote} onemorevote={onemorevote} />
             </div>
             <div className="chatBoard">
-              {/* <Chat id={id} /> */}
+              <Chat id={id} />
               <span style={{ color: 'white' }}>{stageNumber}</span>
-              <input type='button' value='test' onClick={test} />
             </div>
             {stageNumber === 0 && isMaster ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
             {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
             {stageNumber === 2 ? <BtnStartReady status='ReadyInert' /> : ''}
-
           </div>
         </div>
       </div>
