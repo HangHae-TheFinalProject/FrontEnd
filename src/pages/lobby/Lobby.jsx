@@ -16,7 +16,7 @@ function Lobby() {
 
   return (
     <div className="pagesection">
-      <img src={lobbyBackGround} className="roombackground" />
+      <img src={lobbyBackGround} className="background" />
       <LobbyHeader></LobbyHeader>
       <RoomList />
       {openModal && (
