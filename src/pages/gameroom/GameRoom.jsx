@@ -155,10 +155,10 @@ function GameRoom() {
             setGameBoardStatus('');
             break;
           case 'VOTE':
-
+            setStageNumber(6);
             break;
           case 'ONEMOREROUND':
-
+            setStageNumber(3);
             break;
           case 'LIER':
             setStageNumber(7)
@@ -279,8 +279,6 @@ function GameRoom() {
         type: "VOTE"
       }),
     });
-
-    setStageNumber(3);
   }
 
   const govote = () => {
@@ -295,8 +293,6 @@ function GameRoom() {
         type: "ONEMOREROUND"
       }),
     });
-
-    setStageNumber(6);
   }
 
   // toServer : 라이어 투표
