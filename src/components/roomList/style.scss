@@ -7,6 +7,11 @@
   width: 100%;
 }
 
+.background {
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
 .arrowBoxL {
   width: 200px;
   color: black;
