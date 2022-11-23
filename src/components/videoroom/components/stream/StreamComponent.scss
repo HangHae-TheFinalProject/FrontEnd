@@ -46,3 +46,21 @@ $totalHeight: 185px;
 .test{
     text-decoration: underline;
 }
+
+.frameNormal{
+    fill:#D9D9D9;
+    z-index: 1;
+}
+
+.frameSpotlight{
+    fill:#FFC42E;
+    z-index: 1;
+}
+
+video{
+    z-index: -1;
+}
+
+.boxSpotlight{
+    filter:drop-shadow(0 0 0.75rem #FFFFFF)
+}

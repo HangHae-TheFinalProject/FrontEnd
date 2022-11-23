@@ -26,10 +26,34 @@ export const __getRooms = createAsyncThunk(
 
 const initialState = {
   rooms: [],
-  room: {},
+  room: {
+    id: 0,
+    member: [
+      {
+        createdAt: '',
+        modifiedAt: '',
+        email: '',
+        memberId: 0,
+        nickname: '',
+        password: ''
+      }, {
+        createdAt: '',
+        modifiedAt: '',
+        email: '',
+        memberId: 0,
+        nickname: '',
+        password: ''
+      }
+    ],
+    mode: 1,
+    owner: '',
+    roomName: '',
+    roomPassword: '',
+    status: ''
+  },
   maxPage: 0,
   isLoading: false,
-  error: null,
+  error: null
 };
 
 export const roomsSlice = createSlice({
