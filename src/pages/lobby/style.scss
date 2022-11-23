@@ -1,8 +1,20 @@
-.pagesection{
+.pagesection {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: -1;
+}
+
+.roombackground {
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  position: absolute;
+}
+
+.createBtn {
+  margin-top: 80px;
 }
