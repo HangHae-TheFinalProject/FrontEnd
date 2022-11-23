@@ -37,6 +37,7 @@ function GameRoom() {
   const [muted, setMuted] = useState(false);
   const nickname = sessionStorage.getItem('nickname');
   const dispatch = useDispatch();
+  
 
   const [round, setRound] = useState(0);
 
@@ -52,7 +53,8 @@ function GameRoom() {
   const navigate = useNavigate();
   const [cookie] = useCookies();
 
-  const [isMaster, setIsMaster] = useState(true);
+  // const [isMaster, setIsMaster] = useState(useSelector(state => state.room.owner) === sessionStorage.getItem('nickname'));
+  const isMaster = useState(useSelector(state => state.room.owner) === sessionStorage.getItem('nickname'));
   const [isLiar, setIsLiar] = useState(true);
 
   const closePopup = () => { setIsPop(false); }
@@ -395,13 +397,15 @@ function GameRoom() {
       setMuted(true);
       setStatusSpotlight(2);
       setIsPop(false);
+      if(isMaster)
+        spotlight();
     }
 
     // spotlight 한 턴 끝
     if (stageNumber === 4 && timer.status === 2) {
       dispatch(setSpotlightMember(''));
-      // spotlight 끝
-      if (!(statusSpotlight === 0)) {
+      // 내 턴이 끝났을 때
+      if ((statusSpotlight === 1)) {
         setTimer({ ...timer, status: 0 });
         setStatusSpotlight(0);
         spotlight();
