@@ -9,16 +9,18 @@ export default function RobbyHeader() {
     <>
       <div className="headerbackground">
         <header className="headerBtnBox">
-          <div className="communityBox" />
-
-          <img src={headerArrow} />
-          <div
-            type="button"
-            value="커뮤니티"
-            onClick={() => navigate('/social/list')}
-          >
-            커뮤니티
+          {/* <div className="communityBox" /> */}
+          <div className="communityBox">
+            <img src={headerArrow} />
+            <div
+              type="button"
+              value="커뮤니티"
+              onClick={() => navigate('/social/list')}
+            >
+              커뮤니티
+            </div>
           </div>
+
           <h1>로비</h1>
           <div
             type="button"
