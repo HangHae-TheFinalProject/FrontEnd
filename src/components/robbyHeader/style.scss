@@ -1,0 +1,44 @@
+.headerbackground {
+  width: 100vw;
+  height: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgba(217, 217, 217, 0.1);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+.communityBox {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  div {
+    color: white;
+    font-size: 24px;
+  }
+  img {
+    margin-right: 6px;
+  }
+}
+.headerBtnBox {
+  width: 1173px;
+  height: 99px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+
+  div {
+    color: white;
+  }
+
+  h1 {
+    color: white;
+  }
+}
