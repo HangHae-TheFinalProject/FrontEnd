@@ -8,6 +8,8 @@ import { ReactComponent as Redicon } from '../../images/svg/Redicon.svg';
 
 import gameRoomBackground from '../../images/png/gameRoomBackground.png';
 
+import { setClientHeaders } from '../../shared/Request';
+
 import './style.scss';
 
 export default function FormSignIn() {
@@ -43,13 +45,24 @@ export default function FormSignIn() {
         password: password,
       })
       .then((res) => {
+
+        const access_token = res.request.getResponseHeader('authorization');
+        const refresh_token = res.request.getResponseHeader('refresh-token');
+
+        setClientHeaders({
+          // interceptor
+          access: access_token,
+          refresh: refresh_token
+        })
+
         setCookie(
           'access_token',
-          res.request.getResponseHeader('authorization')
+          access_token
         );
+        
         setCookie(
           'refresh_token',
-          res.request.getResponseHeader('refresh-token')
+          refresh_token
         );
         sessionStorage.setItem('email', res.data.data.email);
         sessionStorage.setItem('nickname', res.data.data.nickname);

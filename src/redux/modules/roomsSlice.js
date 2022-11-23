@@ -1,21 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { Cookies } from 'react-cookie';
+import instance from '../../shared/Request';
 
 export const __getRooms = createAsyncThunk(
   'rooms/getRooms',
   async (payload, thunkAPI) => {
-    const config = {
-      headers: {
-        authorization: new Cookies().get('access_token'),
-        'refresh-token': new Cookies().get('refresh_token'),
-      },
-    };
     try {
-      const { data } = await axios.get(
-        `https://haetae.shop/lier/rooms/${payload}`,
-        config
-      );
+      const { data } = await instance.get(`/lier/rooms/${payload}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       alert('방을 찾을 수 없습니다.');
