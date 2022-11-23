@@ -1,7 +1,5 @@
 import './style.scss';
-import popupBackground from '../../images/png/popupBackground.png';
 import useInput from '../../hooks/useInput';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 function GamePopup({ closePopup, round, isAnswer, liarVote }) {
@@ -40,7 +38,7 @@ function GamePopup({ closePopup, round, isAnswer, liarVote }) {
   }
 
   return (
-    <div className='gamePopup'>
+    <div className='gamePopup fontLight'>
       <div className='popupContent' >
         {content}
       </div>
@@ -64,7 +62,7 @@ const VotePopup = ({ closePopup, liarVote }) => {
       <h3>당신이 생각하는 라이어는?</h3>
       <a href='#' onClick={closePopup}>H</a>
     </div>
-    <div className='liarVoteBox'>
+    <div className='contentBox'>
       {memberlist.map((member, index) => {
         return <a href='#' key={keys[index]} onClick={() => { liarVote(member) }}>
           <h1>{member}
@@ -82,11 +80,11 @@ const VoteResultPopup = ({ closePopup }) => {
   const result = useSelector(state => state.game.memberVoteResult)
   return <>
     <div className='popupTitleBox'>
-    <h3>투표완료!</h3>
+      <h3>투표완료!</h3>
       <h3>{result}의 정체는!?</h3>
       <a href='#' onClick={closePopup}>H</a>
     </div>
-    <div className='liarVoteBox'>
+    <div className='contentBox'>
     </div>
   </>
 }
@@ -95,26 +93,16 @@ const VoteDrawPopup = ({ closePopup, round }) => {
 
   const MAX_ROUND = 3;
   return <>
-    <div className='popupTitleBox'>
-      <h3>동점입니다.</h3>
-      <h3>{`앞으로 ${MAX_ROUND - round}라운드 남았습니다.`}</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='liarVoteBox'>
-    </div>
+    <h3>한 명의 라이어를 찾아내지 못했습니다.</h3>
+    <h3>{`앞으로 ${MAX_ROUND - round}라운드 남았습니다.`}</h3>
   </>
 }
 
 const VoteDrawEndPopup = ({ closePopup }) => {
 
   return <>
-    <div className='popupTitleBox'>
-      <h3>동점입니다.</h3>
-      <h3>모든 라운드가 종료되어 라이어의 승리입니다.</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='liarVoteBox'>
-    </div>
+    <h3>동점입니다.</h3>
+    <h3>모든 라운드가 종료되어 라이어의 승리입니다.</h3>
   </>
 }
 
@@ -122,14 +110,8 @@ const ResultLierUserPopup = ({ closePopup }) => {
   const result = useSelector(state => state.game.memberVoteResult);
 
   return <>
-    <div className='popupTitleBox'>
-      <h3>{result}은(는) 라이어가 맞습니다.</h3>
-      <h3>라이어가 키워드를 입력하고 있습니다.</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='liarVoteBox'>
-
-    </div>
+    <h3>{result}은(는) 라이어가 맞습니다.</h3>
+    <h3>라이어가 키워드를 입력하고 있습니다.</h3>
   </>
 }
 
@@ -138,13 +120,10 @@ const ResultLierLierPopup = ({ closePopup, isAnswer }) => {
   const [value, handler] = useInput();
 
   return <>
-    <div className='popupTitleBox'>
-      <h3>라이어로 지목된 당신의 키워드는?</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='liarVoteBox'>
-      <input typt='text' onChange={handler} />
-      <input type='button' value='확인' onClick={() => {isAnswer(value)}}/>
+    <h2>라이어로 지목된 당신의 키워드는?</h2>
+    <div className='inputBox'>
+      <input typt='text' onChange={handler} className='inputKeyword' placeholder='키워드를 입력해 주세요.' />
+      <input type='button' value='확인' onClick={() => { isAnswer(value) }} className='btnInputKeyword' />
     </div>
   </>
 }
@@ -157,7 +136,7 @@ const ResultNLierPopup = ({ closePopup }) => {
       <h3>{result}은(는) 라이어가 아니었습니다.</h3>
       <a href='#' onClick={closePopup}>H</a>
     </div>
-    <div className='liarVoteBox'>
+    <div className='contentBox'>
     </div>
   </>
 }
@@ -169,7 +148,7 @@ const VictoryUserPopup = ({ closePopup }) => {
       <h3>참가자들의 승리!</h3>
       <a href='#' onClick={closePopup}>H</a>
     </div>
-    <div className='liarVoteBox'>
+    <div className='contentBox'>
     </div>
   </>
 }
@@ -181,7 +160,7 @@ const VictoryLierPopup = ({ closePopup }) => {
       <h3>라이어의 승리!</h3>
       <a href='#' onClick={closePopup}>H</a>
     </div>
-    <div className='liarVoteBox'>
+    <div className='contentBox'>
     </div>
   </>
 }
