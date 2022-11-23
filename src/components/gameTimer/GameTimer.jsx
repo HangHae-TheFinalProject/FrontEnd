@@ -7,7 +7,7 @@ function GameTimer({ sec, setSec }) {
   const [time, setTime] = useState();
 
   useEffect(() => {
-    setTime(sec);
+    setTime(sec.time);
     const intervalId = setInterval(() => {
       setTime((t) => t - 1)
     }, 1000);
@@ -15,15 +15,15 @@ function GameTimer({ sec, setSec }) {
     const timeoutId = setTimeout(() => {
       clearInterval(intervalId)
       setTime(-1);
-      setSec(-1);
-    }, (sec + 1) * 1000)
+      setSec({time: -1, status: 2});
+    }, (sec.time + 1) * 1000)
 
     return () => {
       return (clearInterval(intervalId),
         clearTimeout(timeoutId)
       );
     }
-  }, [sec])
+  }, [sec.time])
 
   return <div className='timerBox'>
     <img src={timerFrame} className='timerFrame' />

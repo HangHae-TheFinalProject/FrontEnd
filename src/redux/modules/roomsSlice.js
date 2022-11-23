@@ -5,7 +5,31 @@ import instance from "../../shared/Request";
 // need to : API connection
 const initialState = {
   rooms: [],
-  room: {},
+  room: {
+    id: 0,
+    member: [
+      {
+        createdAt: '',
+        modifiedAt: '',
+        email: '',
+        memberId: 0,
+        nickname: '',
+        password: ''
+      }, {
+        createdAt: '',
+        modifiedAt: '',
+        email: '',
+        memberId: 0,
+        nickname: '',
+        password: ''
+      }
+    ],
+    mode: 1,
+    owner: '',
+    roomName: '',
+    roomPassword: '',
+    status: ''
+  },
   maxPage: 0,
   isLoading: false,
   error: null
@@ -27,6 +51,7 @@ export const __getRooms = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await instance.get(`/lier/rooms/${payload}`)
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       alert('방을 찾을 수 없습니다.');
