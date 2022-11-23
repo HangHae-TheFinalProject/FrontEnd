@@ -3,7 +3,7 @@ import gameBoardBackground from '../../images/svg/gameBoardBackground.svg';
 import gameBoardFrame from '../../images/svg/gameBoardFrame.svg';
 import './style.scss';
 
-function GameBoard({ item, goStage6, goStage3 }) {
+function GameBoard({ item, govote, onemorevote }) {
 
   let content;
   const status = useSelector(state => state.game.gameBoardStatus);
@@ -19,7 +19,7 @@ function GameBoard({ item, goStage6, goStage3 }) {
       content = <ShowLierBoard item={item} />
       break;
     case 'VOTE_ONEMORE':
-      content = <OnemoreVoteBoard goStage3={goStage3} goStage6={goStage6} />
+      content = <OnemoreVoteBoard onemorevote={onemorevote} govote={govote} />
       break;
   }
 
@@ -58,13 +58,13 @@ function ShowLierBoard({ item }) {
   </div>
 }
 
-function OnemoreVoteBoard({ goStage3, goStage6 }) {
+function OnemoreVoteBoard({ onemorevote, govote }) {
 
   return <div className='stageBtn'>
-    <a href='#' onClick={goStage3}><div className='btnOnemore'>
+    <a href='#' onClick={onemorevote}><div className='btnOnemore'>
       한바퀴 더!
     </div></a>
-    <a href='#' onClick={goStage6}><div className='btnOnemore'>
+    <a href='#' onClick={govote}><div className='btnOnemore'>
       바로 투표하기
     </div></a>
   </div>
