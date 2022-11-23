@@ -7,7 +7,7 @@
 import { useParams } from 'react-router-dom';
 import VideoRoomComponent from '../../components/videoroom/components/VideoRoomComponent';
 import './style.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, version } from 'react';
 import instance from '../../shared/Request';
 import GameBoard from '../../components/gameBoard/GameBoard';
 import gameRoomBackground from '../../images/png/gameRoomBackground.png';
@@ -37,7 +37,7 @@ function GameRoom() {
   const [muted, setMuted] = useState(false);
   const nickname = sessionStorage.getItem('nickname');
   const dispatch = useDispatch();
-  
+
 
   const [round, setRound] = useState(0);
 
@@ -53,8 +53,7 @@ function GameRoom() {
   const navigate = useNavigate();
   const [cookie] = useCookies();
 
-  // const [isMaster, setIsMaster] = useState(useSelector(state => state.room.owner) === sessionStorage.getItem('nickname'));
-  const isMaster = useState(useSelector(state => state.rooms.owner) === sessionStorage.getItem('nickname'));
+  const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === sessionStorage.getItem('nickname'));
   const [isLiar, setIsLiar] = useState(true);
 
   const closePopup = () => { setIsPop(false); }
@@ -154,6 +153,12 @@ function GameRoom() {
           case 'ALLCOMPLETE':
             setStageNumber(6);
             setGameBoardStatus('');
+            break;
+          case 'VOTE':
+
+            break;
+          case 'ONEMOREROUND':
+
             break;
           case 'LIER':
             setStageNumber(7)
@@ -259,6 +264,39 @@ function GameRoom() {
     client.current.publish({
       destination: `/pub/lier/game/${id}/spotlight`,
     });
+  }
+
+
+  const onemorevote = () => {
+    console.log('onemorevote', nickname);
+    if (!client.current.connected) return;
+
+    client.current.publish({
+      destination: `/pub/lier/game/${id}/roundorvote`,
+      body: JSON.stringify({
+        roomId: id,
+        sender: nickname,
+        type: "VOTE"
+      }),
+    });
+
+    setStageNumber(3);
+  }
+
+  const govote = () => {
+    console.log('onemorevote', nickname);
+    if (!client.current.connected) return;
+
+    client.current.publish({
+      destination: `/pub/lier/game/${id}/roundorvote`,
+      body: JSON.stringify({
+        roomId: id,
+        sender: nickname,
+        type: "ONEMOREROUND"
+      }),
+    });
+
+    setStageNumber(6);
   }
 
   // toServer : 라이어 투표
@@ -395,17 +433,21 @@ function GameRoom() {
       setStageNumber(4);
       setTimer({ ...timer, status: 0 });
       setMuted(true);
-      setStatusSpotlight(2);
+      setStatusSpotlight(0);
       setIsPop(false);
-      if(isMaster)
+      if (isMaster)
         spotlight();
     }
 
     // spotlight 한 턴 끝
+    console.log('stageNumber' + stageNumber)
+    console.log('timer.status' + timer.status)
     if (stageNumber === 4 && timer.status === 2) {
       dispatch(setSpotlightMember(''));
       // 내 턴이 끝났을 때
+      console.log(statusSpotlight);
       if ((statusSpotlight === 1)) {
+        console.log('내 턴 종료');
         setTimer({ ...timer, status: 0 });
         setStatusSpotlight(0);
         spotlight();
@@ -451,6 +493,9 @@ function GameRoom() {
 
   }, [timer.status])
 
+  useEffect(() => {
+    console.log(isMaster);
+  }, [isMaster])
 
 
   return (
@@ -483,7 +528,7 @@ function GameRoom() {
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
-              <GameBoard stageNumber={stageNumber} isLiar={isLiar} item={item} goStage6={() => { setStageNumber(6); console.log('33') }} goStage3={() => { setStageNumber(3); console.log('33') }} />
+              <GameBoard stageNumber={stageNumber} isLiar={isLiar} item={item} govote={govote} onemorevote={onemorevote} />
             </div>
             <div className="chatBoard">
               {/* <Chat id={id} /> */}
