@@ -26,7 +26,6 @@ export default function StreamComponent(props) {
         mutedSound: false,
         myTurn: false
     });
-
     const memberSpotlight = useSelector(state => state.game.spotlightMember);
     // const [myTurn] = memberSpotlight === sessionStorage.getItem('nickname');
 
@@ -38,8 +37,9 @@ export default function StreamComponent(props) {
     };
 
     useEffect(() => {
-        console.log(memberSpotlight + '/' + sessionStorage.getItem('nickname'))
-        if(memberSpotlight === sessionStorage.getItem('nickname')) {
+        console.log(props)
+        console.log(memberSpotlight + '/' + sessionStorage.getItem('nickname'));
+        if(memberSpotlight === state.nickname) {
             setState({
                 ...state,
                 myTurn: true
@@ -50,7 +50,7 @@ export default function StreamComponent(props) {
                 myTurn: false
             })
         }
-    }, [memberSpotlight])
+    }, [memberSpotlight]);
 
     return (
         <div className={`videoBox ${state.myTurn ? 'boxSpotlight' : ''}`}>
@@ -61,7 +61,7 @@ export default function StreamComponent(props) {
                     <VideoFrame myTurn={state.myTurn} />
                     <div className="nicknameBox">
                         <img src={nicknameBackground} className="nicknameBackground" />
-                        <div className="nickname boldfont">Hello</div>
+                        <div className="nickname boldfont">{state.nickname}</div>
                         <NickNameFrame myTurn={state.myTurn} />
                     </div>
                     {/* <div id="statusIcons">

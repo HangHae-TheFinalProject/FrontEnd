@@ -22,7 +22,7 @@ class VideoRoomComponent extends Component {
         this.hasBeenUpdated = false;
         // this.layout = new OpenViduLayout();
         let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
-        let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+        let userName = sessionStorage.getItem('nickname') || 'User' + Math.floor(Math.random() * 100);
         this.remotes = [];
         this.localUserAccessAllowed = false;
         this.state = {
