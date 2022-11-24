@@ -1,9 +1,3 @@
-// -------------------------------------------------
-// 내일은 투표부터
-// -------------------------------------------------
-
-
-
 import { useParams } from 'react-router-dom';
 import VideoRoomComponent from '../../components/videoroom/components/VideoRoomComponent';
 import './style.scss';
@@ -33,26 +27,22 @@ import btnExit from '../../images/png/btnExit.png';
 
 function GameRoom() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [cookie] = useCookies();
+
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
   const nickname = sessionStorage.getItem('nickname');
   const dispatch = useDispatch();
 
-
   const [round, setRound] = useState(0);
-
   // Timer status : 0 대기 1 시작 2 종료
   const [timer, setTimer] = useState({ time: -1, status: 0 });
-
   // statusSpotlight : 0 대기 1 내 차례 2 다른 사람 차례
   const [statusSpotlight, setStatusSpotlight] = useState(0)
   const [resultStatus, setResultStatus] = useState('');
-
   const [item, setItem] = useState({ category: '', keyword: '' });
   const [isPop, setIsPop] = useState(false);
-  const navigate = useNavigate();
-  const [cookie] = useCookies();
-
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === sessionStorage.getItem('nickname'));
   const [isLiar, setIsLiar] = useState(true);
 
@@ -76,10 +66,6 @@ function GameRoom() {
     } catch (error) {
       alert(error.data.statusMsg);
     }
-  }
-
-  const muteLocalMike = () => {
-    setMuted(state => !state);
   }
 
   // Sock
@@ -137,9 +123,12 @@ function GameRoom() {
             break;
           case 'SPOTLIGHT':
             dispatch(setSpotlightMember(data.sender));
+            console.log(data.sender)
+            console.log(nickname)
             if (data.sender === nickname) {
+              console.log('내 차례야');
               setStatusSpotlight(1);
-              setMuted(true);
+              setMuted(false);
             } else {
               setStatusSpotlight(2);
             }
@@ -341,11 +330,7 @@ function GameRoom() {
   }
 
   const test = () => {
-    setStageNumber(8)
-    setResultStatus('LIER')
-    // dispatch(setGameBoardStatus(''));
-    // dispatch(setPopupStatus('NLIER'))
-    // setIsPop(true);
+    setMuted(muted => !muted);
   }
 
   useEffect(() => {
@@ -521,6 +506,7 @@ function GameRoom() {
         <div className="bodySection">
           <div className='videoSection'>
             <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
+            <input type='button' value='test' onClick={test} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
