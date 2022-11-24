@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react';
 import './StreamComponent.scss';
+import test from '../../../../images/test.gif';
+import { useSelector } from 'react-redux';
 
 export default function OvVideoComponent(props) {
     const videoRef = useRef();
+    const isCamera = useSelector(state => state.game.isCamera);
 
     useEffect(() => {
         if (props && props.user.streamManager && !!videoRef) {
@@ -27,11 +30,18 @@ export default function OvVideoComponent(props) {
     },)
 
     return (
+        <div className='boxVideo'>
             <video
                 autoPlay={true}
                 id={'video-' + props.user.getStreamManager().stream.streamId}
                 ref={videoRef}
                 muted={props.mutedSound}
             />
+            {!isCamera ? <div className='boxVideoProfile'>
+                <img src={test} />
+            </div> : ''}
+
+        </div>
+
     );
 }
