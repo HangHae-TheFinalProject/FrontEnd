@@ -1,6 +1,8 @@
 $headerHeight: 99px;
 $mainWidth: 1180px;
+$mainHeight: 791px;
 $videoSectionWidth: 448px;
+
 
 .section {
   width: 100vw;
@@ -21,7 +23,6 @@ $videoSectionWidth: 448px;
 .gameRoomSection {
   width: $mainWidth;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,6 +60,14 @@ $videoSectionWidth: 448px;
   }
 }
 
+.bodySectionTopSpace {
+  max-height: 40px;
+}
+
+.bodySectionBottomSpace {
+  max-height: 150px;
+}
+
 .bodySection {
   display: flex;
   flex-direction: row;
@@ -91,13 +100,17 @@ $videoSectionWidth: 448px;
 
     .gameBoard {
       flex-basis: 215px;
-      flex-grow: 1;
+      flex-grow: 0;
     }
 
     .chatBoard {
-      flex-basis: 450px;
-      flex-grow: 1;
+      flex-basis: 448px;
+      flex-grow: 0;
       // height: 50%;
+    }
+
+    .btnBoard {
+      flex-basis: 97px;
     }
   }
 }

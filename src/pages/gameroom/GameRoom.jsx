@@ -499,6 +499,7 @@ function GameRoom() {
             </a>
           </div>
         </div>
+        <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
             <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
@@ -509,15 +510,17 @@ function GameRoom() {
             </div>
             <div className="chatBoard">
               <Chat id={id} />
-              <span style={{ color: 'white' }}>{stageNumber}</span>
             </div>
-            {stageNumber === 0 && isMaster ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
-            {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
-            {stageNumber === 2 ? <BtnStartReady status='ReadyInert' /> : ''}
+            <div className="btnBoard">
+              {stageNumber === 0 && isMaster ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
+              {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
+              {stageNumber === 2 ? <BtnStartReady status='ReadyInert' /> : ''}
+            </div>
           </div>
         </div>
+        <div className="bodySectionBottomSpace"> </div>
       </div>
-      {isPop ? <GamePopup closePopup={closePopup} round={round} isAnswer={isAnswer} liarVote={liarVote} lierNickname={lierNickname}/> : ''}
+      {isPop ? <GamePopup closePopup={closePopup} round={round} isAnswer={isAnswer} liarVote={liarVote} lierNickname={lierNickname} /> : ''}
     </div>
   )
 }
