@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../../hooks/useInput';
 
@@ -13,7 +13,7 @@ import passwordLayout from '../../images/png/passwordLayout.png';
 import { ReactComponent as IcLock } from '../../images/svg/IcLock.svg';
 import { ReactComponent as icArrowLeft } from '../../images/svg/icArrowLeft.svg';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setRoom } from '../../redux/modules/roomsSlice';
 
 function ARoom({ roomInfo }) {
@@ -25,7 +25,15 @@ function ARoom({ roomInfo }) {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
 
+  const isCantGetDevice = useSelector(state => state.game.isCantGetDevice);
+
   const joinRoom = () => {
+
+    if (isCantGetDevice) {
+      alert('다른 브라우저에서 마이크 또는 비디오를 사용중입니다. 게임방 입장이 어려울 수 있습니다.');
+      return;
+    }
+
     if (roomInfo.member.length >= MAX_NUMBER_OF_PERSON) {
       alert('빈자리가 없습니다.');
       return;
@@ -39,6 +47,10 @@ function ARoom({ roomInfo }) {
     dispatch(setRoom(roomInfo));
     navigate(`/gameroom/${roomInfo.id}`);
   };
+
+  useEffect(() => {
+    console.log(isCantGetDevice);
+  },)
 
   return (
     <>
