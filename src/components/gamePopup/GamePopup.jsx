@@ -81,7 +81,7 @@ const VotePopup = ({ closePopup, liarVote }) => {
                   alt="inGameLabel"
                   className="inGameLabel"
                 />
-                <figcaption className="inGameNickname">{member}</figcaption>
+                <figcaption className="inGameNickname">{member.replace(/#\d*/, '')}</figcaption>
               </figure>
             );
           })}
@@ -98,14 +98,14 @@ const VoteResultPopup = ({ closePopup }) => {
   return (
     <>
       <div className="popupTitleBox">
-        <span className="popupPlayState">과연 '{result}' 의 정체는!?</span>
+        <span className="popupPlayState">과연 '{result.replace(/#\d*/, '')}' 의 정체는!?</span>
         <figure className="GameResult">
           <img
             src={inGameLabelActive}
             alt="resultLabel"
             className="resultLabel"
           />
-          <figcaption className="resultNickname">{result}</figcaption>
+          <figcaption className="resultNickname">{result.replace(/#\d*/, '')}</figcaption>
         </figure>
         {/* <a href="#" onClick={closePopup}>
           H
@@ -178,7 +178,7 @@ const ResultLierUserPopup = ({ closePopup }) => {
   return (
     <>
       <div className="popupTitleBox">
-        <span>{result}은(는) 라이어가 맞습니다.</span>
+        <span>{result.replace(/#\d*/, '')}은(는) 라이어가 맞습니다.</span>
         <span>라이어가 키워드를 입력하고 있습니다.</span>
       </div>
     </>
@@ -192,7 +192,7 @@ const ResultNLierPopup = ({ closePopup }) => {
   return (
     <>
       <div className="popupTitleBox">
-        <span>{result}은(는) 라이어가 아니었습니다...</span>
+        <span>{result.replace(/#\d*/, '')}은(는) 라이어가 아니었습니다...</span>
         {/* <a href="#" onClick={closePopup}>
           H
         </a> */}
@@ -221,7 +221,7 @@ const VictoryUserPopup = ({ closePopup, lierNickname }) => {
                     alt="inGameLabel"
                     className="inGameLabel"
                   />
-                  <figcaption className="inGameNickname">{member}</figcaption>
+                  <figcaption className="inGameNickname">{member.replace(/#\d*/, '')}</figcaption>
                 </figure>
               );
           })}
@@ -247,7 +247,7 @@ const VictoryLierPopup = ({ closePopup }) => {
             alt="resultLabel"
             className="resultLabel"
           />
-          <figcaption className="resultNickname">{result}</figcaption>
+          <figcaption className="resultNickname">{result.replace(/#\d*/, '')}</figcaption>
         </figure>
         {/* <a href="#" onClick={closePopup}>
           H
