@@ -42,9 +42,10 @@ function GameRoom() {
   const [statusSpotlight, setStatusSpotlight] = useState(0)
   const [resultStatus, setResultStatus] = useState('');
   const [item, setItem] = useState({ category: '', keyword: '' });
-  const [isPop, setIsPop] = useState(false);
+  const [isPop, setIsPop] = useState(true); //
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === sessionStorage.getItem('nickname'));
-  const [isLiar, setIsLiar] = useState(true);
+  const [isLiar, setIsLiar] = useState(false);
+  let lierNickname;
 
   const closePopup = () => { setIsPop(false); }
 
@@ -116,6 +117,7 @@ function GameRoom() {
             setStageNumber(1);
             setItem({ category: data.content.category, keyword: data.content.keyword });
             setIsLiar(nickname === data.content.lier);
+            lierNickname = data.content.lier;
             dispatch(setMemberList(data.content.memberlist));
             break;
           case 'ALLREADY':
@@ -123,14 +125,12 @@ function GameRoom() {
             break;
           case 'SPOTLIGHT':
             dispatch(setSpotlightMember(data.sender));
-            console.log(data.sender)
-            console.log(nickname)
             if (data.sender === nickname) {
-              console.log('내 차례야');
               setStatusSpotlight(1);
               setMuted(false);
             } else {
               setStatusSpotlight(2);
+              setMuted(true);
             }
             setTimer({ time: 15, status: 1 });
             break;
@@ -329,10 +329,6 @@ function GameRoom() {
     // }
   }
 
-  const test = () => {
-    setMuted(muted => !muted);
-  }
-
   useEffect(() => {
     console.log('useEffect');
     window.history.pushState(null, "", window.location.href)
@@ -506,7 +502,6 @@ function GameRoom() {
         <div className="bodySection">
           <div className='videoSection'>
             <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
-            <input type='button' value='test' onClick={test} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
@@ -522,7 +517,7 @@ function GameRoom() {
           </div>
         </div>
       </div>
-      {isPop ? <GamePopup closePopup={closePopup} round={round} isAnswer={isAnswer} liarVote={liarVote} /> : ''}
+      {isPop ? <GamePopup closePopup={closePopup} round={round} isAnswer={isAnswer} liarVote={liarVote} lierNickname={lierNickname}/> : ''}
     </div>
   )
 }
