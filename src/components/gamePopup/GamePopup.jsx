@@ -1,11 +1,12 @@
 import './style.scss';
 import useInput from '../../hooks/useInput';
 import { useSelector } from 'react-redux';
+import inGameLabelInActive from '../../images/svg/inGameLabelInActive.svg';
+import inGameLabelActive from '../../images/svg/inGameLabelActive.svg';
 
 function GamePopup({ closePopup, round, isAnswer, liarVote }) {
-
   let content;
-  const status = useSelector(state => state.game.popupStatus);
+  const status = useSelector((state) => state.game.popupStatus);
 
   switch (status) {
     case 'LIER_VOTE':
@@ -17,11 +18,13 @@ function GamePopup({ closePopup, round, isAnswer, liarVote }) {
     case 'DRAW':
       content = <VoteDrawPopup closePopup={closePopup} round={round} />;
       break;
-    case 'DRAWANDENDGAME':
+    case 'DRAW_AND_ENDGAME':
       content = <VoteDrawEndPopup closePopup={closePopup} />;
       break;
     case 'LIER_LIER':
-      content = <ResultLierLierPopup closePopup={closePopup} isAnswer={isAnswer} />;
+      content = (
+        <ResultLierLierPopup closePopup={closePopup} isAnswer={isAnswer} />
+      );
       break;
     case 'LIER_USER':
       content = <ResultLierUserPopup closePopup={closePopup} />;
@@ -38,129 +41,218 @@ function GamePopup({ closePopup, round, isAnswer, liarVote }) {
   }
 
   return (
-    <div className='gamePopup fontLight'>
-      <div className='popupContent' >
-        {content}
-      </div>
+    <div className="gamePopup fontLightBold">
+      <div className="popupContent">{content}</div>
     </div>
-  )
+  );
 }
 
 export default GamePopup;
 
+// CASE LIER_VOTE / VOTE POPUP
 const VotePopup = ({ closePopup, liarVote }) => {
-
-  const memberlist = useSelector(state => state.game.memberList) || [];
+  const memberlist = useSelector((state) => state.game.memberList) || [];
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
   const voteHandler = (event) => {
     console.log(event);
     // liarVote(nickname)
-  }
+  };
 
-  return <>
-    <div className='popupTitleBox'>
-      <h3>당신이 생각하는 라이어는?</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='contentBox'>
-      {memberlist.map((member, index) => {
-        return <a href='#' key={keys[index]} onClick={() => { liarVote(member) }}>
-          <h1>{member}
-          </h1>
-        </a>
-      })}
-      {/* <a href='#' onClick={voteHandler} value='nicndf'>ninkname</a> */}
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span className="popupPlayState">당신이 생각하는 라이어는?</span>
+        {/* <a href="#" onClick={closePopup}>
+          H
+        </a> */}
+        <div className="inGamePlayerSelect">
+          {memberlist.map((member, index) => {
+            return (
+              <figure
+                key={keys[index]}
+                onClick={() => {
+                  liarVote(member);
+                }}
+                className="inGamePlayer"
+              >
+                <img
+                  src={inGameLabelInActive}
+                  alt="inGameLabel"
+                  className="inGameLabel"
+                />
+                <figcaption className="inGameNickname">{member}</figcaption>
+              </figure>
+            );
+          })}
+          {/* <a href='#' onClick={voteHandler} value='nicndf'>ninkname</a> */}
+        </div>
+      </div>
+    </>
+  );
+};
 
-    </div>
-  </>
-}
-
-
+// CASE VOTE_RESULT / VOTE RESULT POPUP
 const VoteResultPopup = ({ closePopup }) => {
-  const result = useSelector(state => state.game.memberVoteResult)
-  return <>
-    <div className='popupTitleBox'>
-      <h3>투표완료!</h3>
-      <h3>{result}의 정체는!?</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='contentBox'>
-    </div>
-  </>
-}
+  const result = useSelector((state) => state.game.memberVoteResult);
 
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span className="popupPlayState">과연 '{result}' 의 정체는!?</span>
+        <figure className="GameResult">
+          <img
+            src={inGameLabelActive}
+            alt="resultLabel"
+            className="resultLabel"
+          />
+          <figcaption className="resultNickname">{result}</figcaption>
+        </figure>
+        {/* <a href="#" onClick={closePopup}>
+          H
+        </a> */}
+      </div>
+      {/* <div className="contentBox"></div> */}
+    </>
+  );
+};
+
+// CASE DRAW / VOTE DRAW POPUP
 const VoteDrawPopup = ({ closePopup, round }) => {
-
   const MAX_ROUND = 3;
-  return <>
-    <h3>한 명의 라이어를 찾아내지 못했습니다.</h3>
-    <h3>{`앞으로 ${MAX_ROUND - round}라운드 남았습니다.`}</h3>
-  </>
-}
 
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span>라이어를 찾아내지 못했습니다.</span>
+        <span>{`앞으로 남은 라운드는 ${MAX_ROUND - round}라운드 입니다.`}</span>
+      </div>
+    </>
+  );
+};
+
+// CASE DRAW_AND_ENDGAME / VOTE DRAW END POPUP
 const VoteDrawEndPopup = ({ closePopup }) => {
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span>투표 결과.. 동점입니다.</span>
+        <span>모든 라운드가 종료되어 라이어의 승리입니다.</span>
+      </div>
+    </>
+  );
+};
 
-  return <>
-    <h3>동점입니다.</h3>
-    <h3>모든 라운드가 종료되어 라이어의 승리입니다.</h3>
-  </>
-}
-
-const ResultLierUserPopup = ({ closePopup }) => {
-  const result = useSelector(state => state.game.memberVoteResult);
-
-  return <>
-    <h3>{result}은(는) 라이어가 맞습니다.</h3>
-    <h3>라이어가 키워드를 입력하고 있습니다.</h3>
-  </>
-}
-
+// CASE LIER_LIER / RESULT LIER LIER POPUP
 const ResultLierLierPopup = ({ closePopup, isAnswer }) => {
-
   const [value, handler] = useInput();
 
-  return <>
-    <h2>라이어로 지목된 당신의 키워드는?</h2>
-    <div className='inputBox'>
-      <input typt='text' onChange={handler} className='inputKeyword' placeholder='키워드를 입력해 주세요.' />
-      <input type='button' value='확인' onClick={() => { isAnswer(value) }} className='btnInputKeyword' />
-    </div>
-  </>
-}
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span className="popupPlayState">라이어로 지목된 당신의 키워드는?</span>
+        <div className="inputBox">
+          <input
+            typt="text"
+            onChange={handler}
+            className="inputKeyword"
+            placeholder="키워드를 입력해 주세요."
+          />
+          <input
+            type="button"
+            value="입력"
+            onClick={() => {
+              isAnswer(value);
+            }}
+            className="btnInputKeyword"
+          />
+        </div>
+      </div>
+    </>
+  );
+};
 
+// CASE LIER_USER / RESULT LIER USER POPUP
+const ResultLierUserPopup = ({ closePopup }) => {
+  const result = useSelector((state) => state.game.memberVoteResult);
+
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span>{result}은(는) 라이어가 맞습니다.</span>
+        <span>라이어가 키워드를 입력하고 있습니다.</span>
+      </div>
+    </>
+  );
+};
+
+// CASE NLIER / RESULT RESULT NLIER POPUP
 const ResultNLierPopup = ({ closePopup }) => {
-  const result = useSelector(state => state.game.memberVoteResult);
+  const result = useSelector((state) => state.game.memberVoteResult);
 
-  return <>
-    <div className='popupTitleBox'>
-      <h3>{result}은(는) 라이어가 아니었습니다.</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='contentBox'>
-    </div>
-  </>
-}
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span>{result}은(는) 라이어가 아니었습니다...</span>
+        {/* <a href="#" onClick={closePopup}>
+          H
+        </a> */}
+      </div>
+      {/* <div className="contentBox"></div> */}
+    </>
+  );
+};
 
+// CASE VICTORY_USER / VICTORY USER POPUP
 const VictoryUserPopup = ({ closePopup }) => {
+  const memberlist = useSelector((state) => state.game.memberList) || [];
+  const keys = [0, 1, 2, 3, 4, 5, 6, 7];
 
-  return <>
-    <div className='popupTitleBox'>
-      <h3>참가자들의 승리!</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='contentBox'>
-    </div>
-  </>
-}
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span className="popupPlayState">참가자들의 승리!</span>
+        <div className="VictoryPlayerList">
+          {memberlist.map((member, index) => {
+            return (
+              <figure key={keys[index]} className="inGameVictoryPlayer">
+                <img
+                  src={inGameLabelActive}
+                  alt="inGameLabel"
+                  className="inGameLabel"
+                />
+                <figcaption className="inGameNickname">{member}</figcaption>
+              </figure>
+            );
+          })}
+        </div>
+        {/* <a href="#" onClick={closePopup}>  H  </a> */}
+      </div>
+      {/* <div className="contentBox"></div> */}
+    </>
+  );
+};
 
+// CASE VICTORY_LIER / VICTORY LIER POPUP
 const VictoryLierPopup = ({ closePopup }) => {
+  const result = useSelector((state) => state.game.memberVoteResult);
 
-  return <>
-    <div className='popupTitleBox'>
-      <h3>라이어의 승리!</h3>
-      <a href='#' onClick={closePopup}>H</a>
-    </div>
-    <div className='contentBox'>
-    </div>
-  </>
-}
+  return (
+    <>
+      <div className="popupTitleBox">
+        <span className="popupPlayState">라이어의 승리!</span>
+        <figure className="GameResult">
+          <img
+            src={inGameLabelActive}
+            alt="resultLabel"
+            className="resultLabel"
+          />
+          <figcaption className="resultNickname">{result}</figcaption>
+        </figure>
+        {/* <a href="#" onClick={closePopup}>
+          H
+        </a> */}
+      </div>
+      {/* <div className="contentBox"></div> */}
+    </>
+  );
+};
