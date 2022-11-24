@@ -66,6 +66,7 @@ export default function FormSignIn() {
         );
         sessionStorage.setItem('email', res.data.data.email);
         sessionStorage.setItem('nickname', res.data.data.nickname);
+        sessionStorage.setItem('realnickname', res.data.data.nickname.replace(/#\d*/, '')	);
         alert(res.data.statusMsg);
         nav('/lobby');
       })

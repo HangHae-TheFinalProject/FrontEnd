@@ -46,7 +46,7 @@ export default function StreamComponent(props) {
                     
                     <div className="nicknameBox">
                         <img src={nicknameBackground} className="nicknameBackground" />
-                        <div className="nickname boldfont">{state.nickname}</div>
+                        <div className="nickname boldfont">{state.nickname.replace(/#\d*/, '')}</div>
                         <NickNameFrame myTurn={state.myTurn} />
                     </div>
                     <VideoFrame myTurn={state.myTurn} />

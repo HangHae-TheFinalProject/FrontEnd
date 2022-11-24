@@ -106,7 +106,7 @@ const Chat = ({ id }) => {
               {chatMessages?.map((newMessage, index) => (
                 <div
                   key={index}
-                >{`${newMessage.sender}: ${newMessage.message}`}</div>
+                >{`${newMessage.sender.replace(/#\d*/, '')}: ${newMessage.message}`}</div>
               ))}
             </div>
           )}

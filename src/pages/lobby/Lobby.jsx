@@ -21,7 +21,7 @@ function Lobby() {
       console.log(res.getAudioTracks());
       console.log(res.getVideoTracks());
 
-      dispatch(setIsCamera(res.getVideoTracks()[0] || res.getAudioTracks()[0]));
+      dispatch(setIsCamera( res.getVideoTracks()[0] || res.getAudioTracks()[0] ? true : false));
       isCantGetDevice = false;
     })
     .catch(err => {
