@@ -1,0 +1,51 @@
+@mixin commentArea($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  font-size: 16px;
+}
+
+.commentContainer {
+  @include commentArea(1030px, 100px);
+
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :focus {
+    outline: none;
+  }
+
+  button:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.commentInput {
+  @include commentArea(915px, 100px);
+
+  resize: none;
+  overflow: hidden;
+
+  padding: 20px 0px 20px 15px;
+
+  border: none;
+
+  color: rgba(77, 77, 77, 1);
+  background: transparent;
+}
+
+.commentBtn {
+  @include commentArea(75px, 60px);
+
+  margin: 0 20px 0 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.4);
+}
