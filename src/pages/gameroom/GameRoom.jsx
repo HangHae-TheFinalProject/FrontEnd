@@ -126,11 +126,11 @@ function GameRoom() {
             console.log(data.sender)
             console.log(nickname)
             if (data.sender === nickname) {
-              console.log('내 차례야');
               setStatusSpotlight(1);
               setMuted(false);
             } else {
               setStatusSpotlight(2);
+              setMuted(true);
             }
             setTimer({ time: 15, status: 1 });
             break;
@@ -329,10 +329,6 @@ function GameRoom() {
     // }
   }
 
-  const test = () => {
-    setMuted(muted => !muted);
-  }
-
   useEffect(() => {
     console.log('useEffect');
     window.history.pushState(null, "", window.location.href)
@@ -506,7 +502,6 @@ function GameRoom() {
         <div className="bodySection">
           <div className='videoSection'>
             <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
-            <input type='button' value='test' onClick={test} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
