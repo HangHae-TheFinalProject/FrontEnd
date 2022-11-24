@@ -28,7 +28,6 @@ function ARoom({ roomInfo }) {
   const isCantGetDevice = useSelector(state => state.game.isCantGetDevice);
 
   const joinRoom = () => {
-
     if (isCantGetDevice) {
       alert('다른 브라우저에서 마이크 또는 비디오를 사용중입니다. 게임방 입장이 어려울 수 있습니다.');
       return;
@@ -36,6 +35,11 @@ function ARoom({ roomInfo }) {
 
     if (roomInfo.member.length >= MAX_NUMBER_OF_PERSON) {
       alert('빈자리가 없습니다.');
+      return;
+    }
+
+    if(roomInfo.status === 'start') {
+      alert('게임이 진행중입니다.');
       return;
     }
 
