@@ -1,24 +1,10 @@
 import './StreamComponent.scss';
 import OvVideoComponent from './OvVideo';
-import videoFrame from '../../../../images/svg/videoFrame.svg';
-import nicknameFrame from '../../../../images/svg/nicknameFrame.svg';
 import nicknameBackground from '../../../../images/svg/nicknameBackground.svg';
 
 import { useSelector } from 'react-redux';
 
-// import MicOff from '@material-ui/icons/MicOff';
-// import VideocamOff from '@material-ui/icons/VideocamOff';
-// import VolumeUp from '@material-ui/icons/VolumeUp';
-// import VolumeOff from '@material-ui/icons/VolumeOff';
-// import FormControl from '@material-ui/core/FormControl';
-// import Input from '@material-ui/core/Input';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import IconButton from '@material-ui/core/IconButton';
-// import HighlightOff from '@material-ui/icons/HighlightOff';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-
 import { useEffect, useState } from 'react';
-import { setSpotlightMember } from '../../../../redux/modules/gameSlice';
 
 export default function StreamComponent(props) {
     const [state, setState] = useState({
@@ -27,7 +13,6 @@ export default function StreamComponent(props) {
         myTurn: false
     });
     const memberSpotlight = useSelector(state => state.game.spotlightMember);
-    // const [myTurn] = memberSpotlight === sessionStorage.getItem('nickname');
 
     const toggleSound = () => {
         setState({
@@ -58,12 +43,13 @@ export default function StreamComponent(props) {
                 props.user.getStreamManager() !== undefined ? (
                 <div>
                     <OvVideoComponent user={props.user} mutedSound={state.mutedSound} />
-                    <VideoFrame myTurn={state.myTurn} />
+                    
                     <div className="nicknameBox">
                         <img src={nicknameBackground} className="nicknameBackground" />
                         <div className="nickname boldfont">{state.nickname}</div>
                         <NickNameFrame myTurn={state.myTurn} />
                     </div>
+                    <VideoFrame myTurn={state.myTurn} />
                     {/* <div id="statusIcons">
                         {!props.user.isVideoActive() ? (
                             <div id="camIcon">
