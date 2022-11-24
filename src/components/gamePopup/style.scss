@@ -8,6 +8,35 @@
   height: 160px;
 }
 
+@mixin inGamePlayer {
+  width: 180px;
+  height: 50px;
+
+  cursor: pointer;
+
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  
+  .inGameLabel {
+    width: 180px;
+    height: 50px;
+
+    position: absolute;
+  }
+
+  .inGameNickname {
+    width: 180px;
+    height: 50px;
+
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
 .gamePopup {
   @include popupBox;
   position: fixed;
@@ -69,38 +98,26 @@
   gap: 30px;
 
   .inGamePlayer {
-    width: 180px;
-    height: 50px;
-
-    cursor: pointer;
-
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.5);
+    @include inGamePlayer;
 
     :hover {
       font-size: 20px;
       color: white;
       background: url('../../images/png/inGameLabelActive.png');
     }
-
-    .inGameLabel {
-      width: 180px;
-      height: 50px;
-
-      position: absolute;
-    }
-
-    .inGameNickname {
-      width: 180px;
-      height: 50px;
-
-      position: absolute;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
   }
+}
+
+.inactiveVoteBox {
+  @include inGamePlayer;
+}
+
+.highlightVoteBox {
+  @include inGamePlayer;
+
+  font-size: 20px;
+  color: white;
+  background: url('../../images/png/inGameLabelActive.png');
 }
 
 // CASE VOTE_RESULT
@@ -154,6 +171,7 @@
   gap: 10px;
 
   :focus {
+
     outline: none;
   }
 
@@ -175,11 +193,9 @@
     height: 50px;
     border: none;
     border-radius: 5px;
-    background: linear-gradient(
-      to bottom,
-      rgb(102, 102, 102),
-      rgba(102, 102, 102, 0.3)
-    );
+    background: linear-gradient(to bottom,
+        rgb(102, 102, 102),
+        rgba(102, 102, 102, 0.3));
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;

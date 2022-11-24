@@ -3,8 +3,9 @@ import useInput from '../../hooks/useInput';
 import { useSelector } from 'react-redux';
 import inGameLabelInActive from '../../images/svg/inGameLabelInActive.svg';
 import inGameLabelActive from '../../images/svg/inGameLabelActive.svg';
+import { useState } from 'react';
 
-function GamePopup({ closePopup, round, isAnswer, liarVote }) {
+function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
   let content;
   const status = useSelector((state) => state.game.popupStatus);
 
@@ -33,7 +34,7 @@ function GamePopup({ closePopup, round, isAnswer, liarVote }) {
       content = <ResultNLierPopup closePopup={closePopup} />;
       break;
     case 'VICTORY_USER':
-      content = <VictoryUserPopup closePopup={closePopup} />;
+      content = <VictoryUserPopup closePopup={closePopup} lierNickname={lierNickname}/>;
       break;
     case 'VICTORY_LIER':
       content = <VictoryLierPopup closePopup={closePopup} />;
@@ -53,27 +54,27 @@ export default GamePopup;
 const VotePopup = ({ closePopup, liarVote }) => {
   const memberlist = useSelector((state) => state.game.memberList) || [];
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
-  const voteHandler = (event) => {
-    console.log(event);
-    // liarVote(nickname)
+  const [voteMember, setVoteMember] = useState();
+
+  const voteHandler = (nickname) => {
+    if (voteMember) return;
+    liarVote(nickname);
+    setVoteMember(nickname);
   };
 
   return (
     <>
       <div className="popupTitleBox">
         <span className="popupPlayState">당신이 생각하는 라이어는?</span>
-        {/* <a href="#" onClick={closePopup}>
-          H
-        </a> */}
         <div className="inGamePlayerSelect">
           {memberlist.map((member, index) => {
             return (
               <figure
                 key={keys[index]}
                 onClick={() => {
-                  liarVote(member);
+                  voteHandler(member);
                 }}
-                className="inGamePlayer"
+                className={`${voteMember ? 'inactiveVoteBox' : 'inGamePlayer'} ${member === voteMember ? 'highlightVoteBox' : ''}`}
               >
                 <img
                   src={inGameLabelInActive}
@@ -84,7 +85,6 @@ const VotePopup = ({ closePopup, liarVote }) => {
               </figure>
             );
           })}
-          {/* <a href='#' onClick={voteHandler} value='nicndf'>ninkname</a> */}
         </div>
       </div>
     </>
@@ -203,7 +203,7 @@ const ResultNLierPopup = ({ closePopup }) => {
 };
 
 // CASE VICTORY_USER / VICTORY USER POPUP
-const VictoryUserPopup = ({ closePopup }) => {
+const VictoryUserPopup = ({ closePopup, lierNickname }) => {
   const memberlist = useSelector((state) => state.game.memberList) || [];
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
 
@@ -213,16 +213,17 @@ const VictoryUserPopup = ({ closePopup }) => {
         <span className="popupPlayState">참가자들의 승리!</span>
         <div className="VictoryPlayerList">
           {memberlist.map((member, index) => {
-            return (
-              <figure key={keys[index]} className="inGameVictoryPlayer">
-                <img
-                  src={inGameLabelActive}
-                  alt="inGameLabel"
-                  className="inGameLabel"
-                />
-                <figcaption className="inGameNickname">{member}</figcaption>
-              </figure>
-            );
+            if (member !== lierNickname)
+              return (
+                <figure key={keys[index]} className="inGameVictoryPlayer">
+                  <img
+                    src={inGameLabelActive}
+                    alt="inGameLabel"
+                    className="inGameLabel"
+                  />
+                  <figcaption className="inGameNickname">{member}</figcaption>
+                </figure>
+              );
           })}
         </div>
         {/* <a href="#" onClick={closePopup}>  H  </a> */}

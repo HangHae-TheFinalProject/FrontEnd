@@ -5,10 +5,10 @@ const initialState = {
   stage: 0,
   isMute: false,
   spotlightMember: '',
-  popupStatus: 'LIER_USER',
+  popupStatus: 'VICTORY_LIER',
   gameBoardStatus: 'WAIT_START',
   memberList: ['A', 'B', 'C', 'D', 'E', 'F'],
-  memberVoteResult: 'TEST_LIAR',
+  memberVoteResult: 'UESR',
   isCamera: true,
   isCantGetDevice: false,
 };
