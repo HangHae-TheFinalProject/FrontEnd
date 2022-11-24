@@ -23,6 +23,7 @@
 ### 🎮 인게임 대표 이미지
 
 ### 🛠️ 트러블슈팅
+▶ https://www.notion.so/Trouble-shooting-ea14209f725342b68610b5c0fa77728a
 
 ### 🗂️ 기술스택
 <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/> <img src="https://img.shields.io/badge/Redux Toolkit-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/openVidu-06d362?style=for-the-badge&logo=oepnVidu&logoColor=white"/> <img src="https://img.shields.io/badge/sockjs-333333?style=for-the-badge&logo=sockjs&logoColor=white"/> <img src="https://img.shields.io/badge/stomp-333333?style=for-the-badge&logo=stomp&logoColor=white"/>
@@ -30,6 +31,7 @@
 
 ### 🏗️ 프로젝트 아키텍처
 ![image](https://user-images.githubusercontent.com/112993031/203712629-d18f4bb6-9f67-48a0-8b91-cae658e3d657.png)
+▶ https://www.notion.so/Service-Architecture-a0a8b52c030641d59b1ad31fce0893a0
 
 ### 📆 프로젝트 기간
 
