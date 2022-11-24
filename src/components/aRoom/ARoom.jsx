@@ -9,6 +9,7 @@ import door1 from '../../images/png/door1.png';
 import door2 from '../../images/png/door2.png';
 import door3 from '../../images/png/door3.png';
 import door4 from '../../images/png/door4.png';
+import passwordLayout from '../../images/png/passwordLayout.png';
 import { ReactComponent as IcLock } from '../../images/svg/IcLock.svg';
 import { ReactComponent as icArrowLeft } from '../../images/svg/icArrowLeft.svg';
 
@@ -93,11 +94,24 @@ function PasswordModal({ roomId, password }) {
   };
 
   return (
-    <div className="sectionModal">
-      <h2>비밀번호를 입력해주세요.</h2>
-      <div>
-        <input type="password" onChange={inputHandler} />
-        <input type="button" value="확인" onClick={confirm} />
+    <div>
+      <img src={passwordLayout} className="sectionModal" />
+      <div className="passwordBox">
+        <h2>비밀번호</h2>
+        <div className="passwordInputSet">
+          <input
+            placeholder="비밀번호를 입력해주세요."
+            className="passwordInput"
+            type="password"
+            onChange={inputHandler}
+          />
+          <input
+            className="passwordBtn"
+            type="button"
+            value="입력"
+            onClick={confirm}
+          />
+        </div>
       </div>
     </div>
   );
