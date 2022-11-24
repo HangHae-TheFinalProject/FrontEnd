@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
-import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import './style.scss';
+import chatOutputBox from '../../images/svg/chatOutputBox.svg';
+import btn_send2 from '../../images/svg/btn_send2.svg';
 
-const Chat = ({id}) => {
-  const [ cookie ] = useCookies();
+const Chat = ({ id }) => {
+  const [cookie] = useCookies();
 
   const connectHeaders = {
-    'Authorization': cookie['access_token'],
-    'Refresh-Token': cookie['refresh_token']
+    Authorization: cookie['access_token'],
+    'Refresh-Token': cookie['refresh_token'],
   };
 
   const client = useRef({});
@@ -19,11 +20,11 @@ const Chat = ({id}) => {
   const [message, setMessage] = useState('');
 
   const nickname = sessionStorage.getItem('nickname');
-  
+
   // stomp 연결
   const connect = () => {
     console.log(connectHeaders);
-    console.log('connect')
+    console.log('connect');
     client.current = new StompJs.Client({
       webSocketFactory: () => new SockJs('https://haetae.shop/ws-stomp'),
       connectHeaders,
@@ -49,7 +50,7 @@ const Chat = ({id}) => {
 
   // stomp 구독
   const subscribe = () => {
-    console.log('subscribe')
+    console.log('subscribe');
     client.current.subscribe(
       // 특정 채팅방에 구독하기
       `/sub/chat/room/${id}`,
@@ -64,7 +65,11 @@ const Chat = ({id}) => {
   // stomp 메세지
   const publish = (message) => {
     // 연결이 되지 않으면 return
+    // 빈 내용을 입력하면 알림을 띄우고 return
     if (!client.current.connected) {
+      return;
+    } else if (message === '') {
+      alert('채팅 내용을 입력해주세요.');
       return;
     }
     // 연결이 된다면 메세지 보내기
@@ -93,8 +98,9 @@ const Chat = ({id}) => {
 
   return (
     <>
-      <div className="ChatBox">
-        <div className="ChatOutputBox">
+      <div className="chatBoxSection">
+        <img src={chatOutputBox} alt="chatArea" className="chatOutputBox" />
+        <div className="chatOutputBoxInner">
           {chatMessages && chatMessages.length > 0 && (
             <div>
               {chatMessages?.map((newMessage, index) => (
@@ -105,18 +111,21 @@ const Chat = ({id}) => {
             </div>
           )}
         </div>
-        <div className="ChatInputContainer">
+        <div className="chatInputContainer">
           <input
-            className="ChatInputBox"
+            className="chatInputBox fontSemiBold"
             type="text"
             placeholder="채팅을 입력해주세요."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && publish(message)}
           />
-          <button className="ChatInputButton" onClick={() => publish(message)}>
-            send
-          </button>
+          <img
+            src={btn_send2}
+            alt="send"
+            className="chatInputButton"
+            onClick={() => publish(message)}
+          />
         </div>
       </div>
     </>
