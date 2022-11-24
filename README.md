@@ -29,6 +29,7 @@
 
 
 ### 🏗️ 프로젝트 아키텍처
+![image](https://user-images.githubusercontent.com/112993031/203712629-d18f4bb6-9f67-48a0-8b91-cae658e3d657.png)
 
 ### 📆 프로젝트 기간
 
