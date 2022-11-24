@@ -42,7 +42,7 @@ function GameRoom() {
   const [statusSpotlight, setStatusSpotlight] = useState(0)
   const [resultStatus, setResultStatus] = useState('');
   const [item, setItem] = useState({ category: '', keyword: '' });
-  const [isPop, setIsPop] = useState(true); //
+  const [isPop, setIsPop] = useState(false);
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === sessionStorage.getItem('nickname'));
   const [isLiar, setIsLiar] = useState(false);
   let lierNickname;
