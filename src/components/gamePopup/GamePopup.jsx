@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
@@ -9,7 +9,7 @@ import './style.scss';
 import inGameLabelInActive from '../../images/svg/inGameLabelInActive.svg';
 import inGameLabelActive from '../../images/svg/inGameLabelActive.svg';
 
-function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
+function GamePopup({ closePopup, round, isAnswer, liarVote }) {
   let content;
   const status = useSelector((state) => state.game.popupStatus);
 
@@ -36,10 +36,10 @@ function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
       content = <ResultNLierPopup closePopup={closePopup} />;
       break;
     case 'VICTORY_USER':
-      content = <VictoryUserPopup closePopup={closePopup} lierNickname={lierNickname} />;
+      content = <VictoryUserPopup closePopup={closePopup} />;
       break;
     case 'VICTORY_LIER':
-      content = <VictoryLierPopup closePopup={closePopup} lierNickname={lierNickname} />;
+      content = <VictoryLierPopup closePopup={closePopup} />;
       break;
   }
 
@@ -189,17 +189,21 @@ const ResultNLierPopup = ({ closePopup }) => {
   );
 };
 
-const VictoryUserPopup = ({ closePopup, lierNickname }) => {
+const VictoryUserPopup = ({ closePopup }) => {
   const memberlist = useSelector((state) => state.game.memberList) || [];
+  const lierNickname = useSelector((state) => state.game.memberLier);
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
 
+  useEffect(() => {
+    console.log(lierNickname);
+  }, [lierNickname])
   return (
     <>
       <div className="popupTitleBox">
         <span className="popupPlayState">참가자들의 승리!</span>
         <div className="VictoryPlayerList">
           {memberlist.map((member, index) => {
-            if (member !== lierNickname)
+            if (member !== lierNickname) {
               return (
                 <figure key={keys[index]} className="inGameVictoryPlayer">
                   <img
@@ -210,6 +214,7 @@ const VictoryUserPopup = ({ closePopup, lierNickname }) => {
                   <figcaption className="inGameNickname">{member.replace(/#\d*/, '')}</figcaption>
                 </figure>
               );
+            }
           })}
         </div>
       </div>
@@ -217,7 +222,9 @@ const VictoryUserPopup = ({ closePopup, lierNickname }) => {
   );
 };
 
-const VictoryLierPopup = ({ closePopup, lierNickname }) => {
+const VictoryLierPopup = ({ closePopup }) => {
+
+  const memberLier = useSelector((state) => state.game.mamberLier);
 
   return (
     <>
@@ -229,7 +236,7 @@ const VictoryLierPopup = ({ closePopup, lierNickname }) => {
             alt="resultLabel"
             className="resultLabel"
           />
-          <figcaption className="resultNickname">{lierNickname.replace(/#\d*/, '')}</figcaption>
+          <figcaption className="resultNickname">{memberLier.replace(/#\d*/, '')}</figcaption>
         </figure>
       </div>
     </>
