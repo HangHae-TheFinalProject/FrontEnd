@@ -9,6 +9,7 @@ import {
   setGameBoardStatus,
   setMemberList,
   setMemberVoteResult,
+  setMemberLier,
   setItem
 } from '../../redux/modules/gameSlice';
 
@@ -57,7 +58,7 @@ function GameRoom() {
   const [isPop, setIsPop] = useState(false);
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
-  let lierNickname;
+  const lierNickname = useRef('');
 
   const closePopup = () => { setIsPop(false); }
 
@@ -126,7 +127,7 @@ function GameRoom() {
             setStageNumber(1);    // 함수로 연결
             setItem({ category: data.content.category, keyword: data.content.keyword });
             setIsLiar(nickname === data.content.lier);
-            lierNickname = data.content.lier;
+            dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
             break;
           case 'ALLREADY':
@@ -134,6 +135,8 @@ function GameRoom() {
             break;
           case 'SPOTLIGHT':
             dispatch(setSpotlightMember(data.sender));
+            console.log(data.sender)
+            console.log(nickname)
             if (data.sender === nickname) {
               setStatusSpotlight(1);
               setMuted(false);
@@ -141,6 +144,7 @@ function GameRoom() {
               setStatusSpotlight(2);
               setMuted(true);
             }
+            console.log('타이머 어디감');
             setTimer({ time: 15, status: 1 });
             break;
           case 'COMPLETE':
@@ -336,8 +340,8 @@ function GameRoom() {
     setItem({ category: '', keyword: '' });
     setIsPop(false);
     setIsLiar(false);
-    lierNickname = '';
 
+    dispatch(setMemberLier(''));
     dispatch(setSpotlightMember(''));
     dispatch(setPopupStatus('WAIT_START'));
     dispatch(setMemberVoteResult(''));
@@ -537,7 +541,7 @@ function GameRoom() {
         </div>
         <div className="bodySectionBottomSpace"> </div>
       </div>
-      {isPop ? <GamePopup closePopup={closePopup} round={round} isAnswer={isAnswer} liarVote={liarVote} lierNickname={lierNickname} /> : ''}
+      {isPop ? <GamePopup closePopup={closePopup} round={round} isAnswer={isAnswer} liarVote={liarVote} /> : ''}
     </div>
   )
 }

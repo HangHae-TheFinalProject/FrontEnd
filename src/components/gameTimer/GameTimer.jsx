@@ -26,7 +26,7 @@ function GameTimer({ timer, setTimer }) {
       );
     }
   // }, [timer.time])
-}, [timer])
+}, [timer.time])
 
   return <div className='timerBox'>
     <img src={timerFrame} className='timerFrame' />

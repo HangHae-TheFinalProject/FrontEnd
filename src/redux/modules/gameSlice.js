@@ -9,6 +9,7 @@ const initialState = {
   gameBoardStatus: 'WAIT_START',
   memberList: ['A', 'B', 'C', 'D', 'E', 'F'],
   memberVoteResult: 'UESR',
+  memberLier: '',
   isCamera: true,
   isCantGetDevice: false,
   item: {
@@ -42,6 +43,9 @@ export const gameSlice = createSlice({
     setMemberVoteResult(state, action) {
       state.memberVoteResult = action.payload;
     },
+    setMemberLier(state, action) {
+      state.memberLier = action.payload;
+    },
     setIsCamera(state, action) {
       state.isCamera = action.payload;
     },
@@ -64,6 +68,7 @@ export const { setStage,
   setGameBoardStatus, 
   setMemberList, 
   setMemberVoteResult, 
+  setMemberLier,
   setIsCamera, 
   setIsCantGetDevice,
   setItem
