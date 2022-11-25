@@ -1,9 +1,13 @@
-import './style.scss';
-import useInput from '../../hooks/useInput';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
+
+import useInput from '../../hooks/useInput';
+
+// style
+import './style.scss';
+
 import inGameLabelInActive from '../../images/svg/inGameLabelInActive.svg';
 import inGameLabelActive from '../../images/svg/inGameLabelActive.svg';
-import { useState } from 'react';
 
 function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
   let content;
@@ -23,9 +27,7 @@ function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
       content = <VoteDrawEndPopup closePopup={closePopup} />;
       break;
     case 'LIER_LIER':
-      content = (
-        <ResultLierLierPopup closePopup={closePopup} isAnswer={isAnswer} />
-      );
+      content = <ResultLierLierPopup closePopup={closePopup} isAnswer={isAnswer} />;
       break;
     case 'LIER_USER':
       content = <ResultLierUserPopup closePopup={closePopup} />;
@@ -34,10 +36,10 @@ function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
       content = <ResultNLierPopup closePopup={closePopup} />;
       break;
     case 'VICTORY_USER':
-      content = <VictoryUserPopup closePopup={closePopup} lierNickname={lierNickname}/>;
+      content = <VictoryUserPopup closePopup={closePopup} lierNickname={lierNickname} />;
       break;
     case 'VICTORY_LIER':
-      content = <VictoryLierPopup closePopup={closePopup} />;
+      content = <VictoryLierPopup closePopup={closePopup} lierNickname={lierNickname} />;
       break;
   }
 
@@ -50,7 +52,6 @@ function GamePopup({ closePopup, round, isAnswer, liarVote, lierNickname }) {
 
 export default GamePopup;
 
-// CASE LIER_VOTE / VOTE POPUP
 const VotePopup = ({ closePopup, liarVote }) => {
   const memberlist = useSelector((state) => state.game.memberList) || [];
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
@@ -91,7 +92,6 @@ const VotePopup = ({ closePopup, liarVote }) => {
   );
 };
 
-// CASE VOTE_RESULT / VOTE RESULT POPUP
 const VoteResultPopup = ({ closePopup }) => {
   const result = useSelector((state) => state.game.memberVoteResult);
 
@@ -107,16 +107,11 @@ const VoteResultPopup = ({ closePopup }) => {
           />
           <figcaption className="resultNickname">{result.replace(/#\d*/, '')}</figcaption>
         </figure>
-        {/* <a href="#" onClick={closePopup}>
-          H
-        </a> */}
       </div>
-      {/* <div className="contentBox"></div> */}
     </>
   );
 };
 
-// CASE DRAW / VOTE DRAW POPUP
 const VoteDrawPopup = ({ closePopup, round }) => {
   const MAX_ROUND = 3;
 
@@ -130,7 +125,6 @@ const VoteDrawPopup = ({ closePopup, round }) => {
   );
 };
 
-// CASE DRAW_AND_ENDGAME / VOTE DRAW END POPUP
 const VoteDrawEndPopup = ({ closePopup }) => {
   return (
     <>
@@ -142,7 +136,6 @@ const VoteDrawEndPopup = ({ closePopup }) => {
   );
 };
 
-// CASE LIER_LIER / RESULT LIER LIER POPUP
 const ResultLierLierPopup = ({ closePopup, isAnswer }) => {
   const [value, handler] = useInput();
 
@@ -171,7 +164,6 @@ const ResultLierLierPopup = ({ closePopup, isAnswer }) => {
   );
 };
 
-// CASE LIER_USER / RESULT LIER USER POPUP
 const ResultLierUserPopup = ({ closePopup }) => {
   const result = useSelector((state) => state.game.memberVoteResult);
 
@@ -185,7 +177,6 @@ const ResultLierUserPopup = ({ closePopup }) => {
   );
 };
 
-// CASE NLIER / RESULT RESULT NLIER POPUP
 const ResultNLierPopup = ({ closePopup }) => {
   const result = useSelector((state) => state.game.memberVoteResult);
 
@@ -193,16 +184,11 @@ const ResultNLierPopup = ({ closePopup }) => {
     <>
       <div className="popupTitleBox">
         <span>{result.replace(/#\d*/, '')}은(는) 라이어가 아니었습니다...</span>
-        {/* <a href="#" onClick={closePopup}>
-          H
-        </a> */}
       </div>
-      {/* <div className="contentBox"></div> */}
     </>
   );
 };
 
-// CASE VICTORY_USER / VICTORY USER POPUP
 const VictoryUserPopup = ({ closePopup, lierNickname }) => {
   const memberlist = useSelector((state) => state.game.memberList) || [];
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
@@ -226,16 +212,12 @@ const VictoryUserPopup = ({ closePopup, lierNickname }) => {
               );
           })}
         </div>
-        {/* <a href="#" onClick={closePopup}>  H  </a> */}
       </div>
-      {/* <div className="contentBox"></div> */}
     </>
   );
 };
 
-// CASE VICTORY_LIER / VICTORY LIER POPUP
-const VictoryLierPopup = ({ closePopup }) => {
-  const result = useSelector((state) => state.game.memberVoteResult);
+const VictoryLierPopup = ({ closePopup, lierNickname }) => {
 
   return (
     <>
@@ -247,13 +229,9 @@ const VictoryLierPopup = ({ closePopup }) => {
             alt="resultLabel"
             className="resultLabel"
           />
-          <figcaption className="resultNickname">{result.replace(/#\d*/, '')}</figcaption>
+          <figcaption className="resultNickname">{lierNickname.replace(/#\d*/, '')}</figcaption>
         </figure>
-        {/* <a href="#" onClick={closePopup}>
-          H
-        </a> */}
       </div>
-      {/* <div className="contentBox"></div> */}
     </>
   );
 };
