@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useParams } from 'react-router-dom';
 import instance from '../../shared/Request';
@@ -14,9 +14,11 @@ function CommentPost() {
     setComment('');
   };
 
+  useEffect(() => {}, []);
+
   return (
     <>
-      <div className="commentContainer">
+      <div className="commentInputContainer">
         <textarea
           className="commentInput fontBold"
           maxLength={200}
@@ -28,7 +30,7 @@ function CommentPost() {
           onChange={(e) => setComment(e.target.value)}
         />
         <button
-          className="commentBtn fontBold"
+          className="commentInputBtn fontBold"
           onClick={() => postComment({ content: comment })}
         >
           등록

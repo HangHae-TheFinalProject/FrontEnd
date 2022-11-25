@@ -5,7 +5,7 @@
   font-size: 16px;
 }
 
-.commentContainer {
+.commentInputContainer {
   @include commentArea(1030px, 100px);
 
   border-radius: 10px;
@@ -19,6 +19,10 @@
     outline: none;
   }
 
+  ::placeholder {
+    color: rgba(77, 77, 77, 1);
+  }
+
   button:hover {
     background-color: rgba(0, 0, 0, 0.6);
   }
@@ -30,7 +34,7 @@
   resize: none;
   overflow: hidden;
 
-  padding: 20px 0px 20px 15px;
+  padding: 20px 0 20px 20px;
 
   border: none;
 
@@ -38,7 +42,7 @@
   background: transparent;
 }
 
-.commentBtn {
+.commentInputBtn {
   @include commentArea(75px, 60px);
 
   margin: 0 20px 0 20px;

@@ -19,14 +19,14 @@ function CommentsForm() {
 
   useEffect(() => {
     getAllComments(id);
-  }, []);
+  }, [id]);
 
   return (
     <>
       <div className="commentsLayout">
-        <span>{`댓글 ${comments.length}`}</span>
-        <CommentPost />
+        <span className="commentsCount fontBold">{`댓글 ${comments.length}`}</span>
         <CommentsList comments={comments} />
+        <CommentPost />
       </div>
     </>
   );

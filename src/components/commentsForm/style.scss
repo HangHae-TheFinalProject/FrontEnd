@@ -1,5 +1,20 @@
+@mixin commentsFormArea($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  font-size: 16px;
+}
+
+.commentsCount {
+  @include commentsFormArea(1030px, 20px);
+
+  margin-bottom: 15px;
+
+  color: rgba(255, 255, 255, 1);
+}
+
 .commentsLayout {
-  width: 1030px;
+  @include commentsFormArea(1130px, 100vh);
 
   display: flex;
   flex-direction: column;
@@ -8,5 +23,5 @@
 
   margin: auto;
 
-  background-color: aquamarine;
+  background-color: rgba(60, 60, 60, 1);
 }
