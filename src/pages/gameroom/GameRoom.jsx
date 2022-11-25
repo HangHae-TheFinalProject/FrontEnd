@@ -1,22 +1,27 @@
-import { useParams } from 'react-router-dom';
-import VideoRoomComponent from '../../components/videoroom/components/VideoRoomComponent';
-import './style.scss';
-import { useEffect, useState, version } from 'react';
-import instance from '../../shared/Request';
-import GameBoard from '../../components/gameBoard/GameBoard';
-import gameRoomBackground from '../../images/png/gameRoomBackground.png';
-import GameTimer from '../../components/gameTimer/GameTimer';
-import Chat from '../../components/chat/Chat';
-import { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import GamePopup from '../../components/gamePopup/GamePopup';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSpotlightMember, setStage, setPopupStatus, setGameBoardStatus, setMemberList, setMemberVoteResult } from '../../redux/modules/gameSlice';
+import { useEffect, useState, useRef } from 'react';
+import { useCookies } from 'react-cookie';
 
-// Sock
+import {
+  setSpotlightMember,
+  setPopupStatus,
+  setGameBoardStatus,
+  setMemberList,
+  setMemberVoteResult,
+  setItem
+} from '../../redux/modules/gameSlice';
+
 import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
-import { useCookies } from 'react-cookie';
+
+// component
+import instance from '../../shared/Request';
+import VideoRoomComponent from '../../components/videoroom/components/VideoRoomComponent';
+import Chat from '../../components/chat/Chat';
+import GameBoard from '../../components/gameBoard/GameBoard';
+import GameTimer from '../../components/gameTimer/GameTimer';
+import GamePopup from '../../components/gamePopup/GamePopup';
 
 // image
 import btnStart from '../../images/png/btnStart.png';
@@ -24,26 +29,33 @@ import btnStartInert from '../../images/png/btnStartInert.png';
 import btnReady from '../../images/png/btnReady.png';
 import btnReadyInert from '../../images/png/btnReadyInert.png';
 import btnExit from '../../images/png/btnExit.png';
+import gameRoomBackground from '../../images/png/gameRoomBackground.png';
+
+// style
+import './style.scss';
 
 function GameRoom() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [cookie] = useCookies();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
   const nickname = sessionStorage.getItem('nickname');
-  const dispatch = useDispatch();
+
+  // gamestatus
 
   const [round, setRound] = useState(0);
   // Timer status : 0 대기 1 시작 2 종료
   const [timer, setTimer] = useState({ time: -1, status: 0 });
   // statusSpotlight : 0 대기 1 내 차례 2 다른 사람 차례
   const [statusSpotlight, setStatusSpotlight] = useState(0)
+
   const [resultStatus, setResultStatus] = useState('');
   const [item, setItem] = useState({ category: '', keyword: '' });
   const [isPop, setIsPop] = useState(false);
-  const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === sessionStorage.getItem('nickname'));
+  const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
   let lierNickname;
 
@@ -58,12 +70,11 @@ function GameRoom() {
     }
     navigate('/lobby');
   }
-  // Need to : 뒤로가기 예외처리
+
   const enterRoom = async () => {
+
     try {
-      const { data } = await instance.post(`/lier/room/${Number(id)}`);
-      console.log(data);
-      // need to : Redux
+      instance.post(`/lier/room/${Number(id)}`);
     } catch (error) {
       alert(error.data.statusMsg);
     }
@@ -78,8 +89,6 @@ function GameRoom() {
   };
 
   const connect = () => {
-    console.log('connect')
-    console.log(connectHeaders);
     client.current = new StompJs.Client({
       webSocketFactory: () => new SockJs('https://haetae.shop/ws-stomp'),
       connectHeaders,
@@ -114,7 +123,7 @@ function GameRoom() {
 
         switch (data.type) {
           case 'START':
-            setStageNumber(1);
+            setStageNumber(1);    // 함수로 연결
             setItem({ category: data.content.category, keyword: data.content.keyword });
             setIsLiar(nickname === data.content.lier);
             lierNickname = data.content.lier;
@@ -195,11 +204,15 @@ function GameRoom() {
               setResultStatus('WIN_LIER');
               setIsPop(true);
               dispatch(setPopupStatus('VICTORY_LIER'));
+
+              setTimer({ time: 10, status: 1 });
             } else {
               setStageNumber(9);
               setIsPop(true);
               setResultStatus('WIN_USER');
               dispatch(setPopupStatus('VICTORY_USER'));
+
+              setTimer({ time: 10, status: 1 });
             }
             break;
         }
@@ -207,9 +220,8 @@ function GameRoom() {
     );
   };
 
-  // to Server : 난 방장이고 게임시작을 눌렀어.
+  // Stomp publish 함수 --------------------
   const gameStart = (message) => {
-    console.log('gameStart');
 
     if (!client.current.connected) return;
 
@@ -226,7 +238,6 @@ function GameRoom() {
   };
 
   const gameReady = () => {
-    console.log('gameReady');
 
     if (!client.current.connected) return;
 
@@ -244,9 +255,7 @@ function GameRoom() {
     setStageNumber(2)
   }
 
-  // to Server : 내 spotlight 시간 끝났어. 시작받고 15초후에 쏜다.
   const spotlight = (sender) => {
-    console.log('spotlight');
 
     if (!client.current.connected) return;
 
@@ -255,9 +264,8 @@ function GameRoom() {
     });
   }
 
-
   const onemorevote = () => {
-    console.log('onemorevote', nickname);
+
     if (!client.current.connected) return;
 
     client.current.publish({
@@ -271,7 +279,7 @@ function GameRoom() {
   }
 
   const govote = () => {
-    console.log('onemorevote', nickname);
+
     if (!client.current.connected) return;
 
     client.current.publish({
@@ -284,9 +292,8 @@ function GameRoom() {
     });
   }
 
-  // toServer : 라이어 투표
   const liarVote = (nickname) => {
-    console.log('liarVote', nickname);
+
     if (!client.current.connected) return;
 
     client.current.publish({
@@ -297,9 +304,8 @@ function GameRoom() {
     });
   }
 
-  // toServer : 투표로 걸린 라이어가 입력한 답을 서버로 전송한다. / 없으면 그냥 빈칸으로 전달을 드릴게요. 
   const isAnswer = (answer) => {
-    console.log('isAnswer', answer);
+
     if (!client.current.connected) return;
 
     client.current.publish({
@@ -310,9 +316,8 @@ function GameRoom() {
     });
   }
 
-
   const endgame = () => {
-    console.log('endgame');
+
     if (!client.current.connected) return;
 
     client.current.publish({
@@ -320,28 +325,35 @@ function GameRoom() {
     });
   }
 
-  const handleBack = () => {
-    // Back 예외처리 다시 해야함
-    // window.history.pushState(null, "", window.location.href)
-    // const result = window.confirm('정말 게임에서 나가시겠어요?');
-    // if (result) {
-    //   navigate('/lobby');
-    // }
+  // need to : 아직 test 안함
+  const initialize = () => {
+    setStageNumber(0);
+    setMuted(false);
+    setRound(0);
+    setTimer({ time: -1, status: 0 });
+    setStatusSpotlight(0);
+    setResultStatus('');
+    setItem({ category: '', keyword: '' });
+    setIsPop(false);
+    setIsLiar(false);
+    lierNickname = '';
+
+    dispatch(setSpotlightMember(''));
+    dispatch(setPopupStatus('WAIT_START'));
+    dispatch(setMemberVoteResult(''));
   }
 
   useEffect(() => {
     console.log('useEffect');
-    window.history.pushState(null, "", window.location.href)
+
+
     enterRoom();
     connect();
 
-    // 뒤로가기 Event 막기
-    window.addEventListener('popstate', handleBack);
 
     return () => {
       return (
         console.log('useEffect return'),
-        window.removeEventListener('popstate', handleBack),
         disconnect(),
         leaveRoom()
       );
@@ -468,6 +480,10 @@ function GameRoom() {
       }
     }
 
+    if (stageNumber === 9 && timer.status === 2) {
+      initialize();
+
+    }
   }, [timer.status])
 
   useEffect(() => {
@@ -489,7 +505,8 @@ function GameRoom() {
             </Link>
           </div>
           <div className='headerBox'>
-            <GameTimer sec={timer} setSec={setTimer} />
+            {/* <GameTimer sec={timer} setSec={setTimer} /> */}
+            <GameTimer timer={timer} setTimer={setTimer} />
           </div>
           <div className='headerBox'>
             <a href='#'>
@@ -502,11 +519,11 @@ function GameRoom() {
         <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoomComponent openviduServerUrl='https://cheiks.shop' sessionName={id} isMute={muted} />
+            <VideoRoomComponent openviduServerUrl='https://openvidu.haetae.shop' sessionName={id} isMute={muted} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
-              <GameBoard stageNumber={stageNumber} isLiar={isLiar} item={item} govote={govote} onemorevote={onemorevote} />
+              <GameBoard item={item} govote={govote} onemorevote={onemorevote} />
             </div>
             <div className="chatBoard">
               <Chat id={id} />

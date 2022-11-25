@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isMaster: false,
+  isMaster: true,
   stage: 0,
-  isMute: false,
+  // isMute: false,
   spotlightMember: '',
   popupStatus: 'VICTORY_LIER',
   gameBoardStatus: 'WAIT_START',
@@ -11,6 +11,10 @@ const initialState = {
   memberVoteResult: 'UESR',
   isCamera: true,
   isCantGetDevice: false,
+  item: {
+    category: '',
+    keyword: ''
+  }
 };
 
 export const gameSlice = createSlice({
@@ -44,12 +48,25 @@ export const gameSlice = createSlice({
     setIsCantGetDevice(state, action) {
       state.isCantGetDevice = action.payload;
     },
-
+    setItem(state, action) {
+      state.item = action.payload;
+    },
   },
   extraReducers: {
     
   }
 });
 
-export const { setStage, setIsMaster, setSpotlightMember, setPopupStatus, setGameBoardStatus, setMemberList, setMemberVoteResult, setIsCamera, setIsCantGetDevice } = gameSlice.actions;
+export const { setStage, 
+  setIsMaster, 
+  setSpotlightMember, 
+  setPopupStatus, 
+  setGameBoardStatus, 
+  setMemberList, 
+  setMemberVoteResult, 
+  setIsCamera, 
+  setIsCantGetDevice,
+  setItem
+} = gameSlice.actions;
+
 export default gameSlice.reducer;
