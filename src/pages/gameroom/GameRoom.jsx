@@ -144,8 +144,7 @@ function GameRoom() {
               setStatusSpotlight(2);
               setMuted(true);
             }
-            console.log('타이머 어디감');
-            setTimer({ time: 15, status: 1 });
+            setTimer({ time: 5, status: 1 });
             break;
           case 'COMPLETE':
             setStageNumber(5);
