@@ -151,10 +151,12 @@ function GameRoom() {
             setStageNumber(5);
             setRound(data.content.round);
             setStatusSpotlight(0);
+            setMuted(false);
             break;
           case 'ALLCOMPLETE':
             setStageNumber(6);
             setGameBoardStatus('');
+            setMuted(false);
             break;
           case 'VOTE':
             setStageNumber(6);
