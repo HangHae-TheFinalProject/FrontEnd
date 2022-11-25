@@ -224,7 +224,7 @@ const VictoryUserPopup = ({ closePopup }) => {
 
 const VictoryLierPopup = ({ closePopup }) => {
 
-  const memberLier = useSelector((state) => state.game.mamberLier);
+  const memberLier = useSelector((state) => state.game.memberLier);
 
   return (
     <>
