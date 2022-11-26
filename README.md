@@ -30,7 +30,7 @@
 
 
 ### 🏗️ 프로젝트 아키텍처
-![image](https://user-images.githubusercontent.com/112993031/203712629-d18f4bb6-9f67-48a0-8b91-cae658e3d657.png)
+![서비스 아키텍쳐 #중간발표](https://user-images.githubusercontent.com/112993031/204065939-8d25f487-30cb-43d0-ab3a-1a663ccf8335.png)
 ▶ https://www.notion.so/Service-Architecture-a0a8b52c030641d59b1ad31fce0893a0
 
 ### 📆 프로젝트 기간
