@@ -10,7 +10,8 @@ import {
   setMemberList,
   setMemberVoteResult,
   setMemberLier,
-  setItem
+  setIsCamera,
+  setIsCantGetDevice
 } from '../../redux/modules/gameSlice';
 
 import * as SockJs from 'sockjs-client';
@@ -349,9 +350,25 @@ function GameRoom() {
     dispatch(setMemberVoteResult(''));
   }
 
+  let isCantGetDevice = false;
+
   useEffect(() => {
     console.log('useEffect');
 
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      .then(res => {
+        console.log(res.getAudioTracks());
+        console.log(res.getVideoTracks());
+
+        dispatch(setIsCamera(res.getVideoTracks()[0] || res.getAudioTracks()[0] ? true : false));
+        isCantGetDevice = false;
+      })
+      .catch(err => {
+        alert('다른 브라우저에서 마이크 또는 비디오를 사용중입니다. 게임방 입장이 어려울 수 있습니다.');
+        isCantGetDevice = true;
+        dispatch(setIsCantGetDevice(isCantGetDevice));
+        navigate('/lobby');
+      })
 
     enterRoom();
     connect();
