@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import instance from '../../shared/Request';
 import './style.scss';
 
 function CommentItem({ comment }) {
-  const { id } = useParams();
   const [value, setValue] = useState(comment);
   const [editValue, setEditValue] = useState(value);
   const [isEdit, setIsEdit] = useState(false);
-  console.log('props', value);
-  console.log('update', editValue);
 
   // 댓글 수정 api
   const editComment = async (payload) => {
-    console.log(payload);
-    await instance.put(`/lier/comment/${payload.commentid}`, payload.content);
+    await instance
+      .put(`/lier/comment/${payload.commentid}`, payload.content)
+      .then((response) => {
+        alert(response.data.data);
+      });
   };
 
   // 댓글 삭제 api
   const deleteComment = async (payload) => {
     const result = window.confirm('댓글을 정말로 삭제하시겠습니까?');
-    if (result) await instance.delete(`/lier/comment/${payload}`);
+    if (result)
+      await instance.delete(`/lier/comment/${payload}`).then((response) => {
+        alert(response.data.data);
+      });
   };
 
   return (
@@ -79,4 +81,4 @@ function CommentItem({ comment }) {
   );
 }
 
-export default CommentItem;
+export default React.memo(CommentItem);

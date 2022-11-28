@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import { useParams } from 'react-router-dom';
 import instance from '../../shared/Request';
@@ -13,8 +13,6 @@ function CommentPost() {
     await instance.post(`/lier/comment/${id}`, payload);
     setComment('');
   };
-
-  useEffect(() => {}, []);
 
   return (
     <>
