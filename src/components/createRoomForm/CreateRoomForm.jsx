@@ -17,10 +17,13 @@ function CreateRoomForm() {
 
   const DEFAULT_GAMEMODE = '1';
 
-  const [title, titleHandler] = useInput('');
+  const arrRoomName = ['타르타로스', '길잃은 영혼', '영겁의 시간', '어서오세요', '오시면 바로 시작', '아무나 오세요'];
+  const randomRoomNumber = Math.trunc(Math.random() * (arrRoomName.length-1));
+  const [title, titleHandler] = useInput(arrRoomName[randomRoomNumber]);
   const [password, passwordHandler] = useInput();
   const [gamemode, gamemodeHandler] = useInput(DEFAULT_GAMEMODE);
-  const arrRoomName = ['타르타로스', '길잃은 영혼', '영겁의 시간', '어서오세요', '오시면 바로 시작', '아무나 오세요'];
+  
+  
 
   // 방 만들기 api
   const createRoomHandler = async () => {
@@ -52,7 +55,7 @@ function CreateRoomForm() {
         <input
           type="text"
           onChange={titleHandler}
-          defaultValue={arrRoomName[Math.trunc(Math.random() * (arrRoomName.length-1))]}
+          defaultValue={arrRoomName[randomRoomNumber]}
           placeholder="방 제목을 입력해주세요."
         />
         <input
