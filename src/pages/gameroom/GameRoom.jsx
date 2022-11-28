@@ -155,6 +155,7 @@ function GameRoom() {
           case 'ALLCOMPLETE':
             setStageNumber(6);
             setGameBoardStatus('');
+            setStatusSpotlight(0);
             setMuted(false);
             break;
           case 'VOTE':
