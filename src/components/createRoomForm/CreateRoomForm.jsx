@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 import useInput from '../../hooks/useInput';
 import instance from '../../shared/Request';
@@ -20,9 +20,15 @@ function CreateRoomForm() {
   const [title, titleHandler] = useInput('');
   const [password, passwordHandler] = useInput();
   const [gamemode, gamemodeHandler] = useInput(DEFAULT_GAMEMODE);
+  const arrRoomName = ['타르타로스', '길잃은 영혼', '영겁의 시간', '어서오세요', '오시면 바로 시작', '아무나 오세요'];
 
   // 방 만들기 api
   const createRoomHandler = async () => {
+    if(!title){
+      alert('방 제목을 입력해주세요.');
+      return;
+    }
+
     try {
       const { data } = await instance.post('/lier/room', {
         roomName: title,
@@ -46,6 +52,7 @@ function CreateRoomForm() {
         <input
           type="text"
           onChange={titleHandler}
+          defaultValue={arrRoomName[Math.trunc(Math.random() * (arrRoomName.length-1))]}
           placeholder="방 제목을 입력해주세요."
         />
         <input
