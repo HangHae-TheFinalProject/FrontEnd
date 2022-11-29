@@ -10,14 +10,15 @@
   top: 0px;
   left: 0px;
 }
-.communityBox {
+
+.lobbyBox {
   display: flex;
   overflow: hidden;
   align-items: center;
   justify-content: center;
   flex-direction: row;
 
-  div {
+  span {
     color: white;
     font-size: 24px;
   }
@@ -25,6 +26,7 @@
     margin-right: 6px;
   }
 }
+
 .headerBtnBox {
   width: 1173px;
   height: 99px;
@@ -34,11 +36,13 @@
   justify-content: space-between;
   flex-direction: row;
 
-  div {
+  span {
     color: white;
+    font-size: 24px;
   }
 
   h1 {
     color: white;
+    font-size: 32px;
   }
 }

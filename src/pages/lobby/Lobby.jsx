@@ -6,7 +6,7 @@ import RoomList from '../../components/roomList/RoomList';
 import CreateRoomForm from '../../components/createRoomForm/CreateRoomForm';
 import lobbyBackGround from '../../images/png/lobbyBackGround.png';
 import roomMakerBtn from '../../images/png/roomMakerBtn.png';
-import LobbyHeader from '../../components/robbyHeader/RobbyHeader';
+import LobbyHeader from '../../components/lobbyHeader/LobbyHeader';
 
 import { setIsCamera, setIsCantGetDevice } from '../../redux/modules/gameSlice'
 import './style.scss';
@@ -14,25 +14,26 @@ import './style.scss';
 // import BGM from '../../audio/lobbyBGM.mp3';
 
 function Lobby() {
-  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const BGM = new Audio('../../audio/lobbyBGM.mp3');
   let isCantGetDevice = false;
 
   const craeteRoomHandler = () => {
-
     setOpenModal(true)
   }
 
   useEffect(() => {
     console.log('useEffect');
-
   }, [])
 
   return (
-    <div className="pagesection">
-      <img src={lobbyBackGround} className="background" />
-      <LobbyHeader></LobbyHeader>
+    <div className="lobbyPageSection fontLightBold">
+      <img
+        className="lobbyBackGround"
+        src={lobbyBackGround}
+        alt="lobbyBackGround"
+      />
+      <LobbyHeader />
       <RoomList />
       {openModal && (
         <Modal
@@ -40,13 +41,11 @@ function Lobby() {
           content={<CreateRoomForm />}
         />
       )}
-
       <img
+        className="gameRoomCreateBtn"
         src={roomMakerBtn}
-        type="button"
-        value="방만들기"
+        alt="roomMakerBtn"
         onClick={craeteRoomHandler}
-        className="createBtn"
       />
     </div>
   );
