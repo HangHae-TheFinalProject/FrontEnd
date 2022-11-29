@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './style.scss';
 
 function MyPageRecord({ allRecord }) {
   const [record, setRecord] = useState(allRecord);
+
+  useEffect(() => {
+    setRecord(allRecord);
+  }, [allRecord])
 
   console.log('전적', record);
   return (
