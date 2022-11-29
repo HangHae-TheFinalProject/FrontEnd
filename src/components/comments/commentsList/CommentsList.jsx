@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 import CommentItem from '../commentItem/CommentItem';
 
 function CommentsList({ comments }) {

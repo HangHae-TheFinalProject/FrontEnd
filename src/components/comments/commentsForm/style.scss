@@ -14,6 +14,7 @@
 }
 
 .commentsLayout {
+  // 게시글이랑 합칠 경우 높이 수정 필요
   @include commentsFormArea(1130px, 100vh);
 
   display: flex;
@@ -23,5 +24,6 @@
 
   margin: auto;
 
+  // 임시 배경
   background-color: rgba(60, 60, 60, 1);
 }
