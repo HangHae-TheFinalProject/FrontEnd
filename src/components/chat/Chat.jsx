@@ -1,38 +1,42 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
-import { useCookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 import './style.scss';
 import chatOutputBox from '../../images/svg/chatOutputBox.svg';
 import btn_send2 from '../../images/svg/btn_send2.svg';
 
 const Chat = ({ id }) => {
-  const [cookie] = useCookies();
-
-  const connectHeaders = {
-    Authorization: cookie['access_token'],
-    'Refresh-Token': cookie['refresh_token'],
-  };
-
   const client = useRef({});
 
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState('');
 
-  const nickname = sessionStorage.getItem('nickname');
+  const nickname = sessionStorage.getItem('realnickname');
 
   // stomp 연결
   const connect = () => {
-    console.log(connectHeaders);
-    console.log('connect');
     client.current = new StompJs.Client({
       webSocketFactory: () => new SockJs('https://haetae.shop/ws-stomp'),
-      connectHeaders,
+      connectHeaders: {
+        Authorization: new Cookies().get('access_token'),
+        'Refresh-Token': new Cookies().get('refresh_token'),
+      },
       debug: function (str) {
-        console.log(str);
+        console.log('debug', str);
       },
       onConnect: () => {
         subscribe();
+        // 채팅 입장 메세지(?)
+        client.current.publish({
+          destination: '/pub/chat/message',
+          body: JSON.stringify({
+            type: 'ENTER',
+            roomId: id,
+            sender: nickname,
+            message: `${nickname}님이 게임에 참가하셨습니다.`,
+          }),
+        });
       },
       onStompError: (frame) => {
         console.log(`Broker reported error: ${frame.headers['message']}`);
@@ -44,19 +48,16 @@ const Chat = ({ id }) => {
 
   // stomp 연결 취소
   const disconnect = () => {
-    console.log('disconnect');
     client.current.deactivate();
   };
 
   // stomp 구독
   const subscribe = () => {
-    console.log('subscribe');
     client.current.subscribe(
       // 특정 채팅방에 구독하기
       `/sub/chat/room/${id}`,
       // body에 담아 보낼 메세지(?)
       ({ body }) => {
-        console.log(body);
         setChatMessages((newMessage) => [...newMessage, JSON.parse(body)]);
       }
     );
@@ -91,7 +92,6 @@ const Chat = ({ id }) => {
 
   // connect를 실행시키기 위한 useEffect
   useEffect(() => {
-    console.log(id);
     connect();
     return () => disconnect();
   }, []);
@@ -104,9 +104,9 @@ const Chat = ({ id }) => {
           {chatMessages && chatMessages.length > 0 && (
             <div>
               {chatMessages?.map((newMessage, index) => (
-                <div
-                  key={index}
-                >{`${newMessage.sender.replace(/#\d*/, '')}: ${newMessage.message}`}</div>
+                <div key={index}>{`${newMessage.sender.replace(/#\d*/, '')}: ${
+                  newMessage.message
+                }`}</div>
               ))}
             </div>
           )}
