@@ -47,7 +47,6 @@ function GameRoom() {
   const nickname = sessionStorage.getItem('nickname');
 
   // gamestatus
-
   const [round, setRound] = useState(0);
   // Timer status : 0 대기 1 시작 2 종료
   const [timer, setTimer] = useState({ time: -1, status: 0 });
@@ -56,15 +55,17 @@ function GameRoom() {
 
   const [resultStatus, setResultStatus] = useState('');
   const [item, setItem] = useState({ category: '', keyword: '' });
+  const [poorItem, setPoorItem] = useState({ category: '', keyword: '' });
   const [isPop, setIsPop] = useState(false);
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
-  const lierNickname = useRef('');
+  const gamemode = useSelector(state => state.rooms.room.mode);
 
   const closePopup = () => { setIsPop(false); }
 
   const leaveRoom = async () => {
     console.log('leaveRoom');
+    
     try {
       instance.delete(`/lier/room/${Number(id)}/exit`);
     } catch (error) {
@@ -130,6 +131,10 @@ function GameRoom() {
             setIsLiar(nickname === data.content.lier);
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
+            if(gamemode === '바보') {
+              setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
+            }
+            console.log(data.content.liercategory);
             break;
           case 'ALLREADY':
             setStageNumber(3);
@@ -341,6 +346,7 @@ function GameRoom() {
     setStatusSpotlight(0);
     setResultStatus('');
     setItem({ category: '', keyword: '' });
+    setPoorItem({ category: '', keyword: '' });
     setIsPop(false);
     setIsLiar(false);
 
@@ -372,6 +378,7 @@ function GameRoom() {
 
     enterRoom();
     connect();
+    initialize();
 
 
     return () => {
@@ -513,6 +520,9 @@ function GameRoom() {
     console.log(isMaster);
   }, [isMaster])
 
+  useEffect(() => {
+    console.log(poorItem); 
+  }, [poorItem])
 
   return (
     <div className="section">
@@ -546,7 +556,10 @@ function GameRoom() {
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
-              <GameBoard item={item} govote={govote} onemorevote={onemorevote} />
+              {
+                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} /> 
+                : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
+              }
             </div>
             <div className="chatBoard">
               <Chat id={id} />
@@ -566,7 +579,6 @@ function GameRoom() {
 }
 
 export default GameRoom;
-
 
 const BtnStartReady = ({ status }) => {
 
