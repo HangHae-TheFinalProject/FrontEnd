@@ -1,4 +1,4 @@
-.lobbyPageSection {
+.socialPageSection {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -8,14 +8,9 @@
   z-index: -1;
 }
 
-.lobbyBackGround {
+.socialBackGround {
   width: 100vw;
   height: 100vh;
   z-index: -1;
   position: absolute;
-}
-
-.gameRoomCreateBtn {
-  margin-top: 80px;
-  z-index: 0;
 }
