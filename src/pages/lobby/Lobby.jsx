@@ -8,23 +8,24 @@ import lobbyBackGround from '../../images/png/lobbyBackGround.png';
 import roomMakerBtn from '../../images/png/roomMakerBtn.png';
 import LobbyHeader from '../../components/lobbyHeader/LobbyHeader';
 
-import { setIsCamera, setIsCantGetDevice } from '../../redux/modules/gameSlice'
+import { setIsCamera, setIsCantGetDevice } from '../../redux/modules/gameSlice';
 import './style.scss';
 
 // import BGM from '../../audio/lobbyBGM.mp3';
 
 function Lobby() {
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
   const BGM = new Audio('../../audio/lobbyBGM.mp3');
   let isCantGetDevice = false;
 
   const craeteRoomHandler = () => {
-    setOpenModal(true)
-  }
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     console.log('useEffect');
-  }, [])
+  }, []);
 
   return (
     <div className="lobbyPageSection fontLightBold">
