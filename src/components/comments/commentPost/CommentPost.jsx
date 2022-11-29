@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 import instance from '../../../shared/Request';
 
 function CommentPost({ setIsLoading }) {
-  // const { id } = useParams();
-  const id = 1;
+  const { id } = useParams();
   const [comment, setComment] = useState('');
 
   // 댓글 작성 api

@@ -6,8 +6,7 @@ import CommentPost from '../commentPost/CommentPost';
 import CommentsList from '../commentsList/CommentsList';
 
 function CommentsForm() {
-  // const { id } = useParams();
-  const id = 1;
+  const { id } = useParams();
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
