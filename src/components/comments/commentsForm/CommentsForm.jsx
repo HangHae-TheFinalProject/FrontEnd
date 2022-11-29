@@ -6,30 +6,35 @@ import CommentPost from '../commentPost/CommentPost';
 import CommentsList from '../commentsList/CommentsList';
 
 function CommentsForm() {
-  const { id } = useParams();
+  // const { id } = useParams();
+  const id = 1;
   const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 게시글 상세 조회 api
-  const getAllComments = async (payload) => {
+  const getAllComments = (payload) => {
     try {
-      await instance.get(`/lier/post/${payload}`).then((response) => {
+      instance.get(`/lier/post/${payload}`).then((response) => {
         const getComments = response.data.data.comments;
         setComments(getComments);
+        setIsLoading(false);
       });
     } catch (error) {
       console.log('게시글 상세 조회', error);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     getAllComments(id);
-  }, [id]);
+    console.log(isLoading);
+  }, [id, isLoading]);
 
   return (
     <div className="commentsLayout">
       <span className="commentsCount fontBold">{`댓글 ${comments.length}`}</span>
-      <CommentsList comments={comments} />
-      <CommentPost />
+      <CommentsList comments={comments} setIsLoading={setIsLoading}/>
+      <CommentPost setIsLoading={setIsLoading}/>
     </div>
   );
 }

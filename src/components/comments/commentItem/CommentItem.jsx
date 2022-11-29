@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import instance from '../../../shared/Request';
 import './style.scss';
 
-function CommentItem({ comment }) {
-  const [value, setValue] = useState(comment);
-  const [editValue, setEditValue] = useState(value);
+function CommentItem({ comment, setIsLoading }) {
+  const [editValue, setEditValue] = useState(comment);
   const [isEdit, setIsEdit] = useState(false);
 
   // 댓글 수정 api
-  const editComment = async (payload) => {
+  const editComment = (payload) => {
     try {
       if (editValue.trim() === '') return alert('내용을 입력해주세요');
-      await instance
+      instance
         .put(`/lier/comment/${payload.commentid}`, payload.content)
         .then((response) => {
+          setIsEdit(false);
           alert(response.data.data);
         });
     } catch (error) {
       console.log('댓글 수정', error);
+      setIsEdit(false);
     }
   };
 
   // 댓글 삭제 api
-  const deleteComment = async (payload) => {
+  const deleteComment = (payload) => {
+    setIsLoading(true);
     try {
       const result = window.confirm('댓글을 정말로 삭제하시겠습니까?');
       if (result)
-        await instance.delete(`/lier/comment/${payload}`).then((response) => {
+        instance.delete(`/lier/comment/${payload}`).then((response) => {
           alert(response.data.data);
+          setIsLoading(false);
         });
     } catch (error) {
       console.log('댓글 삭제', error);
+      setIsLoading(false);
     }
   };
-
+  
   return (
     <>
       {isEdit ? (
@@ -41,9 +45,8 @@ function CommentItem({ comment }) {
           <textarea
             className="commentEditInput fontBold"
             value={editValue.content}
-            onChange={(e) => setEditValue(e.target.value)}
+            onChange={(e) => setEditValue({...editValue, content:e.target.value})}
           >
-            {value.content}
           </textarea>
           <div className="commentEditBtn">
             <button
@@ -56,7 +59,7 @@ function CommentItem({ comment }) {
               className="editRegisterBtn fontBold"
               onClick={() =>
                 editComment({
-                  commentid: value.commentid,
+                  commentid: editValue.commentid,
                   content: editValue,
                 })
               }
@@ -69,17 +72,17 @@ function CommentItem({ comment }) {
         <div className="comment">
           <div className="commentFirstLine">
             <div>
-              <span className="commentAuthor">{value.author}</span>
+              <span className="commentAuthor">{editValue.author}</span>
               <span className="commentDate fontRegular">
-                &nbsp;&nbsp;|&nbsp;&nbsp;{value.createdAt}
+                &nbsp;&nbsp;|&nbsp;&nbsp;{editValue.createdAt}
               </span>
             </div>
             <div className="commentBtn">
               <span onClick={() => setIsEdit(true)}>댓글 수정</span>
-              <span onClick={() => deleteComment(value.commentid)}>삭제</span>
+              <span onClick={() => deleteComment(editValue.commentid)}>삭제</span>
             </div>
           </div>
-          <span className="commentContent">{value.content}</span>
+          <span className="commentContent">{editValue.content}</span>
         </div>
       )}
     </>
