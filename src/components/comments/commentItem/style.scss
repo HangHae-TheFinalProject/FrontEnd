@@ -1,0 +1,125 @@
+@mixin commentElement($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  font-size: 16px;
+}
+
+@mixin editButton {
+  border: none;
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  cursor: pointer;
+}
+
+.comment {
+  @include commentElement(1030px, 75px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin-bottom: 10px;
+  padding: 20px 25px 20px 20px;
+  gap: 8px;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.commentEditInputContainer {
+  @include commentElement(1030px, 75px);
+
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+  // padding: 20px 25px 20px 20px;
+  // gap: 8px;
+
+  :focus {
+    outline: none;
+  }
+
+  button:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.commentEditInput {
+  @include commentElement(830px, 75px);
+
+  resize: none;
+  overflow: hidden;
+
+  padding: 20px 0 20px 20px;
+
+  border: none;
+
+  color: rgba(77, 77, 77, 1);
+  background: transparent;
+}
+
+.commentEditBtn {
+  @include commentElement(200px, 75px);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  .editCancelBtn {
+    @include commentElement(75px, 30px);
+    @include editButton;
+
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .editRegisterBtn {
+    @include commentElement(75px, 30px);
+    @include editButton;
+  }
+}
+
+.commentFirstLine {
+  display: flex;
+  justify-content: space-between;
+}
+
+.commentAuthor {
+  color: rgba(179, 179, 179, 1);
+}
+
+.commentDate {
+  color: rgba(179, 179, 179, 1);
+}
+
+.commentBtn {
+  display: flex;
+
+  gap: 15px;
+
+  color: rgba(255, 255, 255, 1);
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.commentContent {
+  color: rgba(255, 255, 255, 1);
+}

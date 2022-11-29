@@ -1,16 +1,16 @@
 @mixin font-face($name, $file, $weight: noraml, $style: normal) {
-
   @font-face {
-  font-family: "#{$name}";
-  src: url('../fonts/#{$file}.ttf') format('truetype');
-  font-weight: $weight;
-  font-style: $style;
+    font-family: '#{$name}';
+    src: url('../fonts/#{$file}.ttf') format('truetype');
+    font-weight: $weight;
+    font-style: $style;
   }
 }
 
 @include font-face('Pretendard-Bold', 'Pretendard-Bold');
 @include font-face('Pretendard-Medium', 'Pretendard-Medium');
 @include font-face('Pretendard-SemiBold', 'Pretendard-SemiBold');
+@include font-face('Pretendard-Regular', 'Pretendard-Regular');
 @include font-face('HeirofLightRegular', 'HeirofLightRegular');
 @include font-face('HeirofLightBold', 'HeirofLightBold');
 
@@ -22,10 +22,14 @@
   font-family: Pretendard-SemiBold;
 }
 
-.fontLight{
+.fontRegular {
+  font-family: Pretendard-Regular;
+}
+
+.fontLight {
   font-family: HeirofLightRegular;
 }
 
-.fontLightBold{
+.fontLightBold {
   font-family: HeirofLightBold;
 }

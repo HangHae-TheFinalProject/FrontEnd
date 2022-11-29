@@ -1,0 +1,29 @@
+@mixin commentsFormArea($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  font-size: 16px;
+}
+
+.commentsCount {
+  @include commentsFormArea(1030px, 20px);
+
+  margin-bottom: 15px;
+
+  color: rgba(255, 255, 255, 1);
+}
+
+.commentsLayout {
+  // 게시글이랑 합칠 경우 높이 수정 필요
+  @include commentsFormArea(1130px, 100vh);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin: auto;
+
+  // 임시 배경
+  background-color: rgba(60, 60, 60, 1);
+}
