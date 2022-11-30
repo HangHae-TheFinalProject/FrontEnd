@@ -29,7 +29,6 @@ export default function Video(props) {
 
     useEffect(() => {
         if (props && props.user.streamManager && !!videoRef) {
-            console.log('PROPS: ', props);
             props.user.getStreamManager().addVideoElement(videoRef.current);
         }
 
@@ -47,12 +46,9 @@ export default function Video(props) {
         if (props && !!videoRef) {
             props.user.getStreamManager().addVideoElement(videoRef.current);
         }
-        console.log('isReady' + isReady);
     },)
 
     useEffect(() => {
-        console.log(props)
-        console.log(memberSpotlight + '/' + sessionStorage.getItem('nickname'));
         if (memberSpotlight === nickname) {
             setMyTurn(true);
         } else {
