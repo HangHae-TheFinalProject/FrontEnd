@@ -2,9 +2,10 @@ import { useSelector } from 'react-redux';
 import gameBoardFrame from '../../images/svg/gameBoardFrame.svg';
 import './style.scss';
 
-function GameBoard({ item, govote, onemorevote }) {
+function GameBoard({ item, poorItem={}, govote, onemorevote }) {
   let content;
   const status = useSelector((state) => state.game.gameBoardStatus);
+  const gamemode = useSelector((state) => state.rooms.room.mode);
 
   switch (status) {
     case 'WAIT_START':
@@ -14,7 +15,11 @@ function GameBoard({ item, govote, onemorevote }) {
       content = <ShowKeywordBoard item={item} />;
       break;
     case 'SHOW_LIER':
-      content = <ShowLierBoard item={item} />;
+      if(gamemode === '일반' ){
+        content = <ShowLierBoard item={item} />;
+      } else {
+        content = <ShowKeywordBoard item={poorItem} />;
+      }
       break;
     case 'VOTE_ONEMORE':
       content = <OnemoreVoteBoard onemorevote={onemorevote} govote={govote} />;
