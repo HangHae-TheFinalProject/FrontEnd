@@ -33,7 +33,7 @@ function MyPageForm() {
 
   useEffect(() => {
     getMyPageAllRecord();
-    getMyPageReward();
+    // getMyPageReward();
   }, []);
 
   return (
