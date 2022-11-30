@@ -7,20 +7,33 @@ import instance from '../../../shared/Request';
 import MyPageRecord from '../myPageRecord/MyPageRecord';
 import MyPageReward from '../myPageReward/MyPageReward';
 import MyPageSignOff from '../myPageSignOff/MyPageSignOff';
+import MyPageSignOut from '../myPageSignOut/MyPageSignOut';
 
 function MyPageForm() {
   const [active, setActive] = useState(false);
-  const [data, setData] = useState([]);
-  console.log(data);
+  const [recordData, setRecordData] = useState([]);
+  // 업적 데이터 담을 state
+  const [rewardData, setRewardData] = useState([]);
 
-  const getMyPage = async () => {
-    await instance
+  // 전적 조회 api
+  const getMyPageAllRecord = () => {
+    instance
       .get('/lier/myinfo/allrecord')
-      .then((response) => setData(response.data.data));
+      .then((response) => setRecordData(response.data.data));
+  };
+
+  // 업적 조회 api
+  const getMyPageReward = () => {
+    instance.get('/lier/myinfo/reward').then((response) => {
+      console.log(response);
+      // 업적 데이터 담으면 됨
+      setRecordData();
+    });
   };
 
   useEffect(() => {
-    getMyPage();
+    getMyPageAllRecord();
+    getMyPageReward();
   }, []);
 
   return (
@@ -60,14 +73,17 @@ function MyPageForm() {
           {!active ? (
             <>
               <div className="myPageRecord">
-                <MyPageRecord allRecord={data} />
-                <MyPageSignOff />
+                <MyPageRecord allRecord={recordData} />
+                <div className="myPageSignBtn">
+                  <MyPageSignOff />
+                  <MyPageSignOut />
+                </div>
               </div>
             </>
           ) : (
             <>
               <div className="myPageReward">
-                <MyPageReward />
+                <MyPageReward allReward={rewardData} />
               </div>
             </>
           )}

@@ -11,11 +11,14 @@ function MyPageSignOff() {
       <button
         className="myPageSignOffBtn fontSemiBold"
         onClick={() => {
-          instance.delete('lier/logout');
-          sessionStorage.clear();
-          new Cookies().remove('access_token');
-          new Cookies().remove('refresh_token');
-          navigate('/');
+          const result = window.confirm('로그아웃 하시겠습니까?');
+          if (result) {
+            instance.delete('lier/logout');
+            sessionStorage.clear();
+            new Cookies().remove('access_token');
+            new Cookies().remove('refresh_token');
+            navigate('/');
+          }
         }}
       >
         로그아웃

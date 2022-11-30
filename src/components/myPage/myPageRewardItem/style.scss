@@ -1,0 +1,69 @@
+@mixin rewardItem($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: default;
+}
+
+.inActiveItemContainer {
+  @include rewardItem(620px, 330px);
+
+  flex-wrap: wrap;
+
+  gap: 30px;
+}
+
+.inActiveItem {
+  @include rewardItem(125px, 155px);
+}
+
+.activeItemContainer {
+  @include rewardItem(620px, 330px);
+
+  flex-wrap: wrap;
+
+  gap: 30px;
+}
+
+.activeItem {
+  @include rewardItem(125px, 155px);
+
+  position: relative;
+}
+
+.activeItem:before {
+  content: attr(description);
+
+  width: 180px;
+
+  position: absolute;
+  text-align: center;
+
+  padding: 10px;
+
+  bottom: 100%;
+
+  border-radius: 10px;
+
+  font-size: 18px;
+  word-break: break-all;
+
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(0, 0, 0, 0.6);
+
+  transition: opacity 0.3s ease-in-out;
+
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 1;
+}
+
+.activeItem:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
