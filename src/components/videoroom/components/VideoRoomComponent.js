@@ -3,6 +3,7 @@ import axios from 'axios';
 import './VideoRoomComponent.scss';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/StreamComponent';
+import OvVideoComponent from './stream/OvVideo';
 // import DialogExtensionComponent from './dialog-extension/DialogExtension';
 // import ChatComponent from './chat/ChatComponent';
 
@@ -539,7 +540,7 @@ class VideoRoomComponent extends Component {
             <div className="videoContainer">
                 {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                     <div className="videoBox" id="localUser">
-                        <StreamComponent
+                        <OvVideoComponent
                             user={localUser}
                             handleNickname={this.nicknameChanged}
                         />
@@ -547,7 +548,7 @@ class VideoRoomComponent extends Component {
                 )}
                 {this.state.subscribers.map((sub, i) => (
                     <div className="videoBox" key={i} id="remoteUsers">
-                        <StreamComponent
+                        <OvVideoComponent
                             user={sub}
                             streamId={sub.streamManager.stream.streamId}
                         />

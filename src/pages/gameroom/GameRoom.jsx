@@ -11,7 +11,9 @@ import {
   setMemberVoteResult,
   setMemberLier,
   setIsCamera,
-  setIsCantGetDevice
+  setIsCantGetDevice,
+  addReadyMemberList,
+  setReadyMemberList
 } from '../../redux/modules/gameSlice';
 
 import * as SockJs from 'sockjs-client';
@@ -131,7 +133,11 @@ function GameRoom() {
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
             break;
+          case 'READY':
+            dispatch(addReadyMemberList(data.sender));
+            break;
           case 'ALLREADY':
+            dispatch(setReadyMemberList([]));
             setStageNumber(3);
             break;
           case 'SPOTLIGHT':

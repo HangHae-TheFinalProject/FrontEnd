@@ -7,7 +7,8 @@ const initialState = {
   spotlightMember: '',
   popupStatus: 'VICTORY_LIER',
   gameBoardStatus: 'WAIT_START',
-  memberList: ['A', 'B', 'C', 'D', 'E', 'F'],
+  memberList: [],
+  readyMemberList: [],
   memberVoteResult: 'UESR',
   memberLier: '',
   isCamera: true,
@@ -40,6 +41,12 @@ export const gameSlice = createSlice({
     setMemberList(state, action) {
       state.memberList = action.payload;
     },
+    setReadyMemberList(state, action) {
+      state.readyMemberList = action.payload;
+    },
+    addReadyMemberList(state, action) {
+      state.readyMemberList = [...state.readyMemberList, action.payload];
+    },
     setMemberVoteResult(state, action) {
       state.memberVoteResult = action.payload;
     },
@@ -57,21 +64,23 @@ export const gameSlice = createSlice({
     },
   },
   extraReducers: {
-    
+
   }
 });
 
-export const { setStage, 
-  setIsMaster, 
-  setSpotlightMember, 
-  setPopupStatus, 
-  setGameBoardStatus, 
-  setMemberList, 
-  setMemberVoteResult, 
+export const { setStage,
+  setIsMaster,
+  setSpotlightMember,
+  setPopupStatus,
+  setGameBoardStatus,
+  setMemberList,
+  setMemberVoteResult,
   setMemberLier,
-  setIsCamera, 
+  setIsCamera,
   setIsCantGetDevice,
-  setItem
+  setItem,
+  setReadyMemberList,
+  addReadyMemberList
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
