@@ -15,9 +15,17 @@
   cursor: pointer;
 }
 
+@mixin myPageFrame($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .myPageFrame {
-  width: 800px;
-  height: 457px;
+  @include myPageFrame(800px, 457px);
 
   background-image: url(../../../images//svg/myPage_Frame.svg);
 }
@@ -79,13 +87,19 @@
 }
 
 .myPageRecord {
-  width: 800px;
-  height: 457px;
+  @include myPageFrame(800px, 457px);
 
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  margin: auto;
+  .myPageSignBtn {
+    display: flex;
+    margin-top: 25px;
+    gap: 10px;
+  }
+}
+
+.myPageReward {
+  @include myPageFrame(800px, 457px);
+
+  flex-direction: column;
 }

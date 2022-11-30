@@ -1,0 +1,37 @@
+@mixin arrowBtn {
+  width: 40px;
+  height: 40px;
+}
+
+@mixin rewardBox($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: default;
+}
+
+.myPageRewardContainer {
+  @include rewardBox(100%, 100%);
+
+  gap: 15px;
+}
+
+.myPageRewardItemBox {
+  @include rewardBox(620px, 330px);
+
+  flex-wrap: wrap;
+
+  gap: 30px;
+}
+
+.rewardIcArrowLeft {
+  @include arrowBtn;
+}
+
+.rewardIcArrowRight {
+  @include arrowBtn;
+}
