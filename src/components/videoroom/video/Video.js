@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import './StreamComponent.scss';
+import './style.scss';
 
-import test from '../../../../images/test.gif';
-import ready from '../../../../images/png/ready.png';
-import nicknameBackground from '../../../../images/svg/nicknameBackground.svg';
-import crown from '../../../../images/svg/crown.svg';
+import ready from '../../../images/png/ready.png';
+import crown from '../../../images/svg/crown.svg';
+import nicknameBackground from '../../../images/svg/nicknameBackground.svg';
 
-export default function OvVideoComponent(props) {
+
+export default function Video(props) {
     const nickname = props.user.getNickname();
     const [mutedSound, setMutedSound] = useState(false);
     const videoRef = useRef();

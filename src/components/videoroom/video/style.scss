@@ -6,8 +6,8 @@ $totalHeight: 185px;
     width: $totalWidth;
     height: $totalHeight;
 
-    width: 212px;
-    height: 185px;
+    width: $totalWidth;
+    height: $totalHeight;
 
     .videoBox {
         position: absolute;
@@ -51,8 +51,6 @@ $totalHeight: 185px;
             align-items: center;
         }
     }
-
-
 
     img {
         position: absolute;

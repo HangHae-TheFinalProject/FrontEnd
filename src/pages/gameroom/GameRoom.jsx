@@ -21,7 +21,7 @@ import * as StompJs from '@stomp/stompjs';
 
 // component
 import instance from '../../shared/Request';
-import VideoRoomComponent from '../../components/videoroom/components/VideoRoomComponent';
+import VideoRoom from '../../components/videoroom/videoRoom/VideoRoom';
 import Chat from '../../components/chat/Chat';
 import GameBoard from '../../components/gameBoard/GameBoard';
 import GameTimer from '../../components/gameTimer/GameTimer';
@@ -558,7 +558,7 @@ function GameRoom() {
         <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoomComponent openviduServerUrl='https://openvidu.haetae.shop' sessionName={id} isMute={muted} />
+            <VideoRoom openviduServerUrl='https://openvidu.haetae.shop' sessionName={id} isMute={muted} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
