@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import './StreamComponent.scss';
+import './style.scss';
 
-import test from '../../../../images/test.gif';
-import ready from '../../../../images/png/ready.png';
-import nicknameBackground from '../../../../images/svg/nicknameBackground.svg';
-import crown from '../../../../images/svg/crown.svg';
+import ready from '../../../images/png/ready.png';
+import crown from '../../../images/svg/crown.svg';
+import nicknameBackground from '../../../images/svg/nicknameBackground.svg';
 
-export default function OvVideoComponent(props) {
+
+export default function Video(props) {
     const nickname = props.user.getNickname();
     const [mutedSound, setMutedSound] = useState(false);
     const videoRef = useRef();
@@ -29,7 +29,6 @@ export default function OvVideoComponent(props) {
 
     useEffect(() => {
         if (props && props.user.streamManager && !!videoRef) {
-            console.log('PROPS: ', props);
             props.user.getStreamManager().addVideoElement(videoRef.current);
         }
 
@@ -47,12 +46,9 @@ export default function OvVideoComponent(props) {
         if (props && !!videoRef) {
             props.user.getStreamManager().addVideoElement(videoRef.current);
         }
-        console.log('isReady' + isReady);
     },)
 
     useEffect(() => {
-        console.log(props)
-        console.log(memberSpotlight + '/' + sessionStorage.getItem('nickname'));
         if (memberSpotlight === nickname) {
             setMyTurn(true);
         } else {
