@@ -106,23 +106,30 @@ const Chat = ({ id }) => {
           {chatMessages && chatMessages.length > 0 && (
             <div>
               {chatMessages?.map((newMessage, index) => {
+                if (newMessage.type === 'ENTER') {
+                  return (
+                    <div
+                      key={index}
+                      className="anotherChatMessage"
+                    >{`${newMessage.message}`}</div>
+                  );
+                }
+
                 if (newMessage.sender === nickname) {
                   return (
                     <div
                       key={index}
                       className="myChatMessage"
-                    >{`${newMessage.sender.replace(/#\d*/, '')}: ${
-                      newMessage.message
-                    }`}</div>
+                    >{`${newMessage.sender.replace(/#\d*/, '')}: ${newMessage.message
+                      }`}</div>
                   );
                 } else {
                   return (
                     <div
                       key={index}
                       className="anotherChatMessage"
-                    >{`${newMessage.sender.replace(/#\d*/, '')}: ${
-                      newMessage.message
-                    }`}</div>
+                    >{`${newMessage.sender.replace(/#\d*/, '')}: ${newMessage.message
+                      }`}</div>
                   );
                 }
               })}
