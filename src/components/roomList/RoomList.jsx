@@ -11,6 +11,7 @@ import { ReactComponent as IcArrowRight } from '../../images/svg/icArrowRight.sv
 function RoomList() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const [view, setView] = useState('total');
   const { maxPage, rooms, error } = useSelector((state) => state.rooms);
 
   const pageUp = () => {
@@ -23,25 +24,39 @@ function RoomList() {
     setPage((p) => p + 1);
   };
 
+  const selectHandler = (event) => {
+    setView(event.target.value);
+    setPage(1);
+  }
+
   useEffect(() => {
-    dispatch(__getRooms(page));
-  }, [page]);
+    dispatch(__getRooms({page:page, view:view}));
+  }, [page, view]);
 
   return (
-    <div className="sectionRoomList">
-      <a href="#" onClick={pageUp}>
-        <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
-      </a>
-      <div className="roomListBox">
-        {rooms?.map((aroom) => {
-          return <ARoom key={aroom.id} roomInfo={aroom} />;
-        })}
-      </div>
-      <a href="#" onClick={pageDown}>
-        <div className="arrowBoxR">
-          {page < maxPage ? <IcArrowRight /> : ''}
+    <div>
+      <select onChange={selectHandler}>
+        <option value='total'>전체</option>
+        <option value='normal'>일반모드</option>
+        <option value='fool'>바보모드</option>
+        <option value='wait'>대기중</option>
+        <option value='start'>진행중</option>
+      </select>
+      <div className="sectionRoomList">
+        <a href="#" onClick={pageUp}>
+          <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
+        </a>
+        <div className="roomListBox">
+          {rooms?.map((aroom) => {
+            return <ARoom key={aroom.id} roomInfo={aroom} />;
+          })}
         </div>
-      </a>
+        <a href="#" onClick={pageDown}>
+          <div className="arrowBoxR">
+            {page < maxPage ? <IcArrowRight /> : ''}
+          </div>
+        </a>
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ export const __getRooms = createAsyncThunk(
   'rooms/getRooms',
   async (payload, thunkAPI) => {
     try {
-      const { data } = await instance.get(`/lier/rooms/${payload}`);
+      const { data } = await instance.get(`/lier/rooms/${payload.page}/view/${payload.view}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       alert('방을 찾을 수 없습니다.');
