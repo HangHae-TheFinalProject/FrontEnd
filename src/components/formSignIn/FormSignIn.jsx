@@ -1,19 +1,19 @@
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+
 import useInput from '../../hooks/useInput';
 import GoogleLogin from '../googleLogin/GoogleLogin';
 import instance from '../../shared/Request';
-import { ReactComponent as Redicon } from '../../images/svg/Redicon.svg';
-
-import gameRoomBackground from '../../images/png/gameRoomBackground.png';
-
 import { setClientHeaders } from '../../shared/Request';
+
+import { ReactComponent as Redicon } from '../../images/svg/Redicon.svg';
+import gameRoomBackground from '../../images/png/gameRoomBackground.png';
 
 import './style.scss';
 
 export default function FormSignIn() {
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies();
 
   const [email, setEmail] = useInput('');
@@ -68,7 +68,7 @@ export default function FormSignIn() {
         sessionStorage.setItem('nickname', res.data.data.nickname);
         sessionStorage.setItem('realnickname', res.data.data.nickname.replace(/#\d*/, '')	);
         alert(res.data.statusMsg);
-        nav('/lobby');
+        navigate('/lobby');
       })
       .catch((error) => {
         alert(error.response.data.statusMsg);

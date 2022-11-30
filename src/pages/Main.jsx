@@ -9,11 +9,8 @@ function Main() {
   const refresh_token = new Cookies().get('refresh_token');
   const nickname = sessionStorage.getItem('nickname');
 
-
-
   useEffect(() => {
     if(access_token && refresh_token && nickname){
-      console.log('야?');
       navigate('/lobby');
     }
   }, [])

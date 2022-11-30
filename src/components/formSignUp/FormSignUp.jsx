@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import instance from '../../shared/Request';
-import useInput from '../../hooks/useInput';
-import './style.scss';
-import gameRoomBackground from '../../images/png/gameRoomBackground.png';
-import { ReactComponent as Redicon } from '../../images/svg/Redicon.svg';
 import { useNavigate } from 'react-router-dom';
 
+import useInput from '../../hooks/useInput';
+import instance from '../../shared/Request';
+
+import gameRoomBackground from '../../images/png/gameRoomBackground.png';
+import { ReactComponent as Redicon } from '../../images/svg/Redicon.svg';
+
+import './style.scss';
+
 export default function FormSignUp() {
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   const [name, setName] = useInput('');
   const [mail, setMail] = useInput('');
@@ -106,7 +109,7 @@ export default function FormSignUp() {
       .then((res) => {
         if (res.data.statusMsg) {
           alert(res.data.data);
-          nav('/');
+          navigate('/');
         }
       })
       .catch((error) => {
