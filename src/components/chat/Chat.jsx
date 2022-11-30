@@ -29,6 +29,7 @@ const Chat = ({ id }) => {
         subscribe();
         // 채팅 입장 메세지(?)
         client.current.publish({
+          // destination: `/pub/chat/room/${id}}`,
           destination: '/pub/chat/message',
           body: JSON.stringify({
             type: 'ENTER',
@@ -58,6 +59,7 @@ const Chat = ({ id }) => {
       `/sub/chat/room/${id}`,
       // body에 담아 보낼 메세지(?)
       ({ body }) => {
+        console.log('메세지', body);
         setChatMessages((newMessage) => [...newMessage, JSON.parse(body)]);
       }
     );
@@ -98,16 +100,32 @@ const Chat = ({ id }) => {
 
   return (
     <>
-      <div className="chatBoxSection">
+      <div className="chatBoxSection fontSemiBold">
         <img src={chatOutputBox} alt="chatArea" className="chatOutputBox" />
         <div className="chatOutputBoxInner">
           {chatMessages && chatMessages.length > 0 && (
             <div>
-              {chatMessages?.map((newMessage, index) => (
-                <div key={index}>{`${newMessage.sender.replace(/#\d*/, '')}: ${
-                  newMessage.message
-                }`}</div>
-              ))}
+              {chatMessages?.map((newMessage, index) => {
+                if (newMessage.sender === nickname) {
+                  return (
+                    <div
+                      key={index}
+                      className="myChatMessage"
+                    >{`${newMessage.sender.replace(/#\d*/, '')}: ${
+                      newMessage.message
+                    }`}</div>
+                  );
+                } else {
+                  return (
+                    <div
+                      key={index}
+                      className="anotherChatMessage"
+                    >{`${newMessage.sender.replace(/#\d*/, '')}: ${
+                      newMessage.message
+                    }`}</div>
+                  );
+                }
+              })}
             </div>
           )}
         </div>
