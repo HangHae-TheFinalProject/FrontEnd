@@ -11,7 +11,8 @@ function Chat({ id }) {
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState('');
 
-  const nickname = sessionStorage.getItem('realnickname');
+  const nickname = sessionStorage.getItem('nickname');
+  const realnickname = sessionStorage.getItem('realnickname');
 
   const connect = () => {
     client.current = new StompJs.Client({
@@ -25,15 +26,19 @@ function Chat({ id }) {
       },
       onConnect: () => {
         subscribe();
-        client.current.publish({
-          destination: '/pub/chat/message',
-          body: JSON.stringify({
-            type: 'ENTER',
-            roomId: id,
-            sender: nickname,
-            message: `${nickname}님이 게임에 참가하셨습니다.`,
-          }),
-        });
+        if (realnickname) {
+          client.current.publish({
+            destination: '/pub/chat/message',
+            body: JSON.stringify({
+              type: 'ENTER',
+              roomId: id,
+              sender: nickname,
+              message: `${realnickname}님이 게임에 참가하셨습니다.`,
+            }),
+          });
+        } else {
+          return;
+        }
       },
       onStompError: (frame) => {
         // console.log(`Broker reported error: ${frame.headers['message']}`);
@@ -97,14 +102,18 @@ function Chat({ id }) {
                   <div
                     key={index}
                     className="myChatMessage"
-                  >{`${newMessage.sender}: ${newMessage.message}`}</div>
+                  >{`${newMessage.sender.replace(/#\d*/, '')}: ${
+                    newMessage.message
+                  }`}</div>
                 );
               } else {
                 return (
                   <div
                     key={index}
                     className="anotherChatMessage"
-                  >{`${newMessage.sender}: ${newMessage.message}`}</div>
+                  >{`${newMessage.sender.replace(/#\d*/, '')}: ${
+                    newMessage.message
+                  }`}</div>
                 );
               }
             })}
