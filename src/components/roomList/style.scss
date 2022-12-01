@@ -32,3 +32,19 @@ a {
   align-items: center;
   gap: 15px;
 }
+.selectbox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.selectMain {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  color: white;
+  font-weight: bold;
+  border: none;
+  background: url('../../images/svg/DropBoxIconDown.svg') no-repeat right;
+}
