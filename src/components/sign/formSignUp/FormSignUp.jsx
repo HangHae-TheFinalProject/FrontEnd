@@ -31,6 +31,7 @@ export default function FormSignUp() {
   const [show, setShow] = useState(false);
   // 유효성 검사
   const [successName, setSuccessName] = useState(false);
+  const [successMail, setSuccessMail] = useState(false);
   const [successPassword, setSuccessShowPassword] = useState(false);
   const [successPasswordConfirm, setSuccessPasswordConfirm] = useState(false);
 
@@ -43,6 +44,9 @@ export default function FormSignUp() {
       setMsgName('닉네임을 입력해주세요.');
       setShowName(true);
       setSuccessName(false);
+      setTimeout(() => {
+        setShowName(false);
+      }, 2000);
     }
 
     return name;
@@ -54,11 +58,16 @@ export default function FormSignUp() {
     );
 
     if (result) {
-      setMsgMail('');
+      setMsgMail('올바른 메일 형식이에요.');
       setShowMail(false);
+      setSuccessMail(true);
     } else {
-      setMsgMail('올바른 메일 형식이 아닙니다.');
+      setMsgMail('올바른 메일 형식이 아니에요.');
       setShowMail(true);
+      setSuccessMail(false);
+      setTimeout(() => {
+        setShowMail(false);
+      }, 2000);
     }
 
     return result;
@@ -77,15 +86,26 @@ export default function FormSignUp() {
       setMsgPassword('영문, 숫자, 특수문자로 작성해주세요.');
       setShowPassword(true);
       setSuccessShowPassword(false);
+      setTimeout(() => {
+        setShowPassword(false);
+      }, 2000);
     }
 
     return result;
   };
 
   const passwordConfirmCheck = () => {
+    const empty = passwordConfirm.trim() === '';
     const result = password === passwordConfirm;
 
-    if (result) {
+    if (empty) {
+      setMsgPasswordConfirm('내용을 입력해주세요.');
+      setShowPasswordConfirm(true);
+      setSuccessPasswordConfirm(false);
+      setTimeout(() => {
+        setShowPasswordConfirm(false);
+      }, 2000);
+    } else if (result) {
       setMsgPasswordConfirm('입력한 비밀번호와 동일해요.');
       setShowPasswordConfirm(false);
       setSuccessPasswordConfirm(true);
@@ -193,6 +213,12 @@ export default function FormSignUp() {
               {showMail ? (
                 <p className="fail">
                   <Redicon />
+                  {msgMail}
+                </p>
+              ) : null}
+              {successMail ? (
+                <p className="success">
+                  <Greenicon />
                   {msgMail}
                 </p>
               ) : null}
