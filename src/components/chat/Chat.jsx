@@ -6,12 +6,12 @@ import './style.scss';
 import chatOutputBox from '../../images/svg/chatOutputBox.svg';
 import btn_send2 from '../../images/svg/btn_send2.svg';
 
-const nickname = sessionStorage.getItem('realnickname');
-
 function Chat({ id }) {
   const client = useRef({});
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState('');
+
+  const nickname = sessionStorage.getItem('realnickname');
 
   const connect = () => {
     client.current = new StompJs.Client({
@@ -97,18 +97,14 @@ function Chat({ id }) {
                   <div
                     key={index}
                     className="myChatMessage"
-                  >{`${newMessage.sender.replace(/#\d*/, '')}: ${
-                    newMessage.message
-                  }`}</div>
+                  >{`${newMessage.sender}: ${newMessage.message}`}</div>
                 );
               } else {
                 return (
                   <div
                     key={index}
                     className="anotherChatMessage"
-                  >{`${newMessage.sender.replace(/#\d*/, '')}: ${
-                    newMessage.message
-                  }`}</div>
+                  >{`${newMessage.sender}: ${newMessage.message}`}</div>
                 );
               }
             })}
