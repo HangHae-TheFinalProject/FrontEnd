@@ -171,12 +171,12 @@ export default function FormSignUp() {
 
   return (
     <>
-      <img
-        className="signUpBackground"
-        src={gameRoomBackground}
-        alt="background"
-      />
       <div className="signUpContainer fontSemiBold">
+        <img
+          className="signUpBackground"
+          src={gameRoomBackground}
+          alt="background"
+        />
         <div className="signUpBody fontSemiBold">
           <span className="signUpName fontLightBold">회원가입</span>
           <div className="signUpInputBox">

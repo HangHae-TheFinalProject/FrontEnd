@@ -9,6 +9,7 @@ import { setClientHeaders } from '../../../shared/Request';
 
 import { ReactComponent as Redicon } from '../../../images/svg/Redicon.svg';
 import gameRoomBackground from '../../../images/png/gameRoomBackground.png';
+import gameTitleBackground from '../../../images/png/gameTitleBakcground.png';
 import gameTitle from '../../../images/svg/gameTitle.svg';
 
 import './style.scss';
@@ -35,6 +36,9 @@ export default function FormSignIn() {
     } else {
       setMsgMail(`올바른 메일 형식이 아니에요.`);
       setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 2000);
     }
 
     return result;
@@ -95,12 +99,17 @@ export default function FormSignIn() {
 
   return (
     <>
-      <img
-        className="signInBackground"
-        src={gameRoomBackground}
-        alt="background"
-      />
       <div className="signInContainer fontSemiBold">
+        <img
+          className="signInBackground"
+          src={gameRoomBackground}
+          alt="background"
+        />
+        <img
+          className="gameTitleBackground"
+          src={gameTitleBackground}
+          alt="gameTitleBackground"
+        />
         <img className="gameTitle" src={gameTitle} alt="gameTitle" />
         <div className="signInBody fontSemiBold">
           <span className="signInName fontLightBold">로그인</span>

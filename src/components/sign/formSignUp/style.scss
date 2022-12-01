@@ -1,30 +1,22 @@
-.signUpBackground {
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  object-fit: cover;
-}
-
 .signUpContainer {
-  position: fixed;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+}
 
-  margin: auto;
-  gap: 60px;
+.signUpBackground {
+  position: absolute;
 
-  cursor: default;
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+
+  z-index: 0;
 }
 
 .signUpBody {
@@ -38,6 +30,10 @@
 
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.75);
+
+  z-index: 1;
+
+  cursor: default;
 }
 
 .signUpName {
