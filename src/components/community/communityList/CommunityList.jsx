@@ -16,56 +16,19 @@ import CommunityCard from '../communityCard/CommunityCard';
 import { current } from '@reduxjs/toolkit';
 
 export default function CommunityList({ post }) {
+  const MAX_PAGE_NUM = 5;
+
   const navigate = useNavigate();
-  const { pageNum } = useParams();
 
-  //// 조회 값을 담은 state ////
-  const [data, setDate] = useState([]);
-  console.log('길이', data.length);
-
-  ///////////////////////////////////////////
-  // 현재 보고있는 페이지
-  const [currentPage, setCurrentPage] = useState(1);
-
-  //한 페이지에서 보여줄 길이
-  const [pageSize, setPageSize] = useState(data.length);
-
-  // 전체 게시물 수
+  const [currentSortBase, setCurrentSortBase] = useState('recent');
+  const [currentPageNum, setCurrentPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+  const [data, setData] = useState([]);
   const [postsCnt, setPostsCnt] = useState();
+  const [arrPage, setArrPage] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  //페이지 수
-  const [maxPage, setMaxPage] = useState();
-
-  console.log('max', postsCnt);
-  const total = maxPage;
-  const array = [];
-  for (let i = 0; i < total; i++) {
-    array.push(i + 1);
-  }
-
-  const target = array.slice(0, 5);
-
-  //// 페이지네이션 ////
-  const [page, setPage] = useState(1);
-
-  const pageUp = () => {
-    if (maxPage <= 5) return;
-    setPage((p) => p - 1);
-  };
-
-  const pageDown = () => {
-    if (maxPage >= 5) return;
-    setPage((p) => p + 1);
-  };
-
-  const pageCntNum = () => {
-    const sum = 1;
-    for (const i = 0; i <= maxPage; i++) {
-      sum += i;
-    }
-  };
-
-  //// 최신순 인기순 창 열고 닽는 state ////
   const [show, setShow] = useState(false);
 
   const onClickHandler = () => {
@@ -76,49 +39,56 @@ export default function CommunityList({ post }) {
     setShow(true);
   };
 
-  //전체 조회 요청
+  const pageUp = () => {
+    setPageNum(pageNum => pageNum - 1);
+  };
+
+  const pageDown = () => {
+    setPageNum(pageNum => pageNum + 1);
+  };
+
+  const showList = () => {
+    setIsLoading(true);
+    instance
+      .get(`/lier/posts/${currentPageNum}/sort/${currentSortBase}`)
+      .then((res) => {
+        console.log(res);
+        setMaxPage(res.data.data.pageCnt)
+        setData(res.data.data.pageInPosts);
+        setPostsCnt(res.data.data.postsCnt);
+        setShow(false);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const showPageNumbers = () => {
+    let arr = [];
+    const start = (pageNum - 1) * MAX_PAGE_NUM;
+
+    for (let i = 1 + start; i <= 5 + start; i++) {
+      if (i > maxPage) break;
+      arr.push(i);
+    }
+    setArrPage([...arr]);
+    setCurrentPageNum(start + 1);
+  }
+
   useEffect(() => {
-    instance
-      .get(`/lier/posts/${pageNum}/sort/recent`)
+    showList();
+  }, [currentPageNum, currentSortBase])
 
-      .then((res) => {
-        console.log('저를 데이터로 쓰세요..', res.data);
-        setDate(res.data.data.pageInPosts);
-        setPostsCnt(res.data.data.postsCnt);
-        setMaxPage(res.data.data.pageCnt);
-      })
-      .catch((error) => {
-        console.log('실패');
-      });
-  }, []);
+  useEffect(() => {
+    showPageNumbers();
+  }, [pageNum, isLoading]);
 
-  //최신순 조회 요청
-  const recentClickHandler = () => {
-    instance
-      .get(`/lier/posts/${pageNum}/sort/recent`)
-      .then((res) => {
-        setDate(res.data.data.pageInPosts);
-        setPostsCnt(res.data.data.postsCnt);
-        setShow(false);
-      })
-      .catch((error) => {
-        console.log('실패');
-      });
-  };
-
-  //인기순 조회 요청
-  const viewClickHandler = () => {
-    instance
-      .get(`/lier/posts/${pageNum}/sort/view`)
-      .then((res) => {
-        setDate(res.data.data.pageInPosts);
-        setPostsCnt(res.data.data.postsCnt);
-        setShow(false);
-      })
-      .catch((error) => {
-        console.log('실패');
-      });
-  };
+  useEffect(() => {
+    console.log('currentPageNum'+ currentPageNum );
+    console.log('pageNum'+ pageNum );
+    console.log('arr', arrPage)
+  })
 
   return (
     <>
@@ -136,10 +106,10 @@ export default function CommunityList({ post }) {
                   <h4>최신순</h4> <DropBoxDown />
                   {show === true ? (
                     <div className="dropDownBox">
-                      <div className="recentBox" onClick={recentClickHandler}>
+                      <div className="recentBox" onClick={() => setCurrentSortBase('recent')}>
                         최신순
                       </div>
-                      <div className="viewBox" onClick={viewClickHandler}>
+                      <div className="viewBox" onClick={() => setCurrentSortBase('view')}>
                         인기순
                       </div>
                     </div>
@@ -165,29 +135,34 @@ export default function CommunityList({ post }) {
                   글쓰기
                 </button>
                 <div className="pageListBox">
-                  <a href="#" onClick={pageUp}>
-                    <div className="communityListarrowBoxL">
-                      {page > 1 ? <PageBtnIconL /> : ''}
-                    </div>
-                  </a>
-                  {target.map((val) => (
-                    <div>
+                  <div className="communityListarrowBoxL">
+                    {pageNum > 1 ?
+                      <a href="#" onClick={pageUp}>
+                        <PageBtnIconL />
+                      </a>
+                      : ''}
+                  </div>
+                  <div className="pageListNum">
+                    {arrPage.map((val) => (
                       <div
-                        className="pageListNum"
+                        key={val}
                         onClick={() => {
-                          setPostsCnt(val);
+                          setCurrentPageNum(val);
                         }}
                       >
+                        {console.log(val)}
                         {val}
                       </div>
-                    </div>
-                  ))}
 
-                  <a href="#" onClick={pageDown}>
-                    <div className="communityListarrowBoxR">
-                      {page < maxPage ? <PageBtnIconR /> : ''}
-                    </div>
-                  </a>
+                    ))}
+                  </div>
+                  <div className="communityListarrowBoxR">
+                    {maxPage > MAX_PAGE_NUM && pageNum < maxPage / MAX_PAGE_NUM ?
+                      <a href="#" onClick={pageDown}>
+                        <PageBtnIconR />
+                      </a>
+                      : ''}
+                  </div>
                 </div>
               </div>
             </div>

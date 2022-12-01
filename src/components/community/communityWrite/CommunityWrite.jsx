@@ -15,7 +15,7 @@ export default function CommunityWrite() {
       })
       .then((res) => {
         console.log('성공');
-        navigate('/social/list/1');
+        navigate('/social');
       })
       .catch((error) => {
         console.log('실패');
@@ -32,7 +32,7 @@ export default function CommunityWrite() {
     setContent(e.target.value);
   };
   const cancelClickHandler = () => {
-    navigate('/social/list/1');
+    navigate('/social');
   };
 
   return (
@@ -44,15 +44,16 @@ export default function CommunityWrite() {
           </div>
           <div>
             <input
+              type="text"
               className="writeTitleInput"
               placeholder="제목을 입력해주세요"
               onChange={titleOnChangeHandler}
             ></input>
-            <input
+            <textarea
               className="writePostInput"
               placeholder="내용을 입력해주세요"
               onChange={contentOnChangeHandler}
-            ></input>
+            ></textarea>
           </div>
           <div className="communityWriteBtnBox">
             <button

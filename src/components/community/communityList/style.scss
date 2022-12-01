@@ -15,9 +15,11 @@ $mainWidth: 1180px;
   z-index: -1;
   background: url(../../../images/png/lobbyBackGround.png);
 }
+
 .communityRoomNum {
   display: flex;
   justify-content: space-between;
+
   h5 {
     font-size: 16px;
     color: white;
@@ -35,6 +37,7 @@ $mainWidth: 1180px;
     color: white;
   }
 }
+
 .communityBoxImg {
   display: flex;
   align-items: center;
@@ -45,22 +48,27 @@ $mainWidth: 1180px;
   height: 720px;
   background: url(../../../images/png/communityBox.png);
 }
+
 .communityListMainBox {
   width: 1004px;
   height: 573px;
   margin-top: 40px;
 }
+
 .communityListBox {
   width: 1004px;
   height: 38px;
   display: flex;
 }
+
 .communityTitle {
   margin-right: 339px;
 }
+
 .communityNum {
   margin-right: 45px;
 }
+
 .communityDate {
   margin-right: 29px;
 }
@@ -75,6 +83,7 @@ $mainWidth: 1180px;
   border-radius: 10px;
   color: white;
 }
+
 .communityNameBox {
   width: 188px;
   height: 38px;
@@ -86,6 +95,7 @@ $mainWidth: 1180px;
   align-items: center;
   margin-left: 8px;
 }
+
 .communityBtnBox {
   width: 1004px;
   height: 38px;
@@ -94,6 +104,7 @@ $mainWidth: 1180px;
   display: flex;
   justify-content: space-between;
 }
+
 .writeBtn {
   border: none;
   width: 86px;
@@ -105,11 +116,13 @@ $mainWidth: 1180px;
   align-items: center;
   color: white;
 }
+
 .penIcon {
   width: 18px;
   height: 18px;
   margin-right: 5px;
 }
+
 .searchBox {
   display: flex;
   justify-content: center;
@@ -126,6 +139,7 @@ $mainWidth: 1180px;
     border: none;
   }
 }
+
 .searchIcon {
   margin-top: 8px;
   margin-right: 5px;
@@ -134,20 +148,31 @@ $mainWidth: 1180px;
 .communityListarrowBoxL {
   width: 16px;
   height: 16px;
-  background-color: aliceblue;
 }
+
 .communityListarrowBoxR {
   width: 16px;
   height: 16px;
-  background-color: aqua;
 }
 
 .pageListBox {
   width: 203px;
   height: 16px;
-  background-color: blueviolet;
-  justify-content: space-between;
+
   display: flex;
+  justify-content: space-between;
+  
+}
+
+.pageListNum {
+  min-width: 131px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 17px;
+
+  color: rgba(255, 255, 255, 1);
+  font-size: 17px;
 }
 
 .dropDownBox {
@@ -165,6 +190,7 @@ $mainWidth: 1180px;
   color: white;
   padding-top: 10px;
 }
+
 .viewBox {
   width: 91px;
   height: 41px;
