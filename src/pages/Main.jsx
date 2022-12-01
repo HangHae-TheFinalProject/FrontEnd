@@ -1,4 +1,4 @@
-import FormSignIn from '../components/formSignIn/FormSignIn';
+import FormSignIn from '../components/sign/formSignIn/FormSignIn';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -10,11 +10,11 @@ function Main() {
   const nickname = sessionStorage.getItem('nickname');
 
   useEffect(() => {
-    if(access_token && refresh_token && nickname){
+    if (access_token && refresh_token && nickname) {
       navigate('/lobby');
     }
-  }, [])
-  
+  }, []);
+
   return (
     <>
       <FormSignIn></FormSignIn>
@@ -22,4 +22,4 @@ function Main() {
   );
 }
 
-export default Main; 
+export default Main;

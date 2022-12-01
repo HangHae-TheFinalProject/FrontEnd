@@ -1,0 +1,155 @@
+.signInBackground {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  object-fit: cover;
+}
+
+.signInContainer {
+  position: fixed;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  margin: auto;
+  gap: 60px;
+
+  cursor: default;
+}
+
+.gameTitle {
+  position: fixed;
+
+  top: -22.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.signInBody {
+  width: 500px;
+  height: 600px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.signInName {
+  margin-bottom: 45px;
+  font-size: 28px;
+  color: #fff;
+}
+
+.signInInputBox {
+  width: 400px;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 40px;
+
+  :focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    color: rgba(77, 77, 77, 1);
+  }
+
+  input {
+    width: 400px;
+    height: 50px;
+
+    padding-left: 15px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: rgba(26, 26, 26, 1);
+    background-color: rgba(255, 255, 255, 0.45);
+  }
+
+  .signInTest {
+    height: 40px;
+
+    display: flex;
+
+    font-size: 14px;
+
+    .fail {
+      display: flex;
+      align-items: center;
+
+      padding-bottom: 10px;
+      gap: 5px;
+
+      color: #ff264a;
+    }
+  }
+}
+
+.signInButtonBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 35px;
+
+  button:hover {
+    color: rgba(26, 26, 26, 1);
+    background-color: rgba(255, 255, 255, 0.9);
+
+    cursor: pointer;
+  }
+
+  .signInBtn {
+    width: 400px;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: rgba(153, 153, 153, 1);
+    background-color: rgba(77, 77, 77, 0.8);
+  }
+}
+
+.toSignUpBox {
+  width: 400px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 30px;
+  gap: 10px;
+
+  .joinText {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .joinBtn {
+    color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+  }
+}
