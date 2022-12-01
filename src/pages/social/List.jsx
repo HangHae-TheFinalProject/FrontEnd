@@ -1,9 +1,11 @@
+import CommunityList from '../../components/community/communityList/CommunityList';
+
 function List() {
-
-
-  return <>
-    <h1> List </h1>
-  </>
+  return (
+    <>
+      <CommunityList></CommunityList>
+    </>
+  );
 }
 
 export default List;

@@ -1,0 +1,59 @@
+.communityCardTitleBox {
+  height: 48px;
+  width: 1004px;
+  justify-content: left;
+  display: flex;
+  margin-top: 8px;
+}
+.communityCardBox {
+  width: 808px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+
+  align-items: center;
+  div {
+    display: flex;
+    float: left;
+
+    font-size: 14px;
+  }
+}
+
+.communityCardBoxTitle {
+  width: 630px;
+  height: 48px;
+  padding-left: 15px;
+  align-items: center;
+}
+.communityCardBoxViewcnt {
+  width: 57px;
+  height: 48px;
+
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+.communityCardBoxCreatedAt {
+  width: 95px;
+  height: 48px;
+  margin-right: 5px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.communityAuthorBox {
+  width: 188px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-left: 8px;
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

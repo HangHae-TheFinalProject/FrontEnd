@@ -20,9 +20,10 @@ export default function Router() {
         <Route path="/social" element={<Social />} />
         <Route path="/gameroom" element={<GameRoom />} />
         <Route path="/gameroom/:id" element={<GameRoom />} />
-        <Route path="/social/list" element={<List />} />
+        <Route path="/social/list/:pageNum" element={<List />} />
         <Route path="/social/write" element={<Write />} />
         <Route path="/social/detail" element={<Detail />} />
+        <Route path="/social/detail/:postId" element={<Detail />} />
         <Route path="/*" element={<Missing />} />
       </Routes>
     </BrowserRouter>

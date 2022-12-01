@@ -1,0 +1,174 @@
+$headerHeight: 120px;
+$mainWidth: 1180px;
+
+.communityImgBackground {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  text-align: center;
+
+  z-index: -1;
+  background: url(../../../images/png/lobbyBackGround.png);
+}
+.communityRoomNum {
+  display: flex;
+  justify-content: space-between;
+  h5 {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 12px;
+  }
+}
+
+.listDropBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h4 {
+    margin-right: 3px;
+    color: white;
+  }
+}
+.communityBoxImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+
+  width: 1180px;
+  height: 720px;
+  background: url(../../../images/png/communityBox.png);
+}
+.communityListMainBox {
+  width: 1004px;
+  height: 573px;
+  margin-top: 40px;
+}
+.communityListBox {
+  width: 1004px;
+  height: 38px;
+  display: flex;
+}
+.communityTitle {
+  margin-right: 339px;
+}
+.communityNum {
+  margin-right: 45px;
+}
+.communityDate {
+  margin-right: 29px;
+}
+
+.communityTitleBox {
+  width: 808px;
+  height: 38px;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  color: white;
+}
+.communityNameBox {
+  width: 188px;
+  height: 38px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+}
+.communityBtnBox {
+  width: 1004px;
+  height: 38px;
+
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+.writeBtn {
+  border: none;
+  width: 86px;
+  height: 38;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.penIcon {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+.searchBox {
+  display: flex;
+  justify-content: center;
+
+  width: 354px;
+  height: 38px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+
+  input {
+    width: 303px;
+    margin-right: 10px;
+    background: transparent;
+    border: none;
+  }
+}
+.searchIcon {
+  margin-top: 8px;
+  margin-right: 5px;
+}
+
+.communityListarrowBoxL {
+  width: 16px;
+  height: 16px;
+  background-color: aliceblue;
+}
+.communityListarrowBoxR {
+  width: 16px;
+  height: 16px;
+  background-color: aqua;
+}
+
+.pageListBox {
+  width: 203px;
+  height: 16px;
+  background-color: blueviolet;
+  justify-content: space-between;
+  display: flex;
+}
+
+.dropDownBox {
+  width: 91px;
+  height: 82px;
+  background-color: #4d4d4d;
+  border-radius: 8px;
+  border: 1px solid #808080;
+}
+
+.recentBox {
+  width: 91px;
+  height: 41px;
+  border-bottom: 1px solid #808080;
+  color: white;
+  padding-top: 10px;
+}
+.viewBox {
+  width: 91px;
+  height: 41px;
+  color: white;
+
+  padding-top: 10px;
+}
