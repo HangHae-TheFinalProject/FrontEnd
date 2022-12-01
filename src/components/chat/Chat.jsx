@@ -6,12 +6,13 @@ import './style.scss';
 import chatOutputBox from '../../images/svg/chatOutputBox.svg';
 import btn_send2 from '../../images/svg/btn_send2.svg';
 
-const nickname = sessionStorage.getItem('realnickname');
-
 function Chat({ id }) {
   const client = useRef({});
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState('');
+
+  const nickname = sessionStorage.getItem('nickname');
+  const realnickname = sessionStorage.getItem('realnickname');
 
   const connect = () => {
     client.current = new StompJs.Client({
@@ -25,15 +26,19 @@ function Chat({ id }) {
       },
       onConnect: () => {
         subscribe();
-        client.current.publish({
-          destination: '/pub/chat/message',
-          body: JSON.stringify({
-            type: 'ENTER',
-            roomId: id,
-            sender: nickname,
-            message: `${nickname}님이 게임에 참가하셨습니다.`,
-          }),
-        });
+        if (realnickname) {
+          client.current.publish({
+            destination: '/pub/chat/message',
+            body: JSON.stringify({
+              type: 'ENTER',
+              roomId: id,
+              sender: nickname,
+              message: `${realnickname}님이 게임에 참가하셨습니다.`,
+            }),
+          });
+        } else {
+          return;
+        }
       },
       onStompError: (frame) => {
         // console.log(`Broker reported error: ${frame.headers['message']}`);
