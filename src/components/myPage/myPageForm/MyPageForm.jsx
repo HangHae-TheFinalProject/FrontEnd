@@ -25,15 +25,13 @@ function MyPageForm() {
   // 업적 조회 api
   const getMyPageReward = () => {
     instance.get('/lier/myinfo/reward').then((response) => {
-      console.log(response);
-      // 업적 데이터 담으면 됨
-      setRecordData();
+      setRewardData(response.data.data.rewardlist);
     });
   };
 
   useEffect(() => {
     getMyPageAllRecord();
-    // getMyPageReward();
+    getMyPageReward();
   }, []);
 
   return (
@@ -83,7 +81,7 @@ function MyPageForm() {
           ) : (
             <>
               <div className="myPageReward">
-                <MyPageReward allReward={rewardData} />
+                <MyPageReward clearReward={rewardData} />
               </div>
             </>
           )}
