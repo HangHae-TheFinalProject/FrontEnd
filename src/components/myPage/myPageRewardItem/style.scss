@@ -6,36 +6,14 @@
   align-items: center;
   justify-content: center;
 
+  background-image: url('../../../images/png/rewardBackground.png');
+
+  font-size: 18px;
+  color: #FFFFFF;
   cursor: default;
 }
 
-.inActiveItemContainer {
-  @include rewardItem(620px, 330px);
-
-  flex-wrap: wrap;
-
-  gap: 30px;
-}
-
-.inActiveItem {
-  @include rewardItem(125px, 155px);
-}
-
-.activeItemContainer {
-  @include rewardItem(620px, 330px);
-
-  flex-wrap: wrap;
-
-  gap: 30px;
-}
-
-.activeItem {
-  @include rewardItem(125px, 155px);
-
-  position: relative;
-}
-
-.activeItem:before {
+@mixin rewardItemBefore{
   content: attr(description);
 
   width: 180px;
@@ -63,7 +41,37 @@
   z-index: 1;
 }
 
-.activeItem:hover:before {
-  opacity: 1;
-  visibility: visible;
+.rewardDescription{
+  width: 125px;
+  height: 155px;
+  position: relative;
+  left: 0px;
+  top: 0px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:before{
+    @include rewardItemBefore;
+  }
+
+  &:hover:before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.inactiveRewardItem {
+  @include rewardItem(125px, 155px);
+  opacity: 0.2;
+}
+
+.activeRewardItem {
+  @include rewardItem(125px, 155px);
+}
+
+.goldRewardItem{
+  background-image: url('../../../images/png/rewardBackgroundGold.png');
+  color: rgba(255, 196, 46, 1);
 }
