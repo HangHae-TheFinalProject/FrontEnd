@@ -1,9 +1,11 @@
+import CommunityWrite from '../../components/community/communityWrite/CommunityWrite';
+
 function Write() {
-
-
-  return <>
-    <h1> Write </h1>
-  </>
+  return (
+    <>
+      <CommunityWrite></CommunityWrite>
+    </>
+  );
 }
 
 export default Write;

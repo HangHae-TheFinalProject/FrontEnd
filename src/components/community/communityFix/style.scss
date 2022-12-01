@@ -1,0 +1,80 @@
+.communityFixBox {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  text-align: center;
+
+  background: url(../../../images/png/lobbyBackGround.png);
+}
+.fixBoxImg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+
+  width: 1133px;
+  height: 664px;
+  background: url(../../../images/png/writeImg.png);
+}
+.fixTitle {
+  font-size: 24px;
+  color: white;
+  margin-top: 55px;
+  font-weight: bold;
+}
+
+.fixTitleInput {
+  width: 1029px;
+  height: 48px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  margin-top: 30px;
+  color: white;
+}
+.fixPostInput {
+  width: 1029px;
+  height: 379px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  margin-top: 20px;
+  color: white;
+}
+
+.communityFixBtnBox {
+  width: 1029px;
+  height: 37px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.fixCancelBtn {
+  width: 77px;
+  height: 36px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.fixRegistrationBtn {
+  width: 77px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(
+    to bottom,
+    rgba(167, 167, 167, 0.47),
+    rgba(65, 65, 65, 0.9945)
+  );
+  font-weight: bold;
+  color: white;
+  margin-left: 12px;
+}
