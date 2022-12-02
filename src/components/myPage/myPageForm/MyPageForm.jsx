@@ -1,5 +1,5 @@
-import myPage_ActiveBtn from '../../../images/svg/myPage_ActiveBtn.svg';
-import myPage_InActiveBtn from '../../../images/svg/myPage_InActiveBtn.svg';
+import myPage_ActiveBtn from '../../../images/png/myPage_ActiveBtn.png';
+import myPage_InActiveBtn from '../../../images/png/myPage_InActiveBtn.png';
 
 import './style.scss';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,6 @@ import MyPageSignOut from '../myPageSignOut/MyPageSignOut';
 function MyPageForm() {
   const [active, setActive] = useState(false);
   const [recordData, setRecordData] = useState([]);
-  // 업적 데이터 담을 state
   const [rewardData, setRewardData] = useState([]);
 
   // 전적 조회 api
