@@ -15,9 +15,10 @@ export default function Video(props) {
     const isCamera = useSelector(state => state.game.isCamera);
     const [myTurn, setMyTurn] = useState(false);
     const memberSpotlight = useSelector(state => state.game.spotlightMember);
-    const isMaster = useSelector(state => state.game.isMaster);
+    const isMaster = useSelector(state => state.rooms.room.owner) === nickname;
     const readyMemberList = useSelector(state => state.game.readyMemberList);
     const [isReady, setIsReady] = useState(false);
+
 
     const toggleSound = () => {
         setMutedSound(!mutedSound);
