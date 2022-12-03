@@ -12,9 +12,7 @@ export default function GoogleLogin() {
   return (
     <div>
       <LoginSocialGoogle
-        client_id={
-          '834758423855-a5n2vtmbhvf4n4rujq9k9rdtucpud3cf.apps.googleusercontent.com'
-        }
+        client_id={process.env.REACT_APP_GOOGLELOGIN_CLIENT_ID}
         scope="openid profile email"
         discoveryDocs="claims_supported"
         access_type="offline"
