@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
 import useInput from '../../hooks/useInput';
 import instance from '../../shared/Request';
@@ -10,13 +9,11 @@ import createRoomModal from '../../images/png/createRoomModalBackground.png';
 
 import './style.scss';
 
-// need to : 방 만들고 입장하는 기능
 function CreateRoomForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const DEFAULT_GAMEMODE = '1';
-
   const arrRoomName = [
     '타르타로스',
     '길잃은 영혼',
@@ -32,7 +29,7 @@ function CreateRoomForm() {
 
   // 방 만들기 api
   const createRoomHandler = async () => {
-    if (!title) {
+    if (title.trim() === '') {
       alert('방 제목을 입력해주세요.');
       return;
     }
