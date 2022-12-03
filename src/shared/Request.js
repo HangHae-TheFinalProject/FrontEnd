@@ -6,7 +6,7 @@ const refresh_token = new Cookies().get('refresh_token');
 
 const instance = axios.create({
 
-  baseURL: 'https://haetae.shop',
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'authorization': access_token,
     'refresh-token': refresh_token,

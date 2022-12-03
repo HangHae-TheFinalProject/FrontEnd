@@ -1,8 +1,10 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { LoginSocialGoogle } from 'reactjs-social-login';
+
 import { ReactComponent as GoogleLoginBtn } from '../../../images/svg/GoogleLoginBtn.svg';
+import instance from '../../../shared/Request';
+
 import './style.scss';
 
 export default function GoogleLogin() {
@@ -11,15 +13,13 @@ export default function GoogleLogin() {
   return (
     <div>
       <LoginSocialGoogle
-        client_id={
-          '834758423855-a5n2vtmbhvf4n4rujq9k9rdtucpud3cf.apps.googleusercontent.com'
-        }
+        client_id={process.env.REACT_APP_GOOGLELOGIN_CLIENT_ID}
         scope="openid profile email"
         discoveryDocs="claims_supported"
         access_type="offline"
         onResolve={({ provider, data }) => {
-          axios
-            .post('https://haetae.shop/lier/auth/login', null, {
+          instance
+            .post('/lier/auth/login', null, {
               headers: {
                 accesstoken: data.access_token,
               },

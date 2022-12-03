@@ -95,7 +95,7 @@ function GameRoom() {
 
   const connect = () => {
     client.current = new StompJs.Client({
-      webSocketFactory: () => new SockJs('https://haetae.shop/ws-stomp'),
+      webSocketFactory: () => new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders,
       debug: function (str) {
         console.log(str);
@@ -518,7 +518,6 @@ function GameRoom() {
 
     if (stageNumber === 9 && timer.status === 2) {
       initialize();
-
     }
   }, [timer.status])
 
@@ -558,7 +557,7 @@ function GameRoom() {
         <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoom openviduServerUrl='https://openvidu.haetae.shop' sessionName={id} isMute={muted} />
+            <VideoRoom sessionName={id} isMute={muted} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">

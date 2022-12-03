@@ -16,7 +16,7 @@ function Chat({ id }) {
 
   const connect = () => {
     client.current = new StompJs.Client({
-      webSocketFactory: () => new SockJs('https://haetae.shop/ws-stomp'),
+      webSocketFactory: () => new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders: {
         Authorization: new Cookies().get('access_token'),
         'Refresh-Token': new Cookies().get('refresh_token'),
