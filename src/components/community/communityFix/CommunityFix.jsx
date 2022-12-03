@@ -8,6 +8,7 @@ export default function CommunityFix(fixmodal) {
   const { postId } = useParams();
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
+  const [postsDetail, setPostsDetail] = useState({});
   //수정 요청
   const fixOnClickHandler = () => {
     instance
@@ -17,16 +18,29 @@ export default function CommunityFix(fixmodal) {
       })
       .then((res) => {
         alert(res.data.statusMsg);
-        navigate('/social/list/1');
+
+        navigate('/social');
 
         console.log('수정성공', res);
         console.log('성공');
       })
       .catch((error) => {
-        console.log('실패');
+        alert('수정할 내용을 입력해 주세요.');
       });
   };
 
+  useEffect(() => {
+    instance
+      .get(`/lier/post/${postId}`)
+      .then((res) => {
+        setPostsDetail(res.data.data);
+        console.log('악시오스성공', res.data.data);
+        console.log('성공');
+      })
+      .catch((error) => {
+        console.log('상세조회실패');
+      });
+  }, []);
   const postOnChangeHandler = (e) => {
     setContent(e.target.value);
   };
@@ -34,7 +48,7 @@ export default function CommunityFix(fixmodal) {
     setTitle(e.target.value);
   };
   const cancelClickHandler = () => {
-    fixmodal(false);
+    fixmodal.fixmodal(false);
   };
   return (
     <>
@@ -46,12 +60,14 @@ export default function CommunityFix(fixmodal) {
               className="fixTitleInput"
               onChange={postOnChangeHandler}
               placeholder="글제목을 입력해주세요."
+              defaultValue={postsDetail.title}
             ></input>
-            <input
+            <textarea
               className="fixPostInput"
               onChange={titleOnChangeHandler}
               placeholder="내용을 입력해주세요."
-            ></input>
+              defaultValue={postsDetail.content}
+            ></textarea>
           </div>
           <div className="communityFixBtnBox">
             <button className="fixRegistrationBtn" onClick={fixOnClickHandler}>

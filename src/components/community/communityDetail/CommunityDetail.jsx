@@ -13,19 +13,23 @@ import instance from '../../../shared/Request';
 export default function CommunityDetail() {
   const [fix, setFix] = useState(false);
   const [postDetail, setPostDetail] = useState('');
+  const [user, setUser] = useState();
   const { postId } = useParams();
   console.log('postid', postId);
   const navigate = useNavigate();
+  const nickName = sessionStorage.getItem('nickname');
+
   const fixOnClickHamdler = () => {
     setFix(true);
   };
+
   //삭제 요청
   const deleteOnClickHancler = () => {
     instance
       .delete(`/lier/post/${postId}`)
-      .then(() => {
-        console.log('성공');
-        navigate('/social/list/1');
+      .then((res) => {
+        alert(res.data.data);
+        navigate('/social');
       })
       .catch((error) => {
         console.log('실패');
@@ -51,25 +55,30 @@ export default function CommunityDetail() {
         <div className="detailBoxImg">
           <div className="detailMainBox">
             <div className="detailBtnTitleBox">
-              <div className="detailBtnBox">
-                <button onClick={fixOnClickHamdler}>
-                  <FixIcon className="detailsvgIcon" />
-                  수정
-                </button>
-                {fix === true ? (
-                  <CommunityFix fixmodal={setFix} postfix={fix} />
-                ) : (
-                  ''
-                )}
-                <button onClick={deleteOnClickHancler}>
-                  <DeleteIcon className="detailsvgIcon" />
-                  삭제
-                </button>
-              </div>
+              {' '}
+              {nickName === postDetail.author ? (
+                <div className="detailBtnBox">
+                  <button onClick={fixOnClickHamdler}>
+                    <FixIcon className="detailsvgIcon" />
+                    수정
+                  </button>
+                  {fix === true ? (
+                    <CommunityFix fixmodal={setFix} postfix={fix} />
+                  ) : (
+                    ''
+                  )}
+                  <button onClick={deleteOnClickHancler}>
+                    <DeleteIcon className="detailsvgIcon" />
+                    삭제
+                  </button>
+                </div>
+              ) : (
+                ''
+              )}
               <div className="detailPostBox">
                 <h2>{postDetail.title}</h2>
                 <div className="detailPostInformation">
-                  <h4>{postDetail.author} |</h4>{' '}
+                  <h4>{postDetail.author} |</h4>
                   <h4>{postDetail.createdAt} |</h4>
                   <h4>조회수 {postDetail.viewcnt}</h4>
                 </div>
