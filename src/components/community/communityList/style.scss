@@ -8,14 +8,22 @@ $mainWidth: 1180px;
   align-items: center;
   justify-content: center;
   position: fixed;
+
   left: 0;
   top: 0;
-  text-align: center;
 
   z-index: -1;
   background: url(../../../images/png/lobbyBackGround.png);
 }
 
+.searchAndMainBox {
+  height: 780px;
+  width: 1180px;
+  margin-top: 100px;
+  justify-content: center;
+  justify-content: center;
+  display: flex;
+}
 .communityRoomNum {
   display: flex;
   justify-content: space-between;
@@ -43,7 +51,7 @@ $mainWidth: 1180px;
   align-items: center;
   justify-content: center;
   position: fixed;
-
+  margin-top: 50px;
   width: 1180px;
   height: 720px;
   background: url(../../../images/png/communityBox.png);
@@ -102,7 +110,7 @@ $mainWidth: 1180px;
 
   margin-top: 18px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .writeBtn {
@@ -158,10 +166,9 @@ $mainWidth: 1180px;
 .pageListBox {
   width: 203px;
   height: 16px;
-
+  margin-left: 310px;
   display: flex;
   justify-content: space-between;
-  
 }
 
 .pageListNum {
@@ -174,27 +181,51 @@ $mainWidth: 1180px;
   color: rgba(255, 255, 255, 1);
   font-size: 17px;
 }
+.communitySelectBox {
+  width: 65px;
+  height: 16px;
 
-.dropDownBox {
-  width: 91px;
-  height: 82px;
-  background-color: #4d4d4d;
-  border-radius: 8px;
-  border: 1px solid #808080;
+  align-items: center;
+}
+.communitySelectMain {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+
+  appearance: none;
+  color: white;
+  font-weight: bold;
+  border: none;
+  text-align: center;
+  position: fixed;
+
+  justify-content: center;
+  align-items: center;
 }
 
+.dropBoxArrow {
+  margin-left: 5px;
+}
 .recentBox {
-  width: 91px;
+  width: 90px;
   height: 41px;
   border-bottom: 1px solid #808080;
   color: white;
   padding-top: 10px;
+  text-align: center;
 }
 
 .viewBox {
-  width: 91px;
+  width: 90px;
   height: 41px;
   color: white;
 
   padding-top: 10px;
+}
+
+.dropBoxBody {
+  width: 91px;
+  height: 83px;
+  border-radius: 5px;
+  border: 1px solid #808080;
+  background-color: #4d4d4d;
 }
