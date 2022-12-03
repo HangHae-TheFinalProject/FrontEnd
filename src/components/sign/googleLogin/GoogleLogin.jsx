@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 
-import { ReactComponent as GoogleLoginBtn } from '../../../images/svg/GoogleLoginBtn.svg';
 import instance from '../../../shared/Request';
+import { setClientHeaders } from '../../../shared/Request';
 
 import './style.scss';
+
+import { ReactComponent as GoogleLoginBtn } from '../../../images/svg/GoogleLoginBtn.svg';
 
 export default function GoogleLogin() {
   const navigate = useNavigate();
@@ -40,8 +42,17 @@ export default function GoogleLogin() {
                 'realnickname',
                 res.data.data.nickname.replace(/#\d*/, '')
               );
+              const access_token =
+                res.request.getResponseHeader('authorization');
+              const refresh_token =
+                res.request.getResponseHeader('refresh-token');
+              setClientHeaders({
+                // interceptor
+                access: access_token,
+                refresh: refresh_token,
+              });
+              navigate('/lobby');
             });
-          navigate('/lobby');
         }}
         onReject={(error) => {
           alert('로그인에 실패하였습니다.');
