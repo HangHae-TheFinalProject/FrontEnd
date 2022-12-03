@@ -14,9 +14,7 @@ const localUser = new UserModel();
 class VideoRoom extends Component {
     constructor(props) {
         super(props);
-        this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
-            ? this.props.openviduServerUrl
-            : 'https://' + window.location.hostname + ':4443';
+        this.OPENVIDU_SERVER_URL = process.env.REACT_APP_OPENVIDU_URL;
         this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : 'MY_SECRET';
         this.hasBeenUpdated = false;
         let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
@@ -36,7 +34,7 @@ class VideoRoom extends Component {
 
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
-        this.onbeforeunload = this.onbeforeunload.bind(this)        
+        this.onbeforeunload = this.onbeforeunload.bind(this)
         this.camStatusChanged = this.camStatusChanged.bind(this);
         this.micStatusChanged = this.micStatusChanged.bind(this);
         this.micToggleMuted = this.micToggleMuted.bind(this);
@@ -471,7 +469,7 @@ class VideoRoom extends Component {
             bigFirst: true,
             animate: true,
         };
-       
+
     }
 
     toggleChat(property) {
