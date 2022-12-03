@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { LoginSocialGoogle } from 'reactjs-social-login';
+import { setClientHeaders } from '../../../shared/Request';
 import { ReactComponent as GoogleLoginBtn } from '../../../images/svg/GoogleLoginBtn.svg';
 import './style.scss';
 
@@ -40,8 +41,17 @@ export default function GoogleLogin() {
                 'realnickname',
                 res.data.data.nickname.replace(/#\d*/, '')
               );
+              const access_token =
+                res.request.getResponseHeader('authorization');
+              const refresh_token =
+                res.request.getResponseHeader('refresh-token');
+              setClientHeaders({
+                // interceptor
+                access: access_token,
+                refresh: refresh_token,
+              });
+              navigate('/lobby');
             });
-          navigate('/lobby');
         }}
         onReject={(error) => {
           alert('로그인에 실패하였습니다.');
