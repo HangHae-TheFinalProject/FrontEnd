@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
-import instance from '../../../shared/Request';
 import { useParams, useNavigate } from 'react-router-dom';
+import instance from '../../../shared/Request';
+
+import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
+
 import './style.scss';
+
 export default function CommunityFix(fixmodal) {
-  const navigate = useNavigate();
-  useEffect(() => {});
   const { postId } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {});
+
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [postsDetail, setPostsDetail] = useState({});
+
   //수정 요청
   const fixOnClickHandler = () => {
     instance
@@ -18,9 +25,7 @@ export default function CommunityFix(fixmodal) {
       })
       .then((res) => {
         alert(res.data.statusMsg);
-
         navigate('/social');
-
         console.log('수정성공', res);
         console.log('성공');
       })
@@ -41,29 +46,38 @@ export default function CommunityFix(fixmodal) {
         console.log('상세조회실패');
       });
   }, []);
+
   const postOnChangeHandler = (e) => {
     setContent(e.target.value);
   };
+
   const titleOnChangeHandler = (e) => {
     setTitle(e.target.value);
   };
+
   const cancelClickHandler = () => {
     fixmodal.fixmodal(false);
   };
+
   return (
     <>
-      <div className="communityFixBox">
+      <div className="communityFixBox fontLightBold">
+        <img
+          className="communityFixBackgroundImg"
+          src={lobbyBackGround}
+          alt="background"
+        />
         <div className="fixBoxImg">
           <div className="fixTitle">글 수정하기</div>
-          <div>
+          <div className="fixInputBox">
             <input
-              className="fixTitleInput"
+              className="fixTitleInput fontSemiBold"
               onChange={postOnChangeHandler}
               placeholder="글제목을 입력해주세요."
               defaultValue={postsDetail.title}
             ></input>
             <textarea
-              className="fixPostInput"
+              className="fixPostInput fontSemiBold"
               onChange={titleOnChangeHandler}
               placeholder="내용을 입력해주세요."
               defaultValue={postsDetail.content}

@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import instance from '../../../shared/Request';
 
-import './style.scss';
+import CommunityCard from '../communityCard/CommunityCard';
+
 import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
 import communutyBox from '../../../images/png/communityBox.png';
-import { useNavigate, useParams } from 'react-router-dom';
-import instance from '../../../shared/Request';
+
 import { ReactComponent as PenIcon } from '../../../images/svg/PenIcon.svg';
 import { ReactComponent as SearchIcon } from '../../../images/svg/SearchIcon.svg';
 import { ReactComponent as DropBoxDown } from '../../../images/svg/DropBoxIconDown.svg';
 import { ReactComponent as PageBtnIconR } from '../../../images/svg/PageBtnIconR.svg';
 import { ReactComponent as PageBtnIconL } from '../../../images/svg/PageBtnIconL.svg';
-import { useState } from 'react';
-import CommunityCard from '../communityCard/CommunityCard';
 
-import { current } from '@reduxjs/toolkit';
+import './style.scss';
 
 export default function CommunityList({ post }) {
   const MAX_PAGE_NUM = 5;
@@ -69,6 +69,7 @@ export default function CommunityList({ post }) {
   const searchOnChangeHandler = (e) => {
     setValue(e.target.value);
   };
+
   const searchOnClickHandler = () => {
     setCurrentPageNum(1);
     instance
@@ -83,6 +84,7 @@ export default function CommunityList({ post }) {
         console.log(error);
       });
   };
+
   const showPageNumbers = () => {
     let arr = [];
     const start = (pageNum - 1) * MAX_PAGE_NUM;
@@ -91,6 +93,7 @@ export default function CommunityList({ post }) {
       if (i > maxPage) break;
       arr.push(i);
     }
+
     setArrPage([...arr]);
     setCurrentPageNum(start + 1);
   };
@@ -110,88 +113,88 @@ export default function CommunityList({ post }) {
   });
 
   return (
-    <>
-      <div className="communityBackground">
-        <div className="communityImgBackground">
-          <div className="searchAndMainBox">
-            <div className="searchBox">
-              <input onChange={searchOnChangeHandler} />
-              <SearchIcon
-                className="searchIcon"
-                onClick={searchOnClickHandler}
-              />
+    <div className="communityBackground">
+      <img
+        className="communityBackgroundImg"
+        src={lobbyBackGround}
+        alt="background"
+      />
+      <div className="searchAndMainBox">
+        <div className="searchBox">
+          <input onChange={searchOnChangeHandler} />
+          <SearchIcon className="searchIcon" onClick={searchOnClickHandler} />
+        </div>
+        <div className="communityBoxImg">
+          <div className="communityListMainBox">
+            <div className="communityRoomNum">
+              <h5>게시글 총 {postsCnt}개</h5>
+              <div className="communitySelectBox">
+                <ul
+                  className="communitySelectMain"
+                  onClick={() => {
+                    setView(!view);
+                  }}
+                >
+                  {currentSortBase === 'recent' ? '최신순' : '인기순'}
+                  <DropBoxDown className="dropBoxArrow" />
+                  {view && (
+                    <div className="dropBoxBody">
+                      <li
+                        className="recentBox"
+                        onClick={() => setCurrentSortBase('recent')}
+                      >
+                        최신순
+                      </li>
+                      <li
+                        className="viewBox"
+                        onClick={() => setCurrentSortBase('view')}
+                      >
+                        인기순
+                      </li>
+                    </div>
+                  )}
+                </ul>
+              </div>
             </div>
-            <div className="communityBoxImg">
-              <div className="communityListMainBox">
-                <div className="communityRoomNum">
-                  <h5>게시글 총 {postsCnt}개</h5>
-                  <div className="communitySelectBox">
-                    <ul
-                      className="communitySelectMain"
+            <div className="communityListBox">
+              <div className="communityTitleBox">
+                <h3 className="communityTitle">제목</h3>
+                <h3 className="communityNum">조회수</h3>
+                <h3 className="communityDate">작성일</h3>
+              </div>
+              <div>
+                <h3 className="communityNameBox">닉네임</h3>
+              </div>
+            </div>
+            <CommunityCard postDetail={data} />
+            <div className="communityBtnBox">
+              <button className="writeBtn" onClick={onClickHandler}>
+                <PenIcon className="penIcon" />
+                글쓰기
+              </button>
+              <div className="pageListBox">
+                <div className="communityListarrowBoxL">
+                  {pageNum > 1 ? (
+                    <a href="#" onClick={pageUp}>
+                      <PageBtnIconL />
+                    </a>
+                  ) : (
+                    ''
+                  )}
+                </div>
+                <div className="pageListNum">
+                  {arrPage.map((val) => (
+                    <div
+                      key={val}
                       onClick={() => {
-                        setView(!view);
+                        setCurrentPageNum(val);
                       }}
                     >
-                      {currentSortBase === 'recent' ? '최신순' : '인기순'}{' '}
-                      <DropBoxDown className="dropBoxArrow" />
-                      {view && (
-                        <div className="dropBoxBody">
-                          <li
-                            className="recentBox"
-                            onClick={() => setCurrentSortBase('recent')}
-                          >
-                            최신순
-                          </li>
-                          <li
-                            className="viewBox"
-                            onClick={() => setCurrentSortBase('view')}
-                          >
-                            인기순
-                          </li>
-                        </div>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-                <div className="communityListBox">
-                  <div className="communityTitleBox">
-                    <h3 className="communityTitle">제목</h3>
-                    <h3 className="communityNum">조회수</h3>
-                    <h3 className="communityDate">작성일</h3>
-                  </div>
-                  <div>
-                    <h3 className="communityNameBox">닉네임</h3>
-                  </div>
-                </div>
-                <CommunityCard postDetail={data} />
-                <div className="communityBtnBox">
-                  <button className="writeBtn" onClick={onClickHandler}>
-                    <PenIcon className="penIcon" />
-                    글쓰기
-                  </button>
-                  <div className="pageListBox">
-                    <div className="communityListarrowBoxL">
-                      {pageNum > 1 ? (
-                        <a href="#" onClick={pageUp}>
-                          <PageBtnIconL />
-                        </a>
-                      ) : (
-                        ''
-                      )}
+                      {console.log(val)}
+                      {val}
                     </div>
-                    <div className="pageListNum">
-                      {arrPage.map((val) => (
-                        <div
-                          key={val}
-                          onClick={() => {
-                            setCurrentPageNum(val);
-                          }}
-                        >
-                          {console.log(val)}
-                          {val}
-                        </div>
-                      ))}
-                      {/* {arrPage.map((val) => (
+                  ))}
+                  {/* {arrPage.map((val) => (
                         <div
                           key={val}
                           onClick={() => {
@@ -202,24 +205,22 @@ export default function CommunityList({ post }) {
                           {val}
                         </div>
                       ))} */}
-                    </div>
-                    <div className="communityListarrowBoxR">
-                      {maxPage > MAX_PAGE_NUM &&
-                      pageNum < maxPage / MAX_PAGE_NUM ? (
-                        <a href="#" onClick={pageDown}>
-                          <PageBtnIconR />
-                        </a>
-                      ) : (
-                        ''
-                      )}
-                    </div>
-                  </div>
+                </div>
+                <div className="communityListarrowBoxR">
+                  {maxPage > MAX_PAGE_NUM &&
+                  pageNum < maxPage / MAX_PAGE_NUM ? (
+                    <a href="#" onClick={pageDown}>
+                      <PageBtnIconR />
+                    </a>
+                  ) : (
+                    ''
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

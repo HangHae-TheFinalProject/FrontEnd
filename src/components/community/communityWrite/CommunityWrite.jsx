@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import instance from '../../../shared/Request';
 import { useNavigate } from 'react-router-dom';
+import instance from '../../../shared/Request';
+
+import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
+
 import './style.scss';
+
 export default function CommunityWrite() {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
@@ -20,7 +24,6 @@ export default function CommunityWrite() {
       .catch((error) => {
         console.log('실패');
       });
-
     // console.log(title, content);
     // dispatch(__postWrite({ title, content }));
   };
@@ -28,32 +31,38 @@ export default function CommunityWrite() {
   const titleOnChangeHandler = (e) => {
     setTitle(e.target.value);
   };
+
   const contentOnChangeHandler = (e) => {
     setContent(e.target.value);
   };
+
   const cancelClickHandler = () => {
     navigate('/social');
   };
 
   return (
     <>
-      <div className="communityWriteBox">
+      <div className="communityWriteBox fontLightBold">
+        <img
+          className="communityWriteBackgroundImg"
+          src={lobbyBackGround}
+          alt="background"
+        />
         <div className="writeBoxImg">
-          <div className="writeTitle">
-            <h3>새로운 글 작성하기</h3>
-          </div>
-          <div>
+          <span className="writeTitle">새로운 글 작성하기</span>
+          <div className="writeInputBox">
             <input
               type="text"
-              className="writeTitleInput"
-              placeholder="제목을 입력해주세요"
+              className="writeTitleInput fontSemiBold"
+              placeholder="제목을 입력해주세요."
               onChange={titleOnChangeHandler}
-            ></input>
+            />
             <textarea
-              className="writePostInput"
-              placeholder="내용을 입력해주세요"
+              type="text"
+              className="writePostInput fontSemiBold"
+              placeholder="내용을 입력해주세요."
               onChange={contentOnChangeHandler}
-            ></textarea>
+            />
           </div>
           <div className="communityWriteBtnBox">
             <button
