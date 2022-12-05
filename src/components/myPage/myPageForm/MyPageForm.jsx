@@ -16,15 +16,17 @@ function MyPageForm() {
 
   // 전적 조회 api
   const getMyPageAllRecord = () => {
-    instance
-      .get('/lier/myinfo/allrecord')
-      .then((response) => setRecordData(response.data.data));
+    instance.get('/lier/myinfo/allrecord').then((response) => {
+      console.log('전적 조회, response.data', response.data);
+      setRecordData(response.data.data);
+    });
   };
 
   // 업적 조회 api
   const getMyPageReward = () => {
     instance.get('/lier/myinfo/reward').then((response) => {
-      setRewardData(response.data.data.rewardlist);
+      console.log('업적 조회, response.data', response.data);
+      setRewardData(response.data.data);
     });
   };
 

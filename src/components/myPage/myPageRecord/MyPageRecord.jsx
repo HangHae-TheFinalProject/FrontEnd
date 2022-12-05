@@ -3,7 +3,6 @@ import './style.scss';
 
 function MyPageRecord({ allRecord }) {
   const [record, setRecord] = useState(allRecord);
-  const defaultPlayTimeState = '아직 플레이하지 않았습니다.';
 
   useEffect(() => {
     setRecord(allRecord);
@@ -31,17 +30,8 @@ function MyPageRecord({ allRecord }) {
           <span className="rewardNum fontBold">{record.rewardCnt}</span>
         </div>
         <div className="myPagePlayRecord">
-          {defaultPlayTimeState === record.totalPlayTime ? (
-            <>
-              <span className="recordTitle">플레이 시간</span>
-              <span className="recordNum fontBold">0분</span>
-            </>
-          ) : (
-            <>
-              <span className="recordTitle">플레이 시간</span>
-              <span className="recordNum fontBold">{record.totalPlayTime}</span>
-            </>
-          )}
+          <span className="recordTitle">플레이 시간</span>
+          <span className="recordNum fontBold">{record.totalPlayTime}</span>
         </div>
         <div className="myPagePlayRecord">
           <span className="recordTitle">라이어 승리</span>
