@@ -54,7 +54,6 @@ export default function CommunityList({ post }) {
     instance
       .get(`/lier/posts/${currentPageNum}/sort/${currentSortBase}`)
       .then((res) => {
-        console.log('showList', res);
         setMaxPage(res.data.data.pageCnt);
         setData(res.data.data.pageInPosts);
         setPostsCnt(res.data.data.postsCnt);
@@ -75,13 +74,12 @@ export default function CommunityList({ post }) {
     instance
       .post(`/lier/search/post/${currentPageNum}`, { value: value })
       .then((res) => {
-        console.log('검색', res);
         setMaxPage(res.data.data.pageCnt);
         setData(res.data.data.pageInPosts);
         setPostsCnt(res.data.data.postsCnt);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error.response.data.data);
       });
   };
 
