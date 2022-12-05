@@ -1,39 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import './style.scss';
-import { useParams } from 'react-router-dom';
-import instance from '../../../shared/Request';
 import CommentPost from '../commentPost/CommentPost';
-import CommentsList from '../commentsList/CommentsList';
+import CommentItem from '../commentItem/CommentItem';
 
-function CommentsForm() {
-  const { id } = useParams();
-  const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+import './style.scss';
 
-  // 게시글 상세 조회 api
-  const getAllComments = (payload) => {
-    try {
-      instance.get(`/lier/post/${payload}`).then((response) => {
-        const getComments = response.data.data.comments;
-        setComments(getComments);
-        setIsLoading(false);
-      });
-    } catch (error) {
-      console.log('게시글 상세 조회', error);
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getAllComments(id);
-    console.log(isLoading);
-  }, [id, isLoading]);
-
+function CommentsForm({ postId, comments, setIsLoading, nickname }) {
   return (
     <div className="commentsLayout">
       <span className="commentsCount fontBold">{`댓글 ${comments.length}`}</span>
-      <CommentsList comments={comments} setIsLoading={setIsLoading}/>
-      <CommentPost setIsLoading={setIsLoading}/>
+      <div className="commentItem">
+        {comments &&
+          comments.map((comment) => (
+            <CommentItem
+              key={comment.commentid}
+              comment={comment}
+              setIsLoading={setIsLoading}
+              nickname={nickname}
+            />
+          ))}
+      </div>
+      <CommentPost postId={postId} setIsLoading={setIsLoading} />
     </div>
   );
 }

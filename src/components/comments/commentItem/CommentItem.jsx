@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import instance from '../../../shared/Request';
 import './style.scss';
 
-function CommentItem({ comment, setIsLoading }) {
+function CommentItem({ comment, setIsLoading, nickname }) {
   const [editValue, setEditValue] = useState(comment);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -25,19 +25,20 @@ function CommentItem({ comment, setIsLoading }) {
   // 댓글 삭제 api
   const deleteComment = (payload) => {
     setIsLoading(true);
-    try {
-      const result = window.confirm('댓글을 정말로 삭제하시겠습니까?');
-      if (result)
-        instance.delete(`/lier/comment/${payload}`).then((response) => {
+    const result = window.confirm('댓글을 정말로 삭제하시겠습니까?');
+    if (result)
+      instance
+        .delete(`/lier/comment/${payload}`)
+        .then((response) => {
           alert(response.data.data);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log('댓글 삭제', error);
+          setIsLoading(false);
         });
-    } catch (error) {
-      console.log('댓글 삭제', error);
-      setIsLoading(false);
-    }
   };
-  
+
   return (
     <>
       {isEdit ? (
@@ -45,9 +46,10 @@ function CommentItem({ comment, setIsLoading }) {
           <textarea
             className="commentEditInput fontBold"
             value={editValue.content}
-            onChange={(e) => setEditValue({...editValue, content:e.target.value})}
-          >
-          </textarea>
+            onChange={(e) =>
+              setEditValue({ ...editValue, content: e.target.value })
+            }
+          ></textarea>
           <div className="commentEditBtn">
             <button
               className="editCancelBtn fontBold"
@@ -78,8 +80,14 @@ function CommentItem({ comment, setIsLoading }) {
               </span>
             </div>
             <div className="commentBtn">
-              <span onClick={() => setIsEdit(true)}>댓글 수정</span>
-              <span onClick={() => deleteComment(editValue.commentid)}>삭제</span>
+              {nickname === comment.author ? (
+                <>
+                  <span onClick={() => setIsEdit(true)}>댓글 수정</span>
+                  <span onClick={() => deleteComment(editValue.commentid)}>
+                    삭제
+                  </span>
+                </>
+              ) : null}
             </div>
           </div>
           <span className="commentContent">{editValue.content}</span>

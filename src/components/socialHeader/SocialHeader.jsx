@@ -39,24 +39,3 @@ function SocialHeader() {
 }
 
 export default SocialHeader;
-
-{
-  /* <>
-      <div className="headerbackground fontLightBold">
-        <header className="headerBtnBox">
-          <div className="lobbyBox" onClick={() => navigate('/lobby')}>
-            <img src={headerArrow} alt="headerArrow" />
-            <span>로비</span>
-          </div>
-          <h1>커뮤니티</h1>
-          <span onClick={() => setOpenModal(true)}>마이페이지</span>
-          {openModal && (
-            <Modal
-              onClose={() => setOpenModal(false)}
-              content={<MyInfoForm />}
-            />
-          )}
-        </header>
-      </div>
-    </> */
-}

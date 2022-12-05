@@ -1,29 +1,45 @@
 @mixin commentsFormArea($width-size, $height-size) {
   width: $width-size;
   height: $height-size;
-
   font-size: 16px;
 }
 
+.commentsLayout {
+  @include commentsFormArea(1040px, 400px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
 .commentsCount {
-  @include commentsFormArea(1030px, 20px);
-
-  margin-bottom: 15px;
-
+  @include commentsFormArea(1040px, 20px);
+  margin-bottom: 10px;
   color: rgba(255, 255, 255, 1);
 }
 
-.commentsLayout {
-  // 게시글이랑 합칠 경우 높이 수정 필요
-  @include commentsFormArea(1130px, 100vh);
-
+.commentItem {
+  @include commentsFormArea(1065px, 260px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  margin: auto;
-
-  // 임시 배경
-  background-color: rgba(60, 60, 60, 1);
+  overflow-y: scroll;
+  margin-bottom: 10px;
 }

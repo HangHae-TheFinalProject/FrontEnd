@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import './style.scss';
-import { useParams } from 'react-router-dom';
 import instance from '../../../shared/Request';
 
-function CommentPost({ setIsLoading }) {
-  const { id } = useParams();
+import './style.scss';
+
+function CommentPost({ postId, setIsLoading }) {
   const [comment, setComment] = useState('');
 
   // 댓글 작성 api
-  const postComment = async (payload) => {
+  const postComment = (payload) => {
     setIsLoading(true);
-    try {
-      if (comment.trim() === '') return alert('내용을 입력해주세요');
-      await instance.post(`/lier/comment/${id}`, payload);
-      setComment('');
-      setIsLoading(false);
-    } catch (error) {
-      console.log('댓글 작성', error);
-      setIsLoading(false);
-    }
+    if (comment.trim() === '') return alert('내용을 입력해주세요');
+    instance
+      .post(`/lier/comment/${postId}`, payload)
+      .then(() => {
+        setComment('');
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log('댓글 작성', error);
+        setIsLoading(false);
+      });
   };
 
   return (

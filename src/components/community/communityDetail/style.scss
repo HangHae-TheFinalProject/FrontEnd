@@ -1,96 +1,111 @@
 .communityDetailBox {
-  height: 100%;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  left: 0;
-  top: 0;
-  text-align: center;
-
-  z-index: -1;
-  background: url(../../../images/png/lobbyBackGround.png);
+  width: 100vw;
+  height: 100vh;
 }
+
+.communityDetailBackgroundImg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
 .detailBoxImg {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  position: fixed;
-
-  width: 1133px;
-  height: 837px;
+  align-items: center;
+  justify-content: center;
+  // position: fixed;
+  width: 1142px;
+  height: 842px;
   background: url(../../../images/png/detailBack.png);
 }
 
 .detailMainBox {
-  width: 1028px;
-  height: 341px;
-}
+  width: 1040px;
+  height: 740px;
 
-.detailBtnTitleBox {
-  width: 1028px;
-  height: 52px;
-
-  margin-top: 52px;
-}
-
-.detailBtnBox {
-  width: 160px;
-  height: 40px;
-  float: right;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
-  button {
-    width: 74px;
-    height: 36px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-    margin-right: 11px;
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding-bottom: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-.detailsvgIcon {
-  margin-right: 3px;
+
+  // background-color: rgba(179, 179, 179, 0.5);
 }
 
 .detailPostBox {
-  width: 865px;
-  height: 50px;
+  width: 1040px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.detailPostTitleBox {
+  width: 1040px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   h2 {
-    margin-left: 5px;
-    display: flex;
-    flex-direction: row;
+    font-size: 24px;
     color: white;
+    margin: 0;
+  }
+}
+
+.detailBtnBox {
+  display: flex;
+  gap: 10px;
+
+  .detailsvgIcon {
+    margin-right: 5px;
+  }
+
+  button {
+    width: 80px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
   }
 }
 
 .detailPostInformation {
   display: flex;
-  flex-direction: row;
-  h4 {
-    font-weight: normal;
+  width: inherit;
+  color: rgba(179, 179, 179, 1);
+
+  margin-bottom: 40px;
+
+  .postInfoAuthor {
+    font-size: 16px;
+  }
+
+  .postInfoElement {
+    font-size: 16px;
+    font-weight: 100;
     margin-left: 5px;
-    color: white;
   }
 }
 
 .detailPostContent {
-  height: 280px;
-  width: 865px;
+  width: inherit;
+  height: inherit;
+  color: white;
 
-  h4 {
-    padding-top: 36px;
-    float: left;
-    color: white;
-    margin-left: 5px;
+  .postContent {
+    font-size: 16px;
   }
 }
