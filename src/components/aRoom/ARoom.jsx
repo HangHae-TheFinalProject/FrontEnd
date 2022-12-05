@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useInput from '../../hooks/useInput';
+import { useDispatch } from 'react-redux';
+import { setRoom } from '../../redux/modules/roomsSlice';
 
+import useInput from '../../hooks/useInput';
 import Modal from '../../elements/modal/Modal';
 
-import './style.scss';
 import door1 from '../../images/png/door1.png';
 import door2 from '../../images/png/door2.png';
 import door3 from '../../images/png/door3.png';
 import door4 from '../../images/png/door4.png';
-import passwordLayout from '../../images/png/passwordLayout.png';
 import { ReactComponent as IcLock } from '../../images/svg/IcLock.svg';
-import { ReactComponent as icArrowLeft } from '../../images/svg/icArrowLeft.svg';
+import passwordLayout from '../../images/png/passwordLayout.png';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setRoom } from '../../redux/modules/roomsSlice';
+import './style.scss';
 
 function ARoom({ roomInfo }) {
   const MAX_NUMBER_OF_PERSON = 8;
@@ -26,7 +25,6 @@ function ARoom({ roomInfo }) {
   const [openModal, setOpenModal] = useState(false);
 
   const joinRoom = () => {
-
     if (roomInfo.member.length >= MAX_NUMBER_OF_PERSON) {
       alert('빈자리가 없습니다.');
       return;
@@ -47,41 +45,37 @@ function ARoom({ roomInfo }) {
   };
 
   return (
-    <>
-      <div className="roomBox">
-        <div className="roomInfoBox">
-          <div className="modeCheck">{roomInfo.mode}</div>
-          <span>{ARR_MODE[roomInfo.mode]}</span>
-        </div>
-
-        <a href="#" onClick={joinRoom}>
-          <img
-            className="doorImg"
-            src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
-          />
-        </a>
-
-        <div className="roomName">
-          <p> {roomInfo.roomPassword ? <IcLock /> : ''}</p>
-          <p>{roomInfo.roomName}</p>
-        </div>
-
-        <span className="memderLength">
-          ({roomInfo.member.length}/{MAX_NUMBER_OF_PERSON})
-        </span>
-        {openModal && (
-          <Modal
-            onClose={() => setOpenModal(false)}
-            content={
-              <PasswordModal
-                roomId={roomInfo.id}
-                password={roomInfo.roomPassword}
-              />
-            }
-          />
-        )}
+    <div className="roomBox fontBold">
+      <div className="roomInfoBox">
+        <div className="modeCheck">{roomInfo.mode}</div>
+        <span>{ARR_MODE[roomInfo.mode]}</span>
       </div>
-    </>
+      <a href="#" onClick={joinRoom}>
+        <img
+          className="doorImg"
+          src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
+          alt="doorImg"
+        />
+      </a>
+      <div className="roomName">
+        <p>{roomInfo.roomPassword ? <IcLock /> : ''}</p>
+        <p>{roomInfo.roomName}</p>
+      </div>
+      <span className="memderLength">
+        {roomInfo.member.length}/{MAX_NUMBER_OF_PERSON}
+      </span>
+      {openModal && (
+        <Modal
+          onClose={() => setOpenModal(false)}
+          content={
+            <PasswordModal
+              roomId={roomInfo.id}
+              password={roomInfo.roomPassword}
+            />
+          }
+        />
+      )}
+    </div>
   );
 }
 
@@ -101,14 +95,14 @@ function PasswordModal({ roomId, password }) {
 
   return (
     <div>
-      <img src={passwordLayout} className="sectionModal" />
-      <div className="passwordBox">
+      <img className="sectionModal" src={passwordLayout} alt="passwordModal" />
+      <div className="passwordBox fontLightBold">
         <h2>비밀번호</h2>
-        <div className="passwordInputSet">
+        <div className="passwordInputSet fontSemiBold">
           <input
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="방 비밀번호를 입력해주세요."
             className="passwordInput"
-            type="password"
+            type="text"
             onChange={inputHandler}
           />
           <input

@@ -35,7 +35,7 @@ function RoomList() {
 
   return (
     <div>
-      <div className="selectbox">
+      <div className="selectBox">
         <select className="selectMain" onChange={selectHandler}>
           <option value="total">전체</option>
           <option value="normal">일반모드</option>
@@ -44,7 +44,6 @@ function RoomList() {
           <option value="start">진행중</option>
         </select>
       </div>
-
       <div className="sectionRoomList">
         <a href="#" onClick={pageUp}>
           <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
