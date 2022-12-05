@@ -28,9 +28,7 @@ export default function CommunityDetail() {
       .then((response) => {
         setPostDetail(response.data.data);
         setComments(response.data.data.comments);
-        // setIsLoading(false);
-        // console.log('악시오스성공', response.data);
-        // console.log('성공');
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log('게시글 상세 조회', error);

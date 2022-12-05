@@ -7,9 +7,9 @@ import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
 import './style.scss';
 
 export default function CommunityWrite() {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
   const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   const postOnClickHandler = () => {
     instance
