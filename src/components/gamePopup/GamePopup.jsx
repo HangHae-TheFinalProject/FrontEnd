@@ -27,7 +27,9 @@ function GamePopup({ closePopup, round, isAnswer, liarVote }) {
       content = <VoteDrawEndPopup closePopup={closePopup} />;
       break;
     case 'LIER_LIER':
-      content = <ResultLierLierPopup closePopup={closePopup} isAnswer={isAnswer} />;
+      content = (
+        <ResultLierLierPopup closePopup={closePopup} isAnswer={isAnswer} />
+      );
       break;
     case 'LIER_USER':
       content = <ResultLierUserPopup closePopup={closePopup} />;
@@ -75,14 +77,18 @@ const VotePopup = ({ closePopup, liarVote }) => {
                 onClick={() => {
                   voteHandler(member);
                 }}
-                className={`${voteMember ? 'inactiveVoteBox' : 'inGamePlayer'} ${member === voteMember ? 'highlightVoteBox' : ''}`}
+                className={`${
+                  voteMember ? 'inactiveVoteBox' : 'inGamePlayer'
+                } ${member === voteMember ? 'highlightVoteBox' : ''}`}
               >
                 <img
                   src={inGameLabelInActive}
                   alt="inGameLabel"
                   className="inGameLabel"
                 />
-                <figcaption className="inGameNickname">{member.replace(/#\d*/, '')}</figcaption>
+                <figcaption className="inGameNickname">
+                  {member.replace(/#\d*/, '')}
+                </figcaption>
               </figure>
             );
           })}
@@ -98,14 +104,18 @@ const VoteResultPopup = ({ closePopup }) => {
   return (
     <>
       <div className="popupTitleBox">
-        <span className="popupPlayState">과연 '{result.replace(/#\d*/, '')}' 의 정체는!?</span>
+        <span className="popupPlayState">
+          과연 '{result.replace(/#\d*/, '')}' 의 정체는!?
+        </span>
         <figure className="GameResult">
           <img
             src={inGameLabelActive}
             alt="resultLabel"
             className="resultLabel"
           />
-          <figcaption className="resultNickname">{result.replace(/#\d*/, '')}</figcaption>
+          <figcaption className="resultNickname">
+            {result.replace(/#\d*/, '')}
+          </figcaption>
         </figure>
       </div>
     </>
@@ -196,7 +206,7 @@ const VictoryUserPopup = ({ closePopup }) => {
 
   useEffect(() => {
     console.log(lierNickname);
-  }, [lierNickname])
+  }, [lierNickname]);
   return (
     <>
       <div className="popupTitleBox">
@@ -211,7 +221,9 @@ const VictoryUserPopup = ({ closePopup }) => {
                     alt="inGameLabel"
                     className="inGameLabel"
                   />
-                  <figcaption className="inGameNickname">{member.replace(/#\d*/, '')}</figcaption>
+                  <figcaption className="inGameNickname">
+                    {member.replace(/#\d*/, '')}
+                  </figcaption>
                 </figure>
               );
             }
@@ -223,7 +235,6 @@ const VictoryUserPopup = ({ closePopup }) => {
 };
 
 const VictoryLierPopup = ({ closePopup }) => {
-
   const memberLier = useSelector((state) => state.game.memberLier);
 
   return (
@@ -236,7 +247,10 @@ const VictoryLierPopup = ({ closePopup }) => {
             alt="resultLabel"
             className="resultLabel"
           />
-          <figcaption className="resultNickname">{memberLier.replace(/#\d*/, '')}</figcaption>
+
+          <figcaption className="resultNickname">
+            {memberLier.replace(/#\d*/, '')}
+          </figcaption>
         </figure>
       </div>
     </>
