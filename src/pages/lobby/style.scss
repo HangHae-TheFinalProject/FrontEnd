@@ -15,9 +15,9 @@
   height: 100vh;
 
   object-fit: cover;
+  z-index: -1;
 }
 
 .gameRoomCreateBtn {
   margin-top: 80px;
-  z-index: 1;
 }
