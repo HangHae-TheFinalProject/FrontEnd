@@ -110,15 +110,17 @@ $videoSectionWidth: 448px;
     }
 
     .btnBoard {
+      width: 606px;
       flex-basis: 97px;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
     }
   }
-}
-
-.btnBox {
-  width: 274px;
-  height: 100px;
-  position: relative;
 }
 
 // Btn
@@ -139,4 +141,26 @@ $videoSectionWidth: 448px;
   transform: translate(-50%, -50%);
   color: white;
   z-index: 2;
+}
+
+.mvIconWrap{
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  transform: translate(0%, -50%);
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.mvIconBox{
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

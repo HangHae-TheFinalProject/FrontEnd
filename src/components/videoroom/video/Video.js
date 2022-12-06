@@ -7,6 +7,14 @@ import ready from '../../../images/png/ready.png';
 import crown from '../../../images/svg/crown.svg';
 import nicknameBackground from '../../../images/svg/nicknameBackground.svg';
 
+import elliot from '../../../images/png/characters/elliot.png';
+import george from '../../../images/png/characters/george.png';
+import harry from '../../../images/png/characters/harry.png';
+import jack from '../../../images/png/characters/jack.png';
+import jaina from '../../../images/png/characters/jaina.png';
+import oliver from '../../../images/png/characters/oliver.png';
+import serena from '../../../images/png/characters/serena.png';
+import susan from '../../../images/png/characters/susan.png';
 
 export default function Video(props) {
     const nickname = props.user.getNickname();
@@ -18,7 +26,8 @@ export default function Video(props) {
     const isMaster = useSelector(state => state.rooms.room.owner) === nickname;
     const readyMemberList = useSelector(state => state.game.readyMemberList);
     const [isReady, setIsReady] = useState(false);
-
+    const arrCharacters = [elliot, george, harry, jack, jaina, oliver, serena, susan];
+    const myCharacter = arrCharacters[Number(nickname.match(/\d*$/)) % arrCharacters.length];
 
     const toggleSound = () => {
         setMutedSound(!mutedSound);
@@ -73,9 +82,13 @@ export default function Video(props) {
                             muted={props.mutedSound}
                         />
                         <VideoFrame myTurn={myTurn} />
-                        { isReady ? <div className='readyBox'>
+                        {isReady ? <div className='imageBox'>
                             <img src={ready} />
-                        </div> : '' }
+                        </div> : ''}
+
+                        {props.user.videoActive ? '' : <div className='imageBox'>
+                            <img src={myCharacter} />
+                        </div>}
                     </div>
                     <div className="nicknameBox">
                         <NickNameFrame myTurn={myTurn} />
