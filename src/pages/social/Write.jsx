@@ -1,9 +1,11 @@
 import CommunityWrite from '../../components/community/communityWrite/CommunityWrite';
+import SocialHeader from '../../components/socialHeader/SocialHeader';
 
 function Write() {
   return (
     <>
-      <CommunityWrite></CommunityWrite>
+      <SocialHeader />
+      <CommunityWrite />
     </>
   );
 }

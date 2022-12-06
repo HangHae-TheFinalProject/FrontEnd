@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import instance from '../../../shared/Request';
 
 import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
+import SocialHeader from '../../socialHeader/SocialHeader';
 
 import './style.scss';
 
@@ -60,39 +61,38 @@ export default function CommunityFix(fixmodal) {
   };
 
   return (
-    <>
-      <div className="communityFixBox fontLightBold">
-        <img
-          className="communityFixBackgroundImg"
-          src={lobbyBackGround}
-          alt="background"
-        />
-        <div className="fixBoxImg">
-          <div className="fixTitle">글 수정하기</div>
-          <div className="fixInputBox">
-            <input
-              className="fixTitleInput fontSemiBold"
-              onChange={postOnChangeHandler}
-              placeholder="글제목을 입력해주세요."
-              defaultValue={postsDetail.title}
-            ></input>
-            <textarea
-              className="fixPostInput fontSemiBold"
-              onChange={titleOnChangeHandler}
-              placeholder="내용을 입력해주세요."
-              defaultValue={postsDetail.content}
-            ></textarea>
-          </div>
-          <div className="communityFixBtnBox">
-            <button className="fixRegistrationBtn" onClick={fixOnClickHandler}>
-              수정하기
-            </button>
-            <button className="fixCancelBtn" onClick={cancelClickHandler}>
-              취소하기
-            </button>
-          </div>
+    <div className="communityFixBox fontLightBold">
+      <img
+        className="communityFixBackgroundImg"
+        src={lobbyBackGround}
+        alt="background"
+      />
+      <SocialHeader />
+      <div className="fixBoxImg">
+        <div className="fixTitle">글 수정하기</div>
+        <div className="fixInputBox">
+          <input
+            className="fixTitleInput fontSemiBold"
+            onChange={postOnChangeHandler}
+            placeholder="글제목을 입력해주세요."
+            defaultValue={postsDetail.title}
+          ></input>
+          <textarea
+            className="fixPostInput fontSemiBold"
+            onChange={titleOnChangeHandler}
+            placeholder="내용을 입력해주세요."
+            defaultValue={postsDetail.content}
+          ></textarea>
+        </div>
+        <div className="communityFixBtnBox">
+          <button className="fixRegistrationBtn" onClick={fixOnClickHandler}>
+            수정하기
+          </button>
+          <button className="fixCancelBtn" onClick={cancelClickHandler}>
+            취소하기
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

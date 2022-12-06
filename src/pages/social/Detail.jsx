@@ -3,7 +3,7 @@ import CommunityDetail from '../../components/community/communityDetail/Communit
 function Detail() {
   return (
     <>
-      <CommunityDetail></CommunityDetail>
+      <CommunityDetail />
     </>
   );
 }
