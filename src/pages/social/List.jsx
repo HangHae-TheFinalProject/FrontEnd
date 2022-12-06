@@ -5,7 +5,7 @@ function List() {
   return (
     <>
       <SocialHeader />
-      <CommunityList></CommunityList>
+      <CommunityList />
     </>
   );
 }

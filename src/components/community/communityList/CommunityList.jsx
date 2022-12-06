@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import instance from '../../../shared/Request';
 
 import CommunityCard from '../communityCard/CommunityCard';
-
 import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
-import communutyBox from '../../../images/png/communityBox.png';
-
 import { ReactComponent as PenIcon } from '../../../images/svg/PenIcon.svg';
 import { ReactComponent as SearchIcon } from '../../../images/svg/SearchIcon.svg';
 import { ReactComponent as DropBoxDown } from '../../../images/svg/DropBoxIconDown.svg';
@@ -107,21 +104,32 @@ export default function CommunityList({ post }) {
   });
 
   return (
-    <div className="communityBackground">
+    <div className="communityBackground fontBold">
       <img
         className="communityBackgroundImg"
         src={lobbyBackGround}
         alt="background"
       />
       <div className="searchAndMainBox">
-        <div className="searchBox">
-          <input onChange={searchOnChangeHandler} />
-          <SearchIcon className="searchIcon" onClick={searchOnClickHandler} />
+        <div className="searchBox fontSemiBold">
+          <input
+            onChange={searchOnChangeHandler}
+            onKeyPress={(e) =>
+              e.key === 'Enter' && searchOnClickHandler({ value: value })
+            }
+          />
+          <SearchIcon
+            className="searchIcon"
+            onClick={searchOnClickHandler}
+            onKeyPress={(e) =>
+              e.key === 'Enter' && searchOnClickHandler({ value: value })
+            }
+          />
         </div>
         <div className="communityBoxImg">
           <div className="communityListMainBox">
-            <div className="communityRoomNum">
-              <h5>게시글 총 {postsCnt}개</h5>
+            <div className="communityInfoLine fontSemiBold">
+              <div className="communityRoomNum">게시글 총 {postsCnt}개</div>
               <div className="communitySelectBox">
                 <ul
                   className="communitySelectMain"
@@ -160,11 +168,13 @@ export default function CommunityList({ post }) {
                 <h3 className="communityNameBox">닉네임</h3>
               </div>
             </div>
-            <CommunityCard postDetail={data} />
+            <div className="communityCardSection">
+              <CommunityCard postDetail={data} />
+            </div>
             <div className="communityBtnBox">
               <button className="writeBtn" onClick={onClickHandler}>
                 <PenIcon className="penIcon" />
-                글쓰기
+                <p>글쓰기</p>
               </button>
               <div className="pageListBox">
                 <div className="communityListarrowBoxL">
