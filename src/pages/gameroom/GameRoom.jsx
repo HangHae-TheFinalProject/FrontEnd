@@ -8,6 +8,7 @@ import {
   setPopupStatus,
   setGameBoardStatus,
   setMemberList,
+  removeMemberList,
   setMemberVoteResult,
   setMemberLier,
   setIsCamera,
@@ -15,6 +16,10 @@ import {
   addReadyMemberList,
   setReadyMemberList
 } from '../../redux/modules/gameSlice';
+
+import {
+  setOwner
+} from '../../redux/modules/roomsSlice';
 
 import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
@@ -41,6 +46,7 @@ import iconVideoOn from '../../images/png/iconVideoOn.png';
 
 // style
 import './style.scss';
+import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
   const { id } = useParams();
@@ -134,6 +140,19 @@ function GameRoom() {
         console.log(data);
 
         switch (data.type) {
+          case 'LEAVE':
+            // Test 필요
+            dispatch(removeMemberList(data.sender));
+            break;
+
+          case 'NEWOWNER':
+            dispatch(setOwner(data.sender));
+            setIsMaster(nickname === data.sender);
+            break;
+          case 'RESET':
+            alert(data.content);
+            initialize();
+            break;
           case 'START':
             setStageNumber(1);    // 함수로 연결
             setItem({ category: data.content.category, keyword: data.content.keyword });
@@ -381,7 +400,9 @@ function GameRoom() {
     dispatch(setMemberLier(''));
     dispatch(setSpotlightMember(''));
     dispatch(setPopupStatus('WAIT_START'));
+    dispatch(setGameBoardStatus('WAIT_START'));
     dispatch(setMemberVoteResult(''));
+    dispatch(setReadyMemberList([]));
   }
 
   let isCantGetDevice = false;

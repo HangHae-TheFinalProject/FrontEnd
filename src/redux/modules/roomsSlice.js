@@ -53,6 +53,9 @@ export const roomsSlice = createSlice({
     setRoom(state, action) {
       state.room = action.payload;
     },
+    setOwner(state, action) {
+      state.room.owner = action.payload;
+    }
   },
   extraReducers: {
     [__getRooms.pending]: (state, action) => {
@@ -70,5 +73,5 @@ export const roomsSlice = createSlice({
   },
 });
 
-export const { setRoom } = roomsSlice.actions;
+export const { setRoom, setOwner } = roomsSlice.actions;
 export default roomsSlice.reducer;
