@@ -34,6 +34,10 @@ import btnReady from '../../images/png/btnReady.png';
 import btnReadyInert from '../../images/png/btnReadyInert.png';
 import btnExit from '../../images/png/btnExit.png';
 import gameRoomBackground from '../../images/png/gameRoomBackground.png';
+import iconMicOff from '../../images/png/iconMicOff.png';
+import iconMicOn from '../../images/png/iconMicOn.png';
+import iconVideoOff from '../../images/png/iconVideoOff.png';
+import iconVideoOn from '../../images/png/iconVideoOn.png';
 
 // style
 import './style.scss';
@@ -46,6 +50,8 @@ function GameRoom() {
 
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
+  const [micOff, setMicOff] = useState(false);
+  const [videoOn, setVideoOn] = useState(true);
   const nickname = sessionStorage.getItem('nickname');
 
   // gamestatus
@@ -67,7 +73,7 @@ function GameRoom() {
 
   const leaveRoom = async () => {
     console.log('leaveRoom');
-    
+
     try {
       instance.delete(`/lier/room/${Number(id)}/exit`);
     } catch (error) {
@@ -133,7 +139,7 @@ function GameRoom() {
             setIsLiar(nickname === data.content.lier);
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
-            if(gamemode === '바보') {
+            if (gamemode === '바보') {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
             }
             console.log(data.content.liercategory);
@@ -452,6 +458,23 @@ function GameRoom() {
     }
   }, [stageNumber])
 
+  const subscribePersonal = () => {
+    console.log('subscribe')
+    client.current.subscribe(
+      `/sub/gameroom/${id}/${nickname}`,
+      ({ body }) => {
+        const data = JSON.parse(body)
+        console.log(data)
+        switch (data.type) {
+          case 'REWARD':
+            // Reward 알림
+            break;
+        }
+      }
+    );
+  };
+
+
   useEffect(() => {
 
     if (stageNumber === 3 && timer.status === 2) {
@@ -526,7 +549,7 @@ function GameRoom() {
   }, [isMaster])
 
   useEffect(() => {
-    console.log(poorItem); 
+    console.log(poorItem);
   }, [poorItem])
 
   return (
@@ -557,19 +580,23 @@ function GameRoom() {
         <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoom sessionName={id} isMute={muted} />
+            <VideoRoom sessionName={id} isMute={muted} isMicOff={micOff} isVideoOn={videoOn} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
               {
-                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} /> 
-                : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
+                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} />
+                  : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
               }
             </div>
             <div className="chatBoard">
               <Chat id={id} />
             </div>
             <div className="btnBoard">
+              <div className='mvIconWrap'>
+                <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
+                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
+              </div>
               {stageNumber === 0 && isMaster ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
               {stageNumber === 2 ? <BtnStartReady status='ReadyInert' /> : ''}

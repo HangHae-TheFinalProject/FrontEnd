@@ -29,7 +29,9 @@ class VideoRoom extends Component {
             subscribers: [],
             chatDisplay: 'none',
             currentVideoDevice: undefined,
-            isMute: this.props.isMute
+            isMute: this.props.isMute,
+            isMicOff: this.props.isMicOff,
+            isVideoOn: this.props.isVideoOn
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -53,6 +55,16 @@ class VideoRoom extends Component {
         if (this.props.isMute !== prevProps.isMute) {
             this.setState({ isMute: this.props.isMute })
             this.micToggleMuted();
+        }
+
+        if (this.props.isMicOff !== prevProps.isMicOff) {
+            this.setState({ isMicOff: this.props.isMicOff })
+            this.micStatusChanged();
+        }
+
+        if (this.props.isVideoOn !== prevProps.isVideoOn) {
+            this.setState({ isVideoOn: this.props.isVideoOn })
+            this.camStatusChanged();
         }
     }
 
@@ -214,6 +226,7 @@ class VideoRoom extends Component {
             this.props.leaveSession();
         }
     }
+
     camStatusChanged() {
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
