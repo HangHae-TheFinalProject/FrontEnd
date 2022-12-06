@@ -15,18 +15,21 @@
   }
 
   ::-webkit-scrollbar-thumb {
+    height: 20%;
+    border: 2px solid transparent;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-clip: padding-box;
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
   ::-webkit-scrollbar-thumb:hover {
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
   }
 
   ::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background: transparent;
   }
 }
 
@@ -40,6 +43,6 @@
   @include commentsFormArea(1065px, 260px);
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-bottom: 10px;
 }
