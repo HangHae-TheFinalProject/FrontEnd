@@ -245,7 +245,6 @@ function GameRoom() {
     );
   };
 
-
   const subscribePersonal = () => {
     console.log('subscribe')
     client.current.subscribe(
@@ -419,6 +418,7 @@ function GameRoom() {
     }
   }, []);
 
+
   useEffect(() => {
 
     switch (stageNumber) {
@@ -473,24 +473,7 @@ function GameRoom() {
         endgame();
         break;
     }
-  }, [stageNumber])
-
-  const subscribePersonal = () => {
-    console.log('subscribe')
-    client.current.subscribe(
-      `/sub/gameroom/${id}/${nickname}`,
-      ({ body }) => {
-        const data = JSON.parse(body)
-        console.log(data)
-        switch (data.type) {
-          case 'REWARD':
-            // Reward 알림
-            break;
-        }
-      }
-    );
-  };
-
+  }, [stageNumber]);
 
   useEffect(() => {
 
@@ -555,7 +538,6 @@ function GameRoom() {
         }
       }
     }
-
     if (stageNumber === 9 && timer.status === 2) {
       initialize();
     }
