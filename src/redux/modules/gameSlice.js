@@ -41,6 +41,11 @@ export const gameSlice = createSlice({
     setMemberList(state, action) {
       state.memberList = action.payload;
     },
+    removeMemberList(state, action) {
+      state.memberList = state.memberList.filter((member) => {
+        if(member !== action.payload) return member
+      });
+    },
     setReadyMemberList(state, action) {
       state.readyMemberList = action.payload;
     },
@@ -74,6 +79,7 @@ export const { setStage,
   setPopupStatus,
   setGameBoardStatus,
   setMemberList,
+  removeMemberList,
   setMemberVoteResult,
   setMemberLier,
   setIsCamera,
