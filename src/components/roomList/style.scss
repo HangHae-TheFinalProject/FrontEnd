@@ -1,44 +1,18 @@
 .sectionRoomList {
-  position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  width: 100%;
+  justify-content: center;
 }
 
-.arrowBoxL {
-  width: 200px;
-  color: black;
-  padding-left: 150px;
-}
-.arrowBoxR {
-  width: 200px;
-  color: black;
-  padding-right: 200px;
-}
-
-a {
-  text-decoration: none;
-}
-
-.roomListBox {
-  width: 90%;
-  height: 500px;
-
+.selectBox {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  gap: 15px;
-}
-.selectbox {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  margin: 70px 0 30px 0;
 }
+
 .selectMain {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -47,7 +21,34 @@ a {
   font-weight: bold;
   border: none;
   background: url('../../images/svg/DropBoxIconDown.svg') no-repeat right;
+}
 
-  option {
-  }
+.gameRoomBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: default;
+}
+
+.roomListBox {
+  width: 1080px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.arrowBoxL {
+  width: 65px;
+  height: 65px;
+}
+
+.arrowBoxR {
+  width: 65px;
+  height: 65px;
+}
+
+a {
+  text-decoration: none;
 }

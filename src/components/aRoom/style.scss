@@ -1,13 +1,14 @@
 .roomBox {
-  width: 260px;
-  height: 400px;
-  min-width: 300px;
+  width: 200px;
+  height: 430px;
+  min-width: 260px;
   min-height: 300px;
-
-  text-align: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   img {
-    margin-top: 21px;
+    margin-top: 20px;
     width: 150px;
     height: 290px;
     object-fit: cover;
@@ -15,38 +16,43 @@
 }
 
 .roomInfoBox {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modeCheck {
+  width: 55px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #1a1a1a;
+  background-color: #d9d9d9;
 }
 
 .roomName {
-  margin-top: 35px;
-  margin-bottom: 7px;
-  color: white;
+  margin-top: 25px;
+  margin-bottom: 5px;
   font-size: 20px;
+  color: white;
 
   display: flex;
   align-items: center;
   justify-content: center;
   p {
-    margin-left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
   }
 }
 
 .memderLength {
+  font-size: 20px;
   color: white;
-}
-
-.modeCheck {
-  width: 52px;
-  height: 28px;
-  padding-top: 4px;
-  background-color: #d9d9d9;
-  border-radius: 7px;
-  font-size: 16px;
-  text-align: center;
-  font-weight: bold;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 // modal
@@ -61,6 +67,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  :focus {
+    outline: none;
+  }
+  ::placeholder {
+    color: rgba(77, 77, 77, 1);
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .passwordBtn:hover {
+    color: #1a1a1a;
+    background-color: rgba(255, 196, 46, 1);
+
+    cursor: pointer;
+  }
   h2 {
     color: white;
     font-size: 24px;
@@ -73,25 +93,23 @@
   height: 50px;
   background-color: rgba(255, 255, 255, 0.45);
   color: #3e3e3e;
+  font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-right: 10px;
+  padding: 0 0 0 15px;
 }
 
 .passwordBtn {
   width: 50px;
   height: 50px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   font-size: 14px;
   font-weight: bold;
   color: white;
-  background: linear-gradient(
-    to bottom,
-    rgba(113, 113, 113, 1),
-    rgba(0, 0, 0, 0.31) 30%
-  );
+  background-color: rgba(0, 0, 0, 1);
   display: inline-block;
   position: absolute;
 }
