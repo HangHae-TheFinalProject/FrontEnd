@@ -60,6 +60,7 @@ function RoomList() {
 
   return (
     <div>
+
       <div className="selectbox">
         <ul
           className="selectMain"
@@ -91,8 +92,8 @@ function RoomList() {
             ''
           )}
         </ul>
-      </div>
 
+      </div>
       <div className="sectionRoomList">
         <a href="#" onClick={pageUp}>
           <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>

@@ -67,7 +67,7 @@ function GameRoom() {
 
   const leaveRoom = async () => {
     console.log('leaveRoom');
-    
+
     try {
       instance.delete(`/lier/room/${Number(id)}/exit`);
     } catch (error) {
@@ -102,6 +102,7 @@ function GameRoom() {
       },
       onConnect: () => {
         subscribe();
+        subscribePersonal();
       },
       onStompError: (frame) => {
         console.log(`Broker reported error: ${frame.headers['message']}`);
@@ -133,7 +134,7 @@ function GameRoom() {
             setIsLiar(nickname === data.content.lier);
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
-            if(gamemode === '바보') {
+            if (gamemode === '바보') {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
             }
             console.log(data.content.liercategory);
@@ -232,6 +233,22 @@ function GameRoom() {
 
               setTimer({ time: 10, status: 1 });
             }
+            break;
+        }
+      }
+    );
+  };
+
+
+  const subscribePersonal = () => {
+    console.log('subscribe')
+    client.current.subscribe(
+      `/sub/gameroom/${id}/${nickname}`,
+      ({ body }) => {
+        const data = JSON.parse(body)
+        switch (data.type) {
+          case 'REWARD':
+            // Reward 알림
             break;
         }
       }
@@ -526,7 +543,7 @@ function GameRoom() {
   }, [isMaster])
 
   useEffect(() => {
-    console.log(poorItem); 
+    console.log(poorItem);
   }, [poorItem])
 
   return (
@@ -562,8 +579,8 @@ function GameRoom() {
           <div className='boardSection'>
             <div className="gameBoard">
               {
-                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} /> 
-                : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
+                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} />
+                  : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
               }
             </div>
             <div className="chatBoard">

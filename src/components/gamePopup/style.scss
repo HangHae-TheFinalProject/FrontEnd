@@ -16,7 +16,7 @@
 
   font-size: 20px;
   color: rgba(255, 255, 255, 0.5);
-  
+
   .inGameLabel {
     width: 180px;
     height: 50px;
@@ -33,9 +33,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    white-space: nowrap;
   }
 }
-
 
 .gamePopup {
   @include popupBox;
@@ -73,6 +74,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  white-space: nowrap;
 
   // gap: 10px;
 
@@ -146,6 +149,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    white-space: nowrap;
   }
 }
 
@@ -171,7 +176,6 @@
   gap: 10px;
 
   :focus {
-
     outline: none;
   }
 
@@ -193,9 +197,11 @@
     height: 50px;
     border: none;
     border-radius: 5px;
-    background: linear-gradient(to bottom,
-        rgb(102, 102, 102),
-        rgba(102, 102, 102, 0.3));
+    background: linear-gradient(
+      to bottom,
+      rgb(102, 102, 102),
+      rgba(102, 102, 102, 0.3)
+    );
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;
