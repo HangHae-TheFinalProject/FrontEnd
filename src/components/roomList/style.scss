@@ -20,7 +20,55 @@
   color: white;
   font-weight: bold;
   border: none;
-  background: url('../../images/svg/DropBoxIconDown.svg') no-repeat right;
+
+
+  z-index: 1;
+}
+
+.roomListDropBox {
+  width: 91px;
+  height: 206px;
+  background-color: #4d4d4d;
+  border-radius: 8px;
+  position: fixed;
+  text-align: center;
+
+  li:nth-child(1) {
+    width: 91px;
+    height: 41px;
+    padding-top: 8px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  li:nth-child(2) {
+    width: 91px;
+    height: 41px;
+    padding-top: 8px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  li:nth-child(3) {
+    width: 91px;
+    height: 41px;
+    padding-top: 8px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  li:nth-child(4) {
+    width: 91px;
+    height: 41px;
+    padding-top: 8px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  li:nth-child(5) {
+    width: 91px;
+    height: 41px;
+    padding-top: 8px;
+    padding-top: 8px;
+  }
+}
+
+.roomListDropBoxArrow {
+  width: 16px;
+  height: 16px;
+  
 }
 
 .gameRoomBox {
@@ -51,4 +99,5 @@
 
 a {
   text-decoration: none;
+
 }

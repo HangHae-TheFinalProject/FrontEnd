@@ -37,10 +37,6 @@ export default function CommunityList({ post }) {
     navigate('/social/write');
   };
 
-  const dropBoxClickHandler = () => {
-    setShow(true);
-  };
-
   const pageUp = () => {
     setPageNum((pageNum) => pageNum - 1);
   };
@@ -194,17 +190,6 @@ export default function CommunityList({ post }) {
                       {val}
                     </div>
                   ))}
-                  {/* {arrPage.map((val) => (
-                        <div
-                          key={val}
-                          onClick={() => {
-                            setSearchCurrentPageNum(val);
-                          }}
-                        >
-                          {console.log(val)}
-                          {val}
-                        </div>
-                      ))} */}
                 </div>
                 <div className="communityListarrowBoxR">
                   {maxPage > MAX_PAGE_NUM &&
