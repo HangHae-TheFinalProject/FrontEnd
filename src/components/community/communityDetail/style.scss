@@ -4,6 +4,7 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  cursor: default;
 }
 
 .communityDetailBackgroundImg {
@@ -28,12 +29,9 @@
 .detailMainBox {
   width: 1040px;
   height: 740px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  // background-color: rgba(179, 179, 179, 0.5);
 }
 
 .detailPostBox {
@@ -47,11 +45,9 @@
 .detailPostTitleBox {
   width: 1040px;
   height: 35px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   h2 {
     font-size: 24px;
     color: white;
@@ -62,11 +58,9 @@
 .detailBtnBox {
   display: flex;
   gap: 10px;
-
   .detailsvgIcon {
     margin-right: 5px;
   }
-
   button {
     width: 80px;
     height: 35px;
@@ -80,19 +74,21 @@
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.4);
   }
+  button:hover {
+    color: #1a1a1a;
+    background-color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+  }
 }
 
 .detailPostInformation {
   display: flex;
   width: inherit;
   color: rgba(179, 179, 179, 1);
-
   margin-bottom: 40px;
-
   .postInfoAuthor {
     font-size: 16px;
   }
-
   .postInfoElement {
     font-size: 16px;
     font-weight: 100;
@@ -104,7 +100,6 @@
   width: inherit;
   height: inherit;
   color: white;
-
   .postContent {
     font-size: 16px;
   }
