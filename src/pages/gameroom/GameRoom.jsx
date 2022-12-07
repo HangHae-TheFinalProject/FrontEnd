@@ -388,6 +388,8 @@ function GameRoom() {
   const initialize = () => {
     setStageNumber(0);
     setMuted(false);
+    setMicOff(false);
+    setVideoOn(false);
     setRound(0);
     setTimer({ time: -1, status: 0 });
     setStatusSpotlight(0);
@@ -426,7 +428,7 @@ function GameRoom() {
     enterRoom();
     connect();
     initialize();
-
+    setMemberCount(0);
 
     return () => {
       return (
