@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useInput from '../../../hooks/useInput';
-import instance from '../../../shared/Request';
+import { noheaderInstance } from '../../../shared/Request';
 
 import gameRoomBackground from '../../../images/png/gameRoomBackground.png';
 import { ReactComponent as Redicon } from '../../../images/svg/Redicon.svg';
@@ -135,7 +135,7 @@ export default function FormSignUp() {
       alert('입력한 값을 확인해주세요.');
       return;
     }
-    instance
+    noheaderInstance
       .post(
         '/lier/signup',
         {
