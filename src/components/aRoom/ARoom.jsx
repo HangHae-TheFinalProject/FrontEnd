@@ -25,6 +25,11 @@ function ARoom({ roomInfo }) {
   const [openModal, setOpenModal] = useState(false);
 
   const joinRoom = () => {
+    if (roomInfo.member.length === 0) {
+      alert('게임이 종료된 방입니다.');
+      return;
+    }
+
     if (roomInfo.member.length >= MAX_NUMBER_OF_PERSON) {
       alert('빈자리가 없습니다.');
       return;

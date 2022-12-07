@@ -75,11 +75,14 @@ function GameRoom() {
     console.log('leaveRoom');
 
     try {
-      instance.delete(`/lier/room/${Number(id)}/exit`);
+      instance.delete(`/lier/room/${Number(id)}/exit`)
+      .then(res => {
+        navigate('/lobby');
+      })
     } catch (error) {
       alert(error.data.message);
+      navigate('/lobby');
     }
-    navigate('/lobby');
   }
 
   const enterRoom = async () => {
@@ -470,7 +473,7 @@ function GameRoom() {
         }
         break;
       case 9:
-        endgame();
+        if (isMaster) endgame();
         break;
     }
   }, [stageNumber]);
