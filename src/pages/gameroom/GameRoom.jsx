@@ -91,13 +91,18 @@ function GameRoom() {
     }
   }
 
-  const enterRoom = async () => {
+  const enterRoom = () => {
+    console.log(enterRoom);
 
-    try {
-      instance.post(`/lier/room/${Number(id)}`);
-    } catch (error) {
-      alert(error.data.statusMsg);
-    }
+    instance.post(`/lier/room/${Number(id)}`)
+    .then((res) => {
+      console.log('입장')
+    })
+    .catch((error) => {
+      console.log('_________' + error)
+      alert('잘못된 입장입니다.');
+      navigate('/lobby');
+    })
   }
 
   // Sock
@@ -273,6 +278,7 @@ function GameRoom() {
       `/sub/gameroom/${id}/${nickname}`,
       ({ body }) => {
         const data = JSON.parse(body)
+        console.log(data);
         switch (data.type) {
           case 'REWARD':
             // Reward 알림
@@ -413,7 +419,7 @@ function GameRoom() {
   useEffect(() => {
     console.log('useEffect');
 
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       .then(res => {
         console.log(res.getAudioTracks());
         console.log(res.getVideoTracks());
@@ -422,7 +428,7 @@ function GameRoom() {
         isCantGetDevice = false;
       })
       .catch(err => {
-        alert('다른 브라우저에서 마이크 또는 비디오를 사용중입니다. 게임방 입장이 어려울 수 있습니다.');
+        alert('마이크 또는 비디오를 사용이 어렵습니다. 게임방 입장이 어려울 수 있습니다.');
         isCantGetDevice = true;
         dispatch(setIsCantGetDevice(isCantGetDevice));
         navigate('/lobby');
