@@ -32,7 +32,6 @@ export default function CommunityDetail() {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log('게시글 상세 조회', error);
         setIsLoading(false);
       });
   };
@@ -52,7 +51,6 @@ export default function CommunityDetail() {
           navigate('/social');
         })
         .catch((error) => {
-          console.log('삭제 요청', error);
         });
   };
 

@@ -108,7 +108,6 @@ function RoomList() {
         </a>
         <div className="roomListBox">
           {!isLoading && rooms?.map((aroom) => {
-            console.log(isLoading)
             return <ARoom key={aroom.id} roomInfo={aroom} />;
           })}
         </div>

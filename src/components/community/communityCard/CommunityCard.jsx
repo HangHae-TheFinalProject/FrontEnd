@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './style.scss';
 
 function CommunityCard({ postDetail }) {
-  console.log(postDetail);
   const navigate = useNavigate();
 
   return (

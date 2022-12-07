@@ -78,7 +78,6 @@ function GameRoom() {
   const closePopup = () => { setIsPop(false); }
 
   const leaveRoom = async () => {
-    console.log('leaveRoom');
 
     try {
       instance.delete(`/lier/room/${Number(id)}/exit`)
@@ -92,14 +91,9 @@ function GameRoom() {
   }
 
   const enterRoom = () => {
-    console.log(enterRoom);
 
     instance.post(`/lier/room/${Number(id)}`)
-    .then((res) => {
-      console.log('입장')
-    })
     .catch((error) => {
-      console.log('_________' + error)
       alert('잘못된 입장입니다.');
       navigate('/lobby');
     })
@@ -118,7 +112,6 @@ function GameRoom() {
       webSocketFactory: () => new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders,
       debug: function (str) {
-        console.log(str);
       },
       onConnect: () => {
         subscribe();
@@ -134,18 +127,15 @@ function GameRoom() {
 
   // stomp 연결 취소
   const disconnect = () => {
-    console.log('disconnect');
     client.current.deactivate();
   };
 
   // stomp 구독
   const subscribe = () => {
-    console.log('subscribe')
     client.current.subscribe(
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
-        console.log(data);
 
         switch (data.type) {
           case 'LEAVE':
@@ -170,7 +160,6 @@ function GameRoom() {
             if (gamemode === '바보') {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
             }
-            console.log(data.content.liercategory);
             break;
           case 'READY':
             dispatch(addReadyMemberList(data.sender));
@@ -181,8 +170,6 @@ function GameRoom() {
             break;
           case 'SPOTLIGHT':
             dispatch(setSpotlightMember(data.sender));
-            console.log(data.sender)
-            console.log(nickname)
             if (data.sender === nickname) {
               setStatusSpotlight(1);
               setMuted(false);
@@ -273,12 +260,10 @@ function GameRoom() {
   };
 
   const subscribePersonal = () => {
-    console.log('subscribe')
     client.current.subscribe(
       `/sub/gameroom/${id}/${nickname}`,
       ({ body }) => {
         const data = JSON.parse(body)
-        console.log(data);
         switch (data.type) {
           case 'REWARD':
             // Reward 알림
@@ -417,13 +402,9 @@ function GameRoom() {
   let isCantGetDevice = false;
 
   useEffect(() => {
-    console.log('useEffect');
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       .then(res => {
-        console.log(res.getAudioTracks());
-        console.log(res.getVideoTracks());
-
         dispatch(setIsCamera(res.getVideoTracks()[0] || res.getAudioTracks()[0] ? true : false));
         isCantGetDevice = false;
       })
@@ -441,7 +422,6 @@ function GameRoom() {
 
     return () => {
       return (
-        console.log('useEffect return'),
         disconnect(),
         leaveRoom()
       );
@@ -518,14 +498,10 @@ function GameRoom() {
     }
 
     // spotlight 한 턴 끝
-    console.log('stageNumber' + stageNumber)
-    console.log('timer.status' + timer.status)
     if (stageNumber === 4 && timer.status === 2) {
       dispatch(setSpotlightMember(''));
       // 내 턴이 끝났을 때
-      console.log(statusSpotlight);
       if ((statusSpotlight === 1)) {
-        console.log('내 턴 종료');
         setTimer({ ...timer, status: 0 });
         setStatusSpotlight(0);
         spotlight();
@@ -572,14 +548,6 @@ function GameRoom() {
       initialize();
     }
   }, [timer.status])
-
-  useEffect(() => {
-    console.log(isMaster);
-  }, [isMaster])
-
-  useEffect(() => {
-    console.log(poorItem);
-  }, [poorItem])
 
   return (
     <div className="section">
