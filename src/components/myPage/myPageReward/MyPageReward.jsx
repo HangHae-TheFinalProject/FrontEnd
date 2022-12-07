@@ -1,15 +1,14 @@
 import { useState } from 'react';
 
 import MyPageRewardItem from '../myPageRewardItem/MyPageRewardItem';
-import rewardList from './rewardList';
+// import rewardList from './rewardList';
 
 import icArrowLeft2 from '../../../images/svg/icArrowLeft2.svg';
 import icArrowRight2 from '../../../images/svg/icArrowRight2.svg';
 
 import './style.scss';
 
-function MyPageReward({ maxPage, clearReward }) {
-  const initialReward = rewardList['initialReward'];
+function MyPageReward({ maxPage = 1, rewardList = [] }) {
   const [page, setPage] = useState(1);
 
   const rewardPageUp = () => {
@@ -22,10 +21,6 @@ function MyPageReward({ maxPage, clearReward }) {
     setPage((p) => p + 1);
   };
 
-  const checkClear = (rewardId) => {
-    return clearReward.some((id) => id === rewardId)
-  }
-
   return (
     <div className="myPageRewardContainer">
       <div onClick={rewardPageUp}>
@@ -34,8 +29,8 @@ function MyPageReward({ maxPage, clearReward }) {
         </div>
       </div>
       <div className="myPageRewardItemBox">
-        {initialReward.map((reward) => {
-          return <MyPageRewardItem key={reward.rewardId} rewardData={reward} isActive={checkClear(reward.rewardId)} />
+        {rewardList.map((reward) => {
+          return <MyPageRewardItem key={reward.rewardId} rewardData={reward} />
         })}
       </div>
       <div onClick={rewardPageDown}>

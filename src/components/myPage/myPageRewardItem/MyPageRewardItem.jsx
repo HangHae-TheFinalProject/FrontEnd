@@ -1,18 +1,17 @@
 import './style.scss';
 
-function MyPageRewardItem({ rewardData, isActive }) {
+function MyPageRewardItem({ rewardData }) {
 
   return (
     <div
       className='rewardDescription'
       description={rewardData.rewardDescription}
     >
-      <div className={(isActive ? 'activeRewardItem' : 'inactiveRewardItem') + ' '
-        + (rewardData.isGold ? 'goldRewardItem' : '') + ' '
+      <div className={(rewardData.active ? 'activeRewardItem' : 'inactiveRewardItem') + ' '
+        + (rewardData.gold ? 'goldRewardItem' : '') + ' '
         + 'fontLight'}>
         {rewardData.rewardName}
       </div>
-
     </div>
   );
 }
