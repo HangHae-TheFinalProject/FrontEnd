@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 
 import useInput from '../../../hooks/useInput';
-import instance from '../../../shared/Request';
+import { noheaderInstance } from '../../../shared/Request';
 import GoogleLogin from '../googleLogin/GoogleLogin';
 import { setClientHeaders } from '../../../shared/Request';
 
@@ -52,7 +52,7 @@ export default function FormSignIn() {
       alert('비밀번호를 입력해주세요.');
       return;
     }
-    instance
+    noheaderInstance
       .post('/lier/login', {
         email: email,
         password: password,
