@@ -82,13 +82,13 @@ export default function Video(props) {
                             muted={props.mutedSound}
                         />
                         <VideoFrame myTurn={myTurn} />
+                          {props.user.videoActive ? '' : <div className='imageBox'>
+                            <img src={myCharacter} />
+                        </div>}
+
                         {isReady ? <div className='imageBox'>
                             <img src={ready} />
                         </div> : ''}
-
-                        {props.user.videoActive ? '' : <div className='imageBox'>
-                            <img src={myCharacter} />
-                        </div>}
                     </div>
                     <div className="nicknameBox">
                         <NickNameFrame myTurn={myTurn} />
