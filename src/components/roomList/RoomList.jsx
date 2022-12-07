@@ -13,7 +13,7 @@ function RoomList() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [view, setView] = useState('total');
-  const { maxPage, rooms, error } = useSelector((state) => state.rooms);
+  const { maxPage, rooms, isLoading } = useSelector((state) => state.rooms);
   const [dropName, setDropName] = useState('전체');
 
   const [show, setShow] = useState(false);
@@ -33,9 +33,15 @@ function RoomList() {
     setPage(1);
   };
 
-  useEffect(() => {
+  const loadRooms = () => {
     dispatch(__getRooms({ page: page, view: view }));
-  }, [page, view]);
+  }
+
+  useEffect(() => {
+    loadRooms();
+    window.addEventListener('load', loadRooms);
+    return window.removeEventListener('load', loadRooms);
+  }, []);
 
   const totalClickHandler = () => {
     setView('total');
@@ -97,7 +103,8 @@ function RoomList() {
           <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
         </a>
         <div className="roomListBox">
-          {rooms?.map((aroom) => {
+          {!isLoading && rooms?.map((aroom) => {
+            console.log(isLoading)
             return <ARoom key={aroom.id} roomInfo={aroom} />;
           })}
         </div>
