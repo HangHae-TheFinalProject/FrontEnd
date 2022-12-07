@@ -39,6 +39,10 @@ function RoomList() {
 
   useEffect(() => {
     loadRooms();
+  }, [page, view]);
+
+  useEffect(() => {
+    loadRooms();
     window.addEventListener('load', loadRooms);
     return window.removeEventListener('load', loadRooms);
   }, []);
