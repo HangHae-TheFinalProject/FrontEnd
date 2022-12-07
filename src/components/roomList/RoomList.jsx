@@ -59,9 +59,8 @@ function RoomList() {
   };
 
   return (
-    <div>
-
-      <div className="selectbox">
+    <>
+      <div className="selectBox fontSemiBold">
         <ul
           className="selectMain"
           onChange={selectHandler}
@@ -92,7 +91,6 @@ function RoomList() {
             ''
           )}
         </ul>
-
       </div>
       <div className="sectionRoomList">
         <a href="#" onClick={pageUp}>
@@ -109,7 +107,7 @@ function RoomList() {
           </div>
         </a>
       </div>
-    </div>
+    </>
   );
 }
 
