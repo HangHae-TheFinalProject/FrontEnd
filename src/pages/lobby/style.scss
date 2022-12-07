@@ -1,8 +1,23 @@
-.pagesection{
-  width: 100vw;
-  height: 100vh;
+.lobbyPageSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.lobbyBackGround {
+  position: absolute;
+
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+  z-index: -1;
+}
+
+.gameRoomCreateBtn {
+  margin-top: 60px;
 }

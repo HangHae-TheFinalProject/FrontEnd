@@ -1,0 +1,114 @@
+.communityWriteBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.communityWriteBackgroundImg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.writeBoxImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1142px;
+  height: 662px;
+  background: url(../../../images/png/writeImg.png);
+}
+
+.writeTitle {
+  font-size: 24px;
+  color: white;
+}
+
+.writeInputBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  :focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    font-size: 16px;
+    color: rgba(179, 179, 179, 1);
+  }
+
+  .writeTitleInput {
+    width: 1030px;
+    height: 50px;
+    margin-top: 30px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .writePostInput {
+    width: 1030px;
+    height: 380px;
+    resize: none;
+    overflow: hidden;
+    margin-top: 20px;
+    padding: 20px 15px 0 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.communityWriteBtnBox {
+  width: 1030px;
+  height: 40px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+
+  .writeRegistrationBtn:hover {
+    color: #1a1a1a;
+    background-color: rgba(255, 196, 46, 1);
+    cursor: pointer;
+  }
+
+  .writeCancelBtn:hover {
+    border: 1px solid #fff;
+    cursor: pointer;
+  }
+}
+
+.writeRegistrationBtn {
+  width: 80px;
+  height: 35px;
+  margin-left: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: rgba(153, 153, 153, 1);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.writeCancelBtn {
+  width: 80px;
+  height: 35px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: rgba(217, 217, 217, 1);
+  background-color: rgba(0, 0, 0, 0.4);
+}

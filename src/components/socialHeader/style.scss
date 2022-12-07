@@ -1,0 +1,60 @@
+.socialHeaderBackground {
+  width: 100vw;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+
+  top: 0px;
+  left: 0px;
+
+  background-color: rgba(217, 217, 217, 0.075);
+}
+
+.socialHeader {
+  width: inherit;
+  height: inherit;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  h1 {
+    color: white;
+    font-size: 32px;
+  }
+}
+
+.socialHeaderCommunityBox {
+  width: 1180px;
+  height: inherit;
+
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  overflow: hidden;
+
+  span {
+    color: white;
+    font-size: 24px;
+
+    cursor: pointer;
+  }
+
+  img {
+    margin-right: 15px;
+  }
+}
+
+.socialHeaderCommunityBtn {
+  display: flex;
+  align-items: center;
+}

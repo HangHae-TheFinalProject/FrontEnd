@@ -1,9 +1,13 @@
+import CommunityList from '../../components/community/communityList/CommunityList';
+import SocialHeader from '../../components/socialHeader/SocialHeader';
+
 function List() {
-
-
-  return <>
-    <h1> List </h1>
-  </>
+  return (
+    <>
+      <SocialHeader />
+      <CommunityList />
+    </>
+  );
 }
 
 export default List;

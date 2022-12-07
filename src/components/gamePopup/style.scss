@@ -1,0 +1,256 @@
+@mixin popupBox {
+  width: 1040px;
+  height: 520px;
+  position: absolute;
+}
+
+@mixin popupStateHeight {
+  height: 160px;
+}
+
+@mixin inGamePlayer {
+  width: 180px;
+  height: 50px;
+
+  cursor: pointer;
+
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.5);
+
+  .inGameLabel {
+    width: 180px;
+    height: 50px;
+
+    position: absolute;
+  }
+
+  .inGameNickname {
+    width: 180px;
+    height: 50px;
+
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+  }
+}
+
+.gamePopup {
+  @include popupBox;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url(../../images/png/gamePopup.png);
+  z-index: 999;
+}
+
+.popupContent {
+  @include popupBox;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-size: 32px;
+  line-height: 2.2em;
+
+  input::placeholder {
+    color: #3e3e3e;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.popupTitleBox {
+  @include popupBox;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+
+  // gap: 10px;
+
+  .popupPlayState {
+    position: relative;
+
+    top: -10%;
+
+    font-size: 32px;
+  }
+}
+
+// CASE LIER_VOTE,
+.inGamePlayerSelect {
+  @include popupStateHeight;
+  width: 820px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  gap: 30px;
+
+  .inGamePlayer {
+    @include inGamePlayer;
+
+    :hover {
+      font-size: 20px;
+      color: white;
+      background: url('../../images/png/inGameLabelActive.png');
+    }
+  }
+}
+
+.inactiveVoteBox {
+  @include inGamePlayer;
+}
+
+.highlightVoteBox {
+  @include inGamePlayer;
+
+  font-size: 20px;
+  color: white;
+  background: url('../../images/png/inGameLabelActive.png');
+}
+
+// CASE VOTE_RESULT
+.GameResult {
+  @include popupStateHeight;
+  width: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 40px;
+
+  .resultLabel {
+    width: 500px;
+
+    position: absolute;
+  }
+
+  .resultNickname {
+    width: 180px;
+    height: 50px;
+
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+  }
+}
+
+// .contentBox {
+//   @include popupBox;
+
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// CASE LIER_LIER
+.inputBox {
+  @include popupStateHeight;
+  width: 460px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+
+  :focus {
+    outline: none;
+  }
+
+  .inputKeyword {
+    width: 400px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.45);
+
+    padding-left: 20px;
+    color: #3e3e3e;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .btnInputKeyword {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(
+      to bottom,
+      rgb(102, 102, 102),
+      rgba(102, 102, 102, 0.3)
+    );
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+  }
+}
+
+// CASE VICTORY_USER
+.VictoryPlayerList {
+  @include popupStateHeight;
+  width: 820px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  gap: 30px;
+
+  .inGameVictoryPlayer {
+    width: 180px;
+    height: 50px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
+
+    .inGameLabel {
+      width: 180px;
+      height: 50px;
+
+      position: absolute;
+    }
+
+    .inGameNickname {
+      width: 180px;
+      height: 50px;
+
+      position: absolute;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

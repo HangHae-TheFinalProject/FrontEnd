@@ -1,0 +1,59 @@
+@mixin postCard($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+  font-size: 16px;
+}
+
+.communityCardTitleBox {
+  @include postCard(1000px, 45px);
+  // justify-content: left;
+  display: flex;
+  margin-top: 8px;
+  gap: 10px;
+}
+
+.communityCardBox {
+  @include postCard(810px, 45px);
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  div {
+    display: flex;
+  }
+}
+
+.communityCardBoxTitle {
+  @include postCard(625px, 45px);
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.communityCardBoxViewcnt {
+  @include postCard(57px, 45px);
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.communityCardBoxCreatedAt {
+  @include postCard(95px, 45px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.communityAuthorBox {
+  @include postCard(190px, 45px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}

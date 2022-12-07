@@ -1,0 +1,105 @@
+@mixin myPageBtn($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translate(-50%, 30%);
+
+  font-size: 24px;
+
+  cursor: pointer;
+}
+
+@mixin myPageFrame($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.myPageFrame {
+  @include myPageFrame(800px, 457px);
+
+  background-image: url(../../../images/png/myPage_Frame.png);
+}
+
+.myInfoSection {
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.myInfoBtnSection {
+  @include myPageBtn(-50%, -30%);
+  width: 521px;
+  height: 95px;
+
+  position: relative;
+  flex-direction: column;
+
+  top: 50%;
+  left: 50%;
+
+  .activeMyPage {
+    @include myPageBtn(246px, 59px);
+
+    top: 8.5%;
+    left: 26.5%;
+
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .inActiveReward {
+    @include myPageBtn(246px, 59px);
+
+    top: 8.5%;
+    left: 73.5%;
+
+    color: rgba(77, 77, 77, 1);
+  }
+
+  .inActiveMyPage {
+    @include myPageBtn(246px, 59px);
+
+    top: 8.5%;
+    left: 26.5%;
+
+    color: rgba(77, 77, 77, 1);
+  }
+
+  .activeReward {
+    @include myPageBtn(246px, 59px);
+
+    top: 8.5%;
+    left: 73.5%;
+
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
+.myPageRecord {
+  @include myPageFrame(800px, 457px);
+
+  flex-direction: column;
+
+  .myPageSignBtn {
+    display: flex;
+    margin-top: 25px;
+    gap: 10px;
+  }
+}
+
+.myPageReward {
+  @include myPageFrame(800px, 457px);
+
+  flex-direction: column;
+}

@@ -1,0 +1,276 @@
+$headerHeight: 120px;
+$mainWidth: 1180px;
+
+.communityBackground {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  cursor: default;
+}
+
+.communityBackgroundImg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.searchAndMainBox {
+  height: 780px;
+  width: 1180px;
+  margin-top: 100px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 355px;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  border-radius: 10px;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  :focus {
+    outline: none;
+  }
+  input {
+    width: 300px;
+    height: 40px;
+    border: none;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    background: transparent;
+  }
+  .searchIcon {
+    width: 25px;
+    height: 25px;
+  }
+  .searchIcon:hover {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
+
+.communityBoxImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1180px;
+  height: 720px;
+  background: url(../../../images/png/communityBox.png);
+}
+
+.communityListMainBox {
+  width: 1000px;
+  height: 573px;
+  margin-top: 40px;
+}
+
+.communityInfoLine {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.communityRoomNum {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: rgba(217, 217, 217, 1);
+}
+
+.communitySelectBox {
+  width: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.communitySelectMain {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  color: white;
+  font-weight: bold;
+  border: none;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .dropBoxArrow {
+    margin-left: 5px;
+  }
+}
+
+.dropBoxBody {
+  width: 90px;
+  height: 80px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 130%;
+  left: -30%;
+  border: 1.5px solid #808080;
+  border-radius: 5px;
+  background-color: #4d4d4d;
+  :hover {
+    width: 90px;
+    height: 40px;
+    border-radius: 5px;
+    color: rgba(77, 77, 77, 1);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.recentBox {
+  width: 90px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #808080;
+  color: white;
+}
+
+.viewBox {
+  width: 90px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.communityListBox {
+  width: 1000px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.communityTitleBox {
+  width: 810px;
+  height: 38px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+h3 {
+  font-size: 16px;
+  color: rgba(204, 204, 204, 1);
+}
+
+.communityTitle {
+  margin-right: 340px;
+}
+
+.communityNum {
+  margin-right: 50px;
+}
+
+.communityDate {
+  margin-right: 35px;
+}
+
+.communityNameBox {
+  width: 190px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.communityCardSection {
+  width: 1000px;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+}
+
+.communityBtnBox {
+  width: 1000px;
+  height: 38px;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  .writeBtn:hover {
+    color: #000;
+    background-color: #fff;
+    cursor: pointer;
+  }
+}
+
+.writeBtn {
+  width: 86px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  .penIcon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+  }
+  p {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.pageListBox {
+  width: 203px;
+  height: 16px;
+  margin-left: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.communityListarrowBoxL {
+  width: 16px;
+  height: 16px;
+}
+
+.communityListarrowBoxR {
+  width: 16px;
+  height: 16px;
+}
+
+.pageListNum {
+  min-width: 131px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 17px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 17px;
+}

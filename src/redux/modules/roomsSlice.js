@@ -1,63 +1,77 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
-
-
-// need to : API connection
-
-const initialState = {
-  rooms: [],
-  room: {},
-  isLoading: false,
-  error: null
-};
-
-export const __getRoom = createAsyncThunk(
-  'rooms/getRoom',
-  async (payload, thunkAPI) => {
-    try{
-      return thunkAPI.fulfillWithValue();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import instance from '../../shared/Request';
 
 export const __getRooms = createAsyncThunk(
   'rooms/getRooms',
   async (payload, thunkAPI) => {
-    try{
-      return thunkAPI.fulfillWithValue();
+    try {
+      const { data } = await instance.get(`/lier/rooms/${payload.page}/view/${payload.view}`);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      alert('방을 찾을 수 없습니다.');
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
+const initialState = {
+  rooms: [],
+  room: {
+    id: 0,
+    member: [
+      {
+        createdAt: '',
+        modifiedAt: '',
+        email: '',
+        memberId: 0,
+        nickname: '',
+        password: ''
+      }, {
+        createdAt: '',
+        modifiedAt: '',
+        email: '',
+        memberId: 0,
+        nickname: '',
+        password: ''
+      }
+    ],
+    mode: 1,
+    owner: '',
+    roomName: '',
+    roomPassword: '',
+    status: ''
+  },
+  maxPage: 0,
+  isLoading: false,
+  error: null
+};
+
 export const roomsSlice = createSlice({
   name: 'rooms',
   initialState,
-  reducers: {},
-  extraReducers: {
-    [__getRoom.pending]: (state) => {
-      state.isLoading = true;
+  reducers: {
+    setRoom(state, action) {
+      state.room = action.payload;
     },
-    [__getRoom.fulfilled]: (state) => {
-      state.isLoading = false;
-    },
-    [__getRoom.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    [__getRooms.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getRooms.fulfilled]: (state) => {
-      state.isLoading = false;
-    },
-    [__getRooms.rejected]: (state) => {
-      state.isLoading = false;
+    setOwner(state, action) {
+      state.room.owner = action.payload;
     }
-  }
+  },
+  extraReducers: {
+    [__getRooms.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getRooms.fulfilled]: (state, action) => {
+      state.rooms = action.payload.roomsInPage;
+      state.maxPage = action.payload.pageCnt;
+      state.isLoading = false;
+    },
+    [__getRooms.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+  },
 });
 
-export const {} = roomsSlice.actions;
+export const { setRoom, setOwner } = roomsSlice.actions;
 export default roomsSlice.reducer;

@@ -1,7 +1,124 @@
-.createRoomBox{
+.createRoomBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+
+  margin: auto;
+}
+
+.modalBackground {
+  width: 500px;
+  height: 450px;
+}
+
+.modalInput {
+  position: absolute;
+
   display: flex;
   flex-direction: column;
-  background-color: white;
-  width: 500px;
-  height: 500px;
+  align-items: center;
+  justify-content: center;
+
+  cursor: default;
+}
+
+.roomCreateTitle {
+  font-size: 24px;
+  color: white;
+  margin-top: 55px;
+  margin-bottom: 20px;
+}
+
+.titlePasswordBox {
+  :focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    color: rgba(77, 77, 77, 1);
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  input {
+    width: 400px;
+    height: 50px;
+
+    padding-left: 15px;
+    margin-top: 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.modeCheckBox {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  width: 190px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #4d4d4d;
+  font-size: 16px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.btn.active {
+  color: rgba(26, 26, 26, 1);
+  background-color: rgba(255, 255, 255, 1);
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+.btnBox {
+  margin-top: 40px;
+
+  :hover {
+    color: #1a1a1a;
+    background-color: rgba(255, 196, 46, 1);
+
+    cursor: pointer;
+  }
+
+  :focus {
+    outline: 2px solid #fff;
+  }
+
+  input {
+    width: 150px;
+    height: 50px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: rgba(77, 77, 77, 1);
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }

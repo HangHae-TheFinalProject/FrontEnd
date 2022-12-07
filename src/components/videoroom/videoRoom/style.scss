@@ -1,0 +1,18 @@
+$videoBoxGap: 24px;
+
+.videoContainer{
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+  gap: 10px $videoBoxGap;
+}
+
+.video{
+  width: 170px;
+  height: 130px;
+}

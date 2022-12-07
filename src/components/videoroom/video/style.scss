@@ -1,0 +1,103 @@
+$totalWidth: 212px;
+$totalHeight: 185px;
+
+.frameBox {
+  position: relative;
+  width: $totalWidth;
+  height: $totalHeight;
+
+  width: $totalWidth;
+  height: $totalHeight;
+
+  .videoBox {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    video {
+      position: absolute;
+      top: 20px;
+      left: 23px;
+
+      width: 170px;
+      height: 130px;
+      border-radius: 40px;
+      z-index: -1;
+    }
+
+    .crownBox {
+      position: absolute;
+      top: 35px;
+      left: -30px;
+      width: 170px;
+      height: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .imageBox {
+      position: absolute;
+      width: 170px;
+      height: 130px;
+
+      top: 20px;
+      left: 23px;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  img {
+    position: absolute;
+  }
+
+  .nicknameBox {
+    position: absolute;
+    top: 148px;
+    left: 40px;
+    width: 130px;
+    height: 36px;
+    z-index: 1;
+
+    .nicknameBackground {
+      position: absolute;
+      top: 5px;
+      left: 7px;
+    }
+
+    .nickname {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 130px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      color: white;
+      font-size: 12px;
+    }
+  }
+}
+
+.test {
+  text-decoration: underline;
+}
+
+.frameNormal {
+  fill: #d9d9d9;
+  z-index: 99;
+}
+
+.frameSpotlight {
+  fill: #ffc42e;
+  z-index: 99;
+}
+
+.boxSpotlight {
+  filter: drop-shadow(0 0 0.75rem #ffffff);
+}
