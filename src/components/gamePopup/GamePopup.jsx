@@ -194,9 +194,6 @@ const VictoryUserPopup = ({ closePopup }) => {
   const lierNickname = useSelector((state) => state.game.memberLier);
   const keys = [0, 1, 2, 3, 4, 5, 6, 7];
 
-  useEffect(() => {
-    console.log(lierNickname);
-  }, [lierNickname])
   return (
     <>
       <div className="popupTitleBox">

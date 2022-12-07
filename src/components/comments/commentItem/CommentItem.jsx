@@ -17,7 +17,6 @@ function CommentItem({ comment, setIsLoading, nickname }) {
           alert(response.data.data);
         });
     } catch (error) {
-      console.log('댓글 수정', error);
       setIsEdit(false);
     }
   };
@@ -34,7 +33,6 @@ function CommentItem({ comment, setIsLoading, nickname }) {
           setIsLoading(false);
         })
         .catch((error) => {
-          console.log('댓글 삭제', error);
           setIsLoading(false);
         });
   };

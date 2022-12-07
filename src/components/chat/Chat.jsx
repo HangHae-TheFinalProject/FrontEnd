@@ -22,7 +22,6 @@ function Chat({ id }) {
         'Refresh-Token': new Cookies().get('refresh_token'),
       },
       debug: function (str) {
-        // console.log('debug', str);
       },
       onConnect: () => {
         subscribe();
@@ -41,8 +40,6 @@ function Chat({ id }) {
         }
       },
       onStompError: (frame) => {
-        // console.log(`Broker reported error: ${frame.headers['message']}`);
-        // console.log(`Additional details: ${frame.body}`);
       },
     });
     client.current.activate();

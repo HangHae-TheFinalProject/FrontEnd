@@ -29,14 +29,10 @@ export default function CommunityWrite() {
         content: content,
       })
       .then((res) => {
-        console.log('성공');
         navigate('/social');
       })
       .catch((error) => {
-        console.log('실패');
       });
-    // console.log(title, content);
-    // dispatch(__postWrite({ title, content }));
   };
 
   const titleOnChangeHandler = (e) => {

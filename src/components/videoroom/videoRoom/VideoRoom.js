@@ -120,7 +120,6 @@ class VideoRoom extends Component {
                 if (this.props.error) {
                     this.props.error({ error: error.error, messgae: error.message, code: error.code, status: error.status });
                 }
-                console.log('There was an error getting the token:', error.code, error.message);
                 alert('There was an error getting the token:', error.message);
             });
         }
@@ -140,7 +139,6 @@ class VideoRoom extends Component {
                     this.props.error({ error: error.error, messgae: error.message, code: error.code, status: error.status });
                 }
                 alert('There was an error connecting to the session:', error.message);
-                console.log('There was an error connecting to the session:', error.code, error.message);
             });
     }
 
@@ -410,7 +408,7 @@ class VideoRoom extends Component {
                 }
             }
         } catch (e) {
-            console.error(e);
+            
         }
     }
 
@@ -569,7 +567,6 @@ class VideoRoom extends Component {
                     if (error.response && error.response.status === 409) {
                         resolve(sessionId);
                     } else {
-                        console.log(error);
                         console.warn(
                             'No connection to OpenVidu Server. This may be a certificate error at ' +
                             this.OPENVIDU_SERVER_URL

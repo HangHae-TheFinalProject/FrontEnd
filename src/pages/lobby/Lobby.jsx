@@ -21,10 +21,6 @@ function Lobby() {
     setOpenModal(true);
   };
 
-  useEffect(() => {
-    // console.log('useEffect');
-  }, []);
-
   return (
     <div className="lobbyPageSection fontLightBold">
       <img
