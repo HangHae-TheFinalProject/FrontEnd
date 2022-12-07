@@ -13,6 +13,7 @@ function MyPageForm() {
   const [active, setActive] = useState(false);
   const [recordData, setRecordData] = useState([]);
   const [rewardData, setRewardData] = useState([]);
+  const [rewardPage, setRewardPage] = useState(1)
 
   // 전적 조회 api
   const getMyPageAllRecord = () => {
@@ -23,8 +24,8 @@ function MyPageForm() {
 
   // 업적 조회 api
   const getMyPageReward = () => {
-    instance.get('/lier/myinfo/reward').then((response) => {
-      setRewardData(response.data.data);
+    instance.get(`/lier/myinfo/reward/${rewardPage}`).then((response) => {
+      setRewardData(response.data.data.rewardsInPage);
     });
   };
 
@@ -80,7 +81,7 @@ function MyPageForm() {
           ) : (
             <>
               <div className="myPageReward">
-                <MyPageReward clearReward={rewardData} />
+                <MyPageReward rewardList={rewardData} />
               </div>
             </>
           )}
