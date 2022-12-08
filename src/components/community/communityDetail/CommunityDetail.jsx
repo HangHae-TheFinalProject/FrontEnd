@@ -94,7 +94,7 @@ export default function CommunityDetail() {
               </div>
               <div className="detailPostInformation">
                 <h4 className="postInfoAuthor fontBold">
-                  {postDetail.author.replace(/#\d*/, '')}
+                  {postDetail.author}
                 </h4>
                 <h4 className="postInfoElement">| {postDetail.createdAt}</h4>
                 <h4 className="postInfoElement">
