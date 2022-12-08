@@ -143,24 +143,24 @@ $videoSectionWidth: 448px;
   z-index: 2;
 }
 
-.mvIconWrap{
-  position: absolute;
-  top: 50%;
-  left: 0px;
-  transform: translate(0%, -50%);
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
+// .mvIconWrap{
+//   position: absolute;
+//   top: 50%;
+//   left: 0px;
+//   transform: translate(0%, -50%);
+//   display: flex;
+//   flex-direction: row;
+//   gap: 10px;
+// }
 
-.mvIconBox{
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+// .mvIconBox{
+//   width: 60px;
+//   height: 60px;
+//   border-radius: 10px;
 
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+//   background-color: rgba(0, 0, 0, 0.75);
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+// }
