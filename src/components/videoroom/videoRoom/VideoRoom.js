@@ -223,7 +223,7 @@ class VideoRoom extends Component {
 
     camStatusChanged() {
         if(!localUser.getStreamManager()) return;
-        
+
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
         this.sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
@@ -385,7 +385,7 @@ class VideoRoom extends Component {
         }
 
         return (
-            <>
+            <div className='videoroomContainer'>
                 <div className="videoContainer">
                     {localUser0 !== undefined && localUser0.getStreamManager() !== undefined && (
                         <div className="videoBox" id="localUser">
@@ -403,7 +403,8 @@ class VideoRoom extends Component {
                             />
                         </div>
                     ))}
-                    <div className='mvIconWrap'>
+                </div >
+                <div className='mvIconWrap'>
                         <div className='mvIconBox' onClick={this.micStatusChanged}>
                             {localUser.isAudioActive() ? <img src={iconMicOn} /> : <img src={iconMicOff} />}
                         </div>
@@ -411,8 +412,7 @@ class VideoRoom extends Component {
                             {localUser.isVideoActive() ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}
                         </div>
                     </div>
-                </div >
-            </>
+            </div>
         );
     }
 
