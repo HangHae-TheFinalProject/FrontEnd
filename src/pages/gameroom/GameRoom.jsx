@@ -49,7 +49,7 @@ import './style.scss';
 import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
-  const MIN_MEMBER_COUNT = 1;
+  const MIN_MEMBER_COUNT = 3;
   const SPOTLIGHT_TIME = 10;
 
   const { id } = useParams();
@@ -116,7 +116,6 @@ function GameRoom() {
       webSocketFactory: () => new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders,
       debug: function (str) {
-        console.log(str);
       },
       onConnect: () => {
         subscribe();
@@ -409,11 +408,9 @@ function GameRoom() {
   let isCantGetDevice = false;
 
   useEffect(() => {
-    
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       .then(res => {
-
         dispatch(setIsCamera(res.getVideoTracks()[0] || res.getAudioTracks()[0] ? true : false));
         isCantGetDevice = false;
       })

@@ -53,7 +53,6 @@ export default function CommunityList({ post }) {
         setShow(false);
         setIsLoading(false);
       })
-      .catch((error) => {});
   };
 
   const searchOnChangeHandler = (e) => {
@@ -94,12 +93,6 @@ export default function CommunityList({ post }) {
   useEffect(() => {
     showPageNumbers();
   }, [pageNum, isLoading]);
-
-  useEffect(() => {
-    console.log('currentPageNum' + currentPageNum);
-    console.log('pageNum' + pageNum);
-    console.log('arr', arrPage);
-  });
 
   return (
     <div className="communityBackground fontBold">
@@ -192,7 +185,6 @@ export default function CommunityList({ post }) {
                         setCurrentPageNum(val);
                       }}
                     >
-                      {console.log(val)}
                       {val}
                     </div>
                   ))}

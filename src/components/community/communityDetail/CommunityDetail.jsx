@@ -50,7 +50,8 @@ export default function CommunityDetail() {
           alert(res.data.data);
           navigate('/social');
         })
-        .catch((error) => {});
+        .catch((error) => {
+        });
   };
 
   useEffect(() => {

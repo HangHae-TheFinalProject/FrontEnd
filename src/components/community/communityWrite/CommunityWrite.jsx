@@ -30,7 +30,6 @@ export default function CommunityWrite() {
       .then((res) => {
         navigate('/social');
       })
-      .catch((error) => {});
   };
 
   const titleOnChangeHandler = (e) => {
