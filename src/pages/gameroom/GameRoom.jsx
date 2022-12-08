@@ -49,7 +49,8 @@ import './style.scss';
 import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
-  const MIN_MEMBER_COUNT = 3;
+  const MIN_MEMBER_COUNT = 1;
+  const SPOTLIGHT_TIME = 10;
 
   const { id } = useParams();
   const [cookie] = useCookies();
@@ -183,7 +184,7 @@ function GameRoom() {
               setStatusSpotlight(2);
               setMuted(true);
             }
-            setTimer({ time: 5, status: 1 });
+            setTimer({ time: SPOTLIGHT_TIME, status: 1 });
             break;
           case 'COMPLETE':
             setStageNumber(5);
