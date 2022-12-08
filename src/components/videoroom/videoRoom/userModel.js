@@ -2,7 +2,6 @@ class UserModel {
     connectionId;
     audioActive;
     videoActive;
-    screenShareActive;
     nickname;
     streamManager;
     type; // 'remote' | 'local'
@@ -11,7 +10,6 @@ class UserModel {
         this.connectionId = '';
         this.audioActive = true;
         this.videoActive = true;
-        this.screenShareActive = false;
         this.nickname = '';
         this.streamManager = null;
         this.type = 'local';
@@ -23,10 +21,6 @@ class UserModel {
 
     isVideoActive() {
         return this.videoActive;
-    }
-
-    isScreenShareActive() {
-        return this.screenShareActive;
     }
 
     getConnectionId() {
@@ -53,13 +47,9 @@ class UserModel {
     setVideoActive(isVideoActive) {
         this.videoActive = isVideoActive;
     }
-    setScreenShareActive(isScreenShareActive) {
-        this.screenShareActive = isScreenShareActive;
-    }
     setStreamManager(streamManager) {
         this.streamManager = streamManager;
     }
-
     setConnectionId(conecctionId) {
         this.connectionId = conecctionId;
     }
