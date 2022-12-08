@@ -50,8 +50,6 @@ function ARoom({ roomInfo }) {
     navigate(`/gameroom/${roomInfo.id}`);
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div className="roomBox fontBold">
       <div className="roomInfoBox">
@@ -59,11 +57,18 @@ function ARoom({ roomInfo }) {
         <span>{ARR_MODE[roomInfo.mode]}</span>
       </div>
       <a href="#" onClick={joinRoom}>
-        <img
-          className="doorImg"
-          src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
-          alt="doorImg"
-        />
+        <div className="gameRoomImg">
+          <img
+            className="doorImg"
+            src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
+            alt="doorImg"
+          />
+          {roomInfo.status === 'start' ? (
+            <>
+              <span className="roomInfoStart">게임중</span>
+            </>
+          ) : null}
+        </div>
       </a>
       <div className="roomName">
         <p>{roomInfo.roomPassword ? <IcLock /> : ''}</p>
