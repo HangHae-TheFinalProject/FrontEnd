@@ -115,7 +115,6 @@ function GameRoom() {
       webSocketFactory: () => new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders,
       debug: function (str) {
-        console.log(str);
       },
       onConnect: () => {
         subscribe();
@@ -408,11 +407,9 @@ function GameRoom() {
   let isCantGetDevice = false;
 
   useEffect(() => {
-    
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       .then(res => {
-
         dispatch(setIsCamera(res.getVideoTracks()[0] || res.getAudioTracks()[0] ? true : false));
         isCantGetDevice = false;
       })

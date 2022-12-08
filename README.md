@@ -1,5 +1,5 @@
 <컨셉 배너>
-# 👿 라이어게임(가제)
+# 👿 라이어게임:비밀의 문
 
 ## ✋ 프로젝트 소개
 #### 예능으로만 보던 그 게임을 실시간으로 즐기는 온라인 게임입니다.
@@ -23,12 +23,15 @@
 ### 🎮 인게임 대표 이미지
 
 ### 🛠️ 트러블슈팅
+▶ https://www.notion.so/Trouble-shooting-ea14209f725342b68610b5c0fa77728a
 
 ### 🗂️ 기술스택
 <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/> <img src="https://img.shields.io/badge/Redux Toolkit-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/openVidu-06d362?style=for-the-badge&logo=oepnVidu&logoColor=white"/> <img src="https://img.shields.io/badge/sockjs-333333?style=for-the-badge&logo=sockjs&logoColor=white"/> <img src="https://img.shields.io/badge/stomp-333333?style=for-the-badge&logo=stomp&logoColor=white"/>
 
 
 ### 🏗️ 프로젝트 아키텍처
+![서비스 아키텍쳐 #중간발표](https://user-images.githubusercontent.com/112993031/204065939-8d25f487-30cb-43d0-ab3a-1a663ccf8335.png)
+▶ https://www.notion.so/Service-Architecture-a0a8b52c030641d59b1ad31fce0893a0
 
 ### 📆 프로젝트 기간
 
