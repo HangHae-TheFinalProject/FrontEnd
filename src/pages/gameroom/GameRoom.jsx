@@ -81,28 +81,6 @@ function GameRoom() {
 
   const closePopup = () => { setIsPop(false); }
 
-  const leaveRoom = async () => {
-
-    try {
-      instance.delete(`/lier/room/${Number(id)}/exit`)
-      .then(res => {
-        navigate('/lobby');
-      })
-    } catch (error) {
-      alert(error.data.message);
-      navigate('/lobby');
-    }
-  }
-
-  const enterRoom = () => {
-
-    instance.post(`/lier/room/${Number(id)}`)
-    .catch((error) => {
-      alert('잘못된 입장입니다.');
-      navigate('/lobby');
-    })
-  }
-
   // Sock
   const client = useRef({});
 
@@ -133,6 +111,28 @@ function GameRoom() {
   const disconnect = () => {
     client.current.deactivate();
   };
+
+  const leaveRoom = async () => {
+    disconnect();
+    try {
+      instance.delete(`/lier/room/${Number(id)}/exit`)
+        .then(res => {
+          navigate('/lobby');
+        })
+    } catch (error) {
+      alert(error.data.message);
+      navigate('/lobby');
+    }
+  }
+
+  const enterRoom = () => {
+
+    instance.post(`/lier/room/${Number(id)}`)
+      .catch((error) => {
+        alert('잘못된 입장입니다.');
+        navigate('/lobby');
+      })
+  }
 
   // stomp 구독
   const subscribe = () => {
@@ -425,10 +425,11 @@ function GameRoom() {
     connect();
     initialize();
 
+    window.addEventListener("beforeunload", leaveRoom);
 
     return () => {
       return (
-        disconnect(),
+        window.removeEventListener("beforeunload", leaveRoom),
         leaveRoom()
       );
     }
@@ -599,7 +600,7 @@ function GameRoom() {
                 <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
                 <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
               </div>
-              {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT  ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
+              {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}
               {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
               {stageNumber === 2 ? <BtnStartReady status='ReadyInert' /> : ''}
