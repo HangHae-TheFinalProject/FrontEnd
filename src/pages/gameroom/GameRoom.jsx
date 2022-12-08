@@ -134,8 +134,7 @@ function GameRoom() {
       .then((res) => {
         dispatch(setOwner(res.data.data.owner));
         setIsMaster(nickname === res.data.data.owner);
-        console.log('모드체크')
-        console.log(res.data.data.mode);
+
         setGamemode(res.data.data.mode);
       })
       .catch((error) => {
@@ -150,7 +149,7 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
-        console.log(data);
+      
         switch (data.type) {
           case 'JOIN':
             setMemberCount(data.content.memberCnt);
@@ -174,13 +173,10 @@ function GameRoom() {
             setGameboardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD');
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
-            console.log('여기는')
-            console.log(gamemode)
-            console.log(gamemode === '바보');
+   
             if (data.content.liercategory) {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
-              console.log('여기ㅣㅣ')
-              console.log(poorItem)
+  
             }
             break;
           case 'READY':
@@ -405,10 +401,6 @@ function GameRoom() {
     });
   }
 
-  useEffect(() => {
-    console.log('게임모드 변경시점 체크')
-    console.log(gamemode)
-  }, [gamemode])
   // need to : 아직 test 안함
   const initialize = () => {
     setStageNumber(0);
