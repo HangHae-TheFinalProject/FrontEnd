@@ -16,6 +16,7 @@ function MyPageSignOut() {
             instance.delete('lier/removal')
             .then((res) => {
               alert(res.data.data);
+              
               sessionStorage.clear();
               new Cookies().remove('access_token');
               new Cookies().remove('refresh_token');
