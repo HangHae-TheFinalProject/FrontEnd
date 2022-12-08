@@ -53,8 +53,6 @@ export default function CommunityList({ post }) {
         setShow(false);
         setIsLoading(false);
       })
-      .catch((error) => {
-      });
   };
 
   const searchOnChangeHandler = (e) => {

@@ -39,8 +39,7 @@ export default function CommunityFix(fixmodal) {
       .then((res) => {
         setPostsDetail(res.data.data);
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   }, []);
 
   const postOnChangeHandler = (e) => {
