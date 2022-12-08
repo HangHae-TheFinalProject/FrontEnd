@@ -222,6 +222,8 @@ class VideoRoom extends Component {
     }
 
     camStatusChanged() {
+        if(!localUser.getStreamManager()) return;
+        
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
         this.sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
@@ -229,6 +231,8 @@ class VideoRoom extends Component {
     }
 
     micStatusChanged() {
+        if(!localUser.getStreamManager()) return;
+        
         if (this.isMute) return;
         localUser.setAudioActive(!localUser.isAudioActive());
         localUser.getStreamManager().publishAudio(localUser.isAudioActive());
@@ -376,6 +380,9 @@ class VideoRoom extends Component {
 
     render() {
         const localUser0 = this.state.localUser;
+        if(!localUser.getStreamManager()) {
+            return;
+        }
 
         return (
             <>
