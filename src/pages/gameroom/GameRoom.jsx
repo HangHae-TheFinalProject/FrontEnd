@@ -597,10 +597,12 @@ function GameRoom() {
               <Chat id={id} />
             </div>
             <div className="btnBoard">
-              <div className='mvIconWrap'>
-                <div className='mvIconBox' onClick={() => setMicActive(!micActive)}>{micActive ? <img src={iconMicOn} /> : <img src={iconMicOff} />}</div>
-                <div className='mvIconBox' onClick={() => setVideoActive(!videoActive)}>{videoActive ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
-              </div>
+
+              {/* <div className='mvIconWrap'> */}
+                {/* <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
+                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div> */}
+              {/* </div> */}
+
               {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}
               {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}

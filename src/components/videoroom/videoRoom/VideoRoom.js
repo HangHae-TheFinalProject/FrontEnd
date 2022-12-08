@@ -9,6 +9,11 @@ import Video from '../video/Video';
 import UserModel from './userModel';
 // import ToolbarComponent from './toolbar/ToolbarComponent';
 
+import iconMicOff from '../../../images/png/iconMicOff.png';
+import iconMicOn from '../../../images/png/iconMicOn.png';
+import iconVideoOff from '../../../images/png/iconVideoOff.png';
+import iconVideoOn from '../../../images/png/iconVideoOn.png';
+
 const localUser = new UserModel();
 
 class VideoRoom extends Component {
@@ -360,7 +365,6 @@ class VideoRoom extends Component {
                 }
             }
         } catch (e) {
-
         }
     }
 
@@ -371,27 +375,37 @@ class VideoRoom extends Component {
     }
 
     render() {
-        const localUser = this.state.localUser;
+        const localUser0 = this.state.localUser;
 
         return (
-            <div className="videoContainer">
-                {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                    <div className="videoBox" id="localUser">
-                        <Video
-                            user={localUser}
-                            handleNickname={this.nicknameChanged}
-                        />
+            <>
+                <div className="videoContainer">
+                    {localUser0 !== undefined && localUser0.getStreamManager() !== undefined && (
+                        <div className="videoBox" id="localUser">
+                            <Video
+                                user={localUser0}
+                                handleNickname={this.nicknameChanged}
+                            />
+                        </div>
+                    )}
+                    {this.state.subscribers.map((sub, i) => (
+                        <div className="videoBox" key={i} id="remoteUsers">
+                            <Video
+                                user={sub}
+                                streamId={sub.streamManager.stream.streamId}
+                            />
+                        </div>
+                    ))}
+                    <div className='mvIconWrap'>
+                        <div className='mvIconBox' onClick={this.micStatusChanged}>
+                            {localUser.isAudioActive() ? <img src={iconMicOn} /> : <img src={iconMicOff} />}
+                        </div>
+                        <div className='mvIconBox' onClick={this.camStatusChanged}>
+                            {localUser.isVideoActive() ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}
+                        </div>
                     </div>
-                )}
-                {this.state.subscribers.map((sub, i) => (
-                    <div className="videoBox" key={i} id="remoteUsers">
-                        <Video
-                            user={sub}
-                            streamId={sub.streamManager.stream.streamId}
-                        />
-                    </div>
-                ))}
-            </div>
+                </div >
+            </>
         );
     }
 
