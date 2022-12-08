@@ -76,7 +76,8 @@ function GameRoom() {
 
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
-  const gamemode = useSelector(state => state.rooms.room.mode);
+  // const gamemode = useSelector(state => state.rooms.room.mode);
+  const [gamemode, setGamemode] = useState('초기값');
   const [memberCount, setMemberCount] = useState(1);
   const [gameLoading, setGameLoading] = useState(true);
   const [gameboardStatus, setGameboardStatus] = useState('');
@@ -133,6 +134,9 @@ function GameRoom() {
       .then((res) => {
         dispatch(setOwner(res.data.data.owner));
         setIsMaster(nickname === res.data.data.owner);
+        console.log('모드체크')
+        console.log(res.data.data.mode);
+        setGamemode(res.data.data.mode);
       })
       .catch((error) => {
         alert('잘못된 입장입니다.');
@@ -170,11 +174,13 @@ function GameRoom() {
             setGameboardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD');
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
-            console.log(data.content.lier)
-            console.log(nickname)
-            console.log(nickname === data.content.lier)
-            if (gamemode === '바보') {
+            console.log('여기는')
+            console.log(gamemode)
+            console.log(gamemode === '바보');
+            if (data.content.liercategory) {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
+              console.log('여기ㅣㅣ')
+              console.log(poorItem)
             }
             break;
           case 'READY':
@@ -398,6 +404,10 @@ function GameRoom() {
     });
   }
 
+  useEffect(() => {
+    console.log('게임모드 변경시점 체크')
+    console.log(gamemode)
+  }, [gamemode])
   // need to : 아직 test 안함
   const initialize = () => {
     setStageNumber(0);
@@ -579,6 +589,7 @@ function GameRoom() {
 
   return (
     <div className="section">
+      {gamemode}
       <img src={gameRoomBackground} className='background' />
       <div className='gameRoomSection'>
         <div className='headerSection'>
@@ -609,20 +620,12 @@ function GameRoom() {
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
-              {
-                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} gameboardStatus={gameboardStatus} />
-                  : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} gameboardStatus={gameboardStatus} />
-              }
+              <GameBoard gamemode={gamemode} item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} gameboardStatus={gameboardStatus} />
             </div>
             <div className="chatBoard">
               <Chat id={id} />
             </div>
             <div className="btnBoard">
-
-              {/* <div className='mvIconWrap'> */}
-              {/* <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
-                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div> */}
-              {/* </div> */}
 
               {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}
