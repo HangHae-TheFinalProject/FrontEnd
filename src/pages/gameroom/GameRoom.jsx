@@ -6,7 +6,6 @@ import { useCookies } from 'react-cookie';
 import {
   setSpotlightMember,
   setPopupStatus,
-  setGameBoardStatus,
   setMemberList,
   removeMemberList,
   setMemberVoteResult,
@@ -80,6 +79,7 @@ function GameRoom() {
   const gamemode = useSelector(state => state.rooms.room.mode);
   const [memberCount, setMemberCount] = useState(1);
   const [gameLoading, setGameLoading] = useState(true);
+  const [gameboardStatus, setGameboardStatus] = useState('');
 
   const closePopup = () => { setIsPop(false); }
 
@@ -167,7 +167,7 @@ function GameRoom() {
             setStageNumber(1);    // 함수로 연결
             setItem({ category: data.content.category, keyword: data.content.keyword });
             setIsLiar(nickname === data.content.lier);
-            dispatch(setGameBoardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
+            setGameboardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD');
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
             console.log(data.content.lier)
@@ -203,7 +203,7 @@ function GameRoom() {
             break;
           case 'ALLCOMPLETE':
             setStageNumber(6);
-            setGameBoardStatus('');
+            setGameboardStatus('');
             setStatusSpotlight(0);
             setMuted(false);
             break;
@@ -218,7 +218,7 @@ function GameRoom() {
             // 시민 : 라이어가 맞습니다 / 라이어 : 키워드 입력
             dispatch(setMemberVoteResult(data.content[0]));
             setResultStatus('LIER');
-            dispatch(setGameBoardStatus(''));
+            setGameboardStatus('');
             dispatch(setPopupStatus('VOTE_RESULT'));
             setIsPop(true);
 
@@ -230,7 +230,7 @@ function GameRoom() {
             // 시민/라이어 : 라이어가 아닙니다.
             dispatch(setMemberVoteResult(data.content[0]));
             setResultStatus('NLIER');
-            dispatch(setGameBoardStatus(''));
+            setGameboardStatus('');
             dispatch(setPopupStatus('VOTE_RESULT'));
             setIsPop(true);
 
@@ -240,7 +240,7 @@ function GameRoom() {
             setStageNumber(3)
             setResultStatus('DRAW');
             dispatch(setPopupStatus('DRAW'));
-            dispatch(setGameBoardStatus(''));
+            setGameboardStatus('');
             setIsPop(true);
 
             break;
@@ -249,7 +249,7 @@ function GameRoom() {
             setResultStatus('DRAWANDENDGAME');
             setIsPop(true);
             dispatch(setPopupStatus('DRAWANDENDGAME'));
-            setGameBoardStatus('');
+            setGameboardStatus('');
 
             setTimer({ time: 3, status: 1 });
             break;
@@ -270,10 +270,10 @@ function GameRoom() {
               setTimer({ time: 10, status: 1 });
             }
             break;
-            case 'VICTROY':
-              setStageNumber(9);
-              setTimer({ time: 10, status: 1 });
-              break;
+          case 'VICTROY':
+            setStageNumber(9);
+            setTimer({ time: 10, status: 1 });
+            break;
         }
       }
     );
@@ -414,7 +414,7 @@ function GameRoom() {
     dispatch(setMemberLier(''));
     dispatch(setSpotlightMember(''));
     dispatch(setPopupStatus('WAIT_START'));
-    dispatch(setGameBoardStatus('WAIT_START'));
+    setGameboardStatus('WAIT_START');
     dispatch(setMemberVoteResult(''));
     dispatch(setReadyMemberList([]));
   }
@@ -466,7 +466,7 @@ function GameRoom() {
         break;
       case 3:
         // 게임레디 : 모두 다
-        dispatch(setGameBoardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
+        setGameboardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD');
         setTimer({ time: 5, status: 1 });
         break;
       case 4:
@@ -475,7 +475,7 @@ function GameRoom() {
         break;
       case 5:
         // 한번 더 투표
-        dispatch(setGameBoardStatus(isMaster ? 'VOTE_ONEMORE' : ''));
+        setGameboardStatus(isMaster ? 'VOTE_ONEMORE' : '');
         break;
       case 6:
         // 라이어 투표
@@ -610,8 +610,8 @@ function GameRoom() {
           <div className='boardSection'>
             <div className="gameBoard">
               {
-                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} />
-                  : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
+                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} gameboardStatus={gameboardStatus} />
+                  : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} gameboardStatus={gameboardStatus} />
               }
             </div>
             <div className="chatBoard">
