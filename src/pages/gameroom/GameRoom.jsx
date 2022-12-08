@@ -100,7 +100,7 @@ function GameRoom() {
       webSocketFactory: () =>
         new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders,
-      debug: function (str) {},
+      debug: function (str) { },
       onConnect: () => {
         subscribe();
         subscribePersonal();
@@ -149,7 +149,7 @@ function GameRoom() {
   const subscribe = () => {
     client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
       const data = JSON.parse(body);
-
+console.log(data)
       switch (data.type) {
         case 'JOIN':
           setMemberCount(data.content.memberCnt);
@@ -160,13 +160,12 @@ function GameRoom() {
           }
           break;
         case 'LEAVE':
-          if (data.content.memberCnt < MIN_MEMBER_COUNT) {
-            setGameboardStatus('WAIT_JOIN');
-          } else {
-            setGameboardStatus('WAIT_START');
-          }
           setMemberCount(data.content.memberCnt);
           dispatch(removeMemberList(data.sender));
+
+          if (gameboardStatus === 'WAIT_JOIN' && data.content.memberCnt < MIN_MEMBER_COUNT) {
+            setGameboardStatus('WAIT_START');
+          }
           break;
         case 'NEWOWNER':
           dispatch(setOwner(data.sender));
@@ -291,6 +290,7 @@ function GameRoom() {
           break;
         case 'VICTORY':
           setStageNumber(9);
+          setIsPop(true);
           setTimer({ time: 10, status: 1 });
           break;
       }
@@ -487,7 +487,7 @@ function GameRoom() {
         break;
       case 5:
         // 한번 더 투표
-        setGameboardStatus(isMaster ? 'VOTE_ONEMORE' : '');
+        setGameboardStatus(isMaster ? 'VOTE_ONEMORE_OWNER' : 'VOTE_ONEMORE');
         break;
       case 6:
         // 라이어 투표
@@ -639,8 +639,8 @@ function GameRoom() {
             </div>
             <div className="btnBoard">
               {stageNumber === 0 &&
-              isMaster &&
-              memberCount >= MIN_MEMBER_COUNT ? (
+                isMaster &&
+                memberCount >= MIN_MEMBER_COUNT ? (
                 <a href="#" onClick={gameStart}>
                   <BtnStartReady status="Start" />
                 </a>
@@ -648,8 +648,8 @@ function GameRoom() {
                 ''
               )}
               {stageNumber === 0 &&
-              isMaster &&
-              memberCount < MIN_MEMBER_COUNT ? (
+                isMaster &&
+                memberCount < MIN_MEMBER_COUNT ? (
                 <BtnStartReady status="StartInert" />
               ) : (
                 ''
