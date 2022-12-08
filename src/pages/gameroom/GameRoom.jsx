@@ -74,6 +74,7 @@ function GameRoom() {
   const [item, setItem] = useState({ category: '', keyword: '' });
   const [poorItem, setPoorItem] = useState({ category: '', keyword: '' });
   const [isPop, setIsPop] = useState(false);
+
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
   const gamemode = useSelector(state => state.rooms.room.mode);
@@ -129,6 +130,10 @@ function GameRoom() {
   const enterRoom = () => {
 
     instance.post(`/lier/room/${Number(id)}`)
+      .then((res) => {
+        dispatch(setOwner(res.data.data.owner));
+        setIsMaster(nickname === res.data.data.owner);
+      })
       .catch((error) => {
         alert('잘못된 입장입니다.');
         navigate('/lobby');
@@ -141,7 +146,6 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
-        console.log(body)
 
         switch (data.type) {
           case 'JOIN':
