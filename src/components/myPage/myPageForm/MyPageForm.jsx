@@ -1,5 +1,6 @@
 import myPage_ActiveBtn from '../../../images/png/myPage_ActiveBtn.png';
 import myPage_InActiveBtn from '../../../images/png/myPage_InActiveBtn.png';
+import { ReactComponent as CancelBtn } from '../../../images/svg/icCancel.svg';
 
 import './style.scss';
 import { useEffect, useState } from 'react';
@@ -9,11 +10,11 @@ import MyPageReward from '../myPageReward/MyPageReward';
 import MyPageSignOff from '../myPageSignOff/MyPageSignOff';
 import MyPageSignOut from '../myPageSignOut/MyPageSignOut';
 
-function MyPageForm() {
+function MyPageForm({ setOpenModal }) {
   const [active, setActive] = useState(false);
   const [recordData, setRecordData] = useState([]);
   const [rewardData, setRewardData] = useState([]);
-  const [rewardPage, setRewardPage] = useState(1)
+  const [rewardPage, setRewardPage] = useState(1);
 
   // 전적 조회 api
   const getMyPageAllRecord = () => {
@@ -71,6 +72,10 @@ function MyPageForm() {
           {!active ? (
             <>
               <div className="myPageRecord">
+                <CancelBtn
+                  className="myPageCloseBtn"
+                  onClick={() => setOpenModal(false)}
+                />
                 <MyPageRecord allRecord={recordData} />
                 <div className="myPageSignBtn">
                   <MyPageSignOff />
@@ -81,6 +86,10 @@ function MyPageForm() {
           ) : (
             <>
               <div className="myPageReward">
+                <CancelBtn
+                  className="myPageCloseBtn"
+                  onClick={() => setOpenModal(false)}
+                />
                 <MyPageReward rewardList={rewardData} />
               </div>
             </>

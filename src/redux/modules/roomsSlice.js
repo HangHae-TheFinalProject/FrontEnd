@@ -5,8 +5,10 @@ export const __getRooms = createAsyncThunk(
   'rooms/getRooms',
   async (payload, thunkAPI) => {
     try {
-      const { data } = await instance.get(`/lier/rooms/${payload.page}/view/${payload.view}`);
-      console.log(data)
+      const { data } = await instance.get(
+        `/lier/rooms/${payload.page}/view/${payload.view}`
+      );
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       alert('방을 찾을 수 없습니다.');
@@ -26,25 +28,26 @@ const initialState = {
         email: '',
         memberId: 0,
         nickname: '',
-        password: ''
-      }, {
+        password: '',
+      },
+      {
         createdAt: '',
         modifiedAt: '',
         email: '',
         memberId: 0,
         nickname: '',
-        password: ''
-      }
+        password: '',
+      },
     ],
     mode: 1,
     owner: '',
     roomName: '',
     roomPassword: '',
-    status: ''
+    status: '',
   },
   maxPage: 0,
   isLoading: false,
-  error: null
+  error: null,
 };
 
 export const roomsSlice = createSlice({
@@ -56,7 +59,7 @@ export const roomsSlice = createSlice({
     },
     setOwner(state, action) {
       state.room.owner = action.payload;
-    }
+    },
   },
   extraReducers: {
     [__getRooms.pending]: (state, action) => {
