@@ -276,10 +276,11 @@ function GameRoom() {
               setTimer({ time: 10, status: 1 });
             }
             break;
-          case 'VICTROY':
+          case 'VICTORY':
             setStageNumber(9);
             setTimer({ time: 10, status: 1 });
             break;
+
         }
       }
     );
