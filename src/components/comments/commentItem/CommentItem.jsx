@@ -9,7 +9,7 @@ function CommentItem({ comment, setIsLoading, nickname }) {
   // 댓글 수정 api
   const editComment = (payload) => {
     try {
-      if (editValue.trim() === '') return alert('내용을 입력해주세요');
+      if (editValue.content.trim() === '') return alert('내용을 입력해주세요');
       instance
         .put(`/lier/comment/${payload.commentid}`, payload.content)
         .then((response) => {
@@ -17,7 +17,6 @@ function CommentItem({ comment, setIsLoading, nickname }) {
           alert(response.data.data);
         });
     } catch (error) {
-      console.log('댓글 수정', error);
       setIsEdit(false);
     }
   };
@@ -34,7 +33,6 @@ function CommentItem({ comment, setIsLoading, nickname }) {
           setIsLoading(false);
         })
         .catch((error) => {
-          console.log('댓글 삭제', error);
           setIsLoading(false);
         });
   };
@@ -74,7 +72,9 @@ function CommentItem({ comment, setIsLoading, nickname }) {
         <div className="comment">
           <div className="commentFirstLine">
             <div>
-              <span className="commentAuthor">{editValue.author}</span>
+              <span className="commentAuthor">
+                {editValue.author.replace(/#\d*/, '')}
+              </span>
               <span className="commentDate fontRegular">
                 &nbsp;&nbsp;|&nbsp;&nbsp;{editValue.createdAt}
               </span>

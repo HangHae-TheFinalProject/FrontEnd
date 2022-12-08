@@ -32,7 +32,6 @@ export default function CommunityDetail() {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log('게시글 상세 조회', error);
         setIsLoading(false);
       });
   };
@@ -51,9 +50,7 @@ export default function CommunityDetail() {
           alert(res.data.data);
           navigate('/social');
         })
-        .catch((error) => {
-          console.log('삭제 요청', error);
-        });
+        .catch((error) => {});
   };
 
   useEffect(() => {
@@ -95,7 +92,9 @@ export default function CommunityDetail() {
                 )}
               </div>
               <div className="detailPostInformation">
-                <h4 className="postInfoAuthor fontBold">{postDetail.author}</h4>
+                <h4 className="postInfoAuthor fontBold">
+                  {postDetail.author.replace(/#\d*/, '')}
+                </h4>
                 <h4 className="postInfoElement">| {postDetail.createdAt}</h4>
                 <h4 className="postInfoElement">
                   | 조회수 {postDetail.viewcnt}

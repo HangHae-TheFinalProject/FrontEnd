@@ -12,13 +12,12 @@ export default function CommunityWrite() {
   const [content, setContent] = useState('');
 
   const postOnClickHandler = () => {
-
-    if(!title) {
+    if (!title) {
       alert('제목을 입력해주세요.');
       return;
     }
 
-    if(!content) {
+    if (!content) {
       alert('내용을 입력해주세요.');
       return;
     }
@@ -29,14 +28,9 @@ export default function CommunityWrite() {
         content: content,
       })
       .then((res) => {
-        console.log('성공');
         navigate('/social');
       })
-      .catch((error) => {
-        console.log('실패');
-      });
-    // console.log(title, content);
-    // dispatch(__postWrite({ title, content }));
+      .catch((error) => {});
   };
 
   const titleOnChangeHandler = (e) => {
