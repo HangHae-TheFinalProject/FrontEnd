@@ -149,12 +149,22 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
-      
+
         switch (data.type) {
           case 'JOIN':
             setMemberCount(data.content.memberCnt);
+            if (data.content.memberCnt < MIN_MEMBER_COUNT) {
+              setGameboardStatus('WAIT_JOIN');
+            } else {
+              setGameboardStatus('WAIT_START');
+            }
             break;
           case 'LEAVE':
+            if (data.content.memberCnt < MIN_MEMBER_COUNT) {
+              setGameboardStatus('WAIT_JOIN');
+            } else {
+              setGameboardStatus('WAIT_START');
+            }
             setMemberCount(data.content.memberCnt);
             dispatch(removeMemberList(data.sender));
             break;
@@ -173,10 +183,9 @@ function GameRoom() {
             setGameboardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD');
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
-   
+
             if (data.content.liercategory) {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
-  
             }
             break;
           case 'READY':
@@ -417,7 +426,11 @@ function GameRoom() {
     dispatch(setMemberLier(''));
     dispatch(setSpotlightMember(''));
     dispatch(setPopupStatus('WAIT_START'));
-    setGameboardStatus('WAIT_START');
+    if (memberCount < MIN_MEMBER_COUNT) {
+      setGameboardStatus('WAIT_JOIN');
+    } else {
+      setGameboardStatus('WAIT_START');
+    }
     dispatch(setMemberVoteResult(''));
     dispatch(setReadyMemberList([]));
   }
