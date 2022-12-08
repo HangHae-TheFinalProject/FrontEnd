@@ -20,7 +20,6 @@ export default function Video(props) {
     const nickname = props.user.getNickname();
     const [mutedSound, setMutedSound] = useState(false);
     const videoRef = useRef();
-    const isCamera = useSelector(state => state.game.isCamera);
     const [myTurn, setMyTurn] = useState(false);
     const memberSpotlight = useSelector(state => state.game.spotlightMember);
     const isMaster = useSelector(state => state.rooms.room.owner) === nickname;
@@ -28,10 +27,6 @@ export default function Video(props) {
     const [isReady, setIsReady] = useState(false);
     const arrCharacters = [elliot, george, harry, jack, jaina, oliver, serena, susan];
     const myCharacter = arrCharacters[Number(nickname.match(/\d*$/)) % arrCharacters.length];
-
-    const toggleSound = () => {
-        setMutedSound(!mutedSound);
-    };
 
     useEffect(() => {
         setIsReady(readyMemberList.some(member => member === nickname));

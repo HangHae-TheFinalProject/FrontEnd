@@ -59,8 +59,8 @@ function GameRoom() {
 
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
-  const [micOff, setMicOff] = useState(false);
-  const [videoOn, setVideoOn] = useState(true);
+  const [micActive, setMicActive] = useState(true);
+  const [videoActive, setVideoActive] = useState(true);
   const nickname = sessionStorage.getItem('nickname');
 
   // gamestatus
@@ -140,6 +140,7 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
+        console.log(body)
 
         switch (data.type) {
           case 'JOIN':
@@ -583,7 +584,7 @@ function GameRoom() {
         <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoom sessionName={id} isMute={muted} isMicOff={micOff} isVideoOn={videoOn} />
+            <VideoRoom sessionName={id} isMute={muted} micActive={micActive} videoActive={videoActive} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
@@ -597,8 +598,8 @@ function GameRoom() {
             </div>
             <div className="btnBoard">
               <div className='mvIconWrap'>
-                <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
-                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
+                <div className='mvIconBox' onClick={() => setMicActive(!micActive)}>{micActive ? <img src={iconMicOn} /> : <img src={iconMicOff} />}</div>
+                <div className='mvIconBox' onClick={() => setVideoActive(!videoActive)}>{videoActive ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
               </div>
               {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}
