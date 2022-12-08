@@ -50,8 +50,7 @@ export default function CommunityDetail() {
           alert(res.data.data);
           navigate('/social');
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
   };
 
   useEffect(() => {
@@ -94,7 +93,7 @@ export default function CommunityDetail() {
               </div>
               <div className="detailPostInformation">
                 <h4 className="postInfoAuthor fontBold">
-                  {postDetail.author}
+                  {postDetail.author?.replace(/#\d*/, '')}
                 </h4>
                 <h4 className="postInfoElement">| {postDetail.createdAt}</h4>
                 <h4 className="postInfoElement">
