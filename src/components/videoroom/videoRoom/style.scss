@@ -5,6 +5,11 @@ $videoBoxGap: 24px;
   height: 791px;
   position: relative;
 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
   // background-color: red;
 }
 
