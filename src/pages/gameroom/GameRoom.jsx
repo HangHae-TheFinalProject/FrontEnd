@@ -49,7 +49,7 @@ import './style.scss';
 import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
-  const MIN_MEMBER_COUNT = 1;
+  const MIN_MEMBER_COUNT = 3;
   const SPOTLIGHT_TIME = 10;
 
   const { id } = useParams();
