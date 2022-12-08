@@ -49,6 +49,8 @@ import './style.scss';
 import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
+  const MIN_MEMBER_COUNT = 3;
+
   const { id } = useParams();
   const [cookie] = useCookies();
   const navigate = useNavigate();
@@ -74,6 +76,7 @@ function GameRoom() {
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
   const gamemode = useSelector(state => state.rooms.room.mode);
+  const [memberCount, setMemberCount] = useState(1);
 
   const closePopup = () => { setIsPop(false); }
 
@@ -138,11 +141,13 @@ function GameRoom() {
         const data = JSON.parse(body)
 
         switch (data.type) {
+          case 'JOIN':
+            setMemberCount(data.content.memberCnt);
+            break;
           case 'LEAVE':
-            // Test 필요
+            setMemberCount(data.content.memberCnt);
             dispatch(removeMemberList(data.sender));
             break;
-
           case 'NEWOWNER':
             dispatch(setOwner(data.sender));
             setIsMaster(nickname === data.sender);
@@ -497,7 +502,6 @@ function GameRoom() {
         spotlight();
     }
 
-    // spotlight 한 턴 끝
     if (stageNumber === 4 && timer.status === 2) {
       dispatch(setSpotlightMember(''));
       // 내 턴이 끝났을 때
@@ -594,7 +598,8 @@ function GameRoom() {
                 <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
                 <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
               </div>
-              {stageNumber === 0 && isMaster ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
+              {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT  ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
+              {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}
               {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
               {stageNumber === 2 ? <BtnStartReady status='ReadyInert' /> : ''}
             </div>
