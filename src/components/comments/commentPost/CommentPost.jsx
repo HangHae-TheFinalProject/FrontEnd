@@ -17,7 +17,6 @@ function CommentPost({ postId, setIsLoading }) {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log('댓글 작성', error);
         setIsLoading(false);
       });
   };

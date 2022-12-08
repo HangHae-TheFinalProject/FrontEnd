@@ -27,8 +27,6 @@ export default function CommunityFix(fixmodal) {
       .then((res) => {
         alert(res.data.statusMsg);
         navigate('/social');
-        console.log('수정성공', res);
-        console.log('성공');
       })
       .catch((error) => {
         alert('수정할 내용을 입력해 주세요.');
@@ -40,12 +38,8 @@ export default function CommunityFix(fixmodal) {
       .get(`/lier/post/${postId}`)
       .then((res) => {
         setPostsDetail(res.data.data);
-        console.log('악시오스성공', res.data.data);
-        console.log('성공');
       })
-      .catch((error) => {
-        console.log('상세조회실패');
-      });
+      .catch((error) => {});
   }, []);
 
   const postOnChangeHandler = (e) => {
