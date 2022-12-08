@@ -12,6 +12,9 @@ function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardSta
     console.log(poorItem);
   }, [])
   switch (gameboardStatus) {
+    case 'WAIT_JOIN':
+      content = <WaitJoinBoard />;
+      break;
     case 'WAIT_START':
       content = <WaitStartBoard />;
       break;
@@ -19,7 +22,7 @@ function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardSta
       content = <ShowKeywordBoard item={item} />;
       break;
     case 'SHOW_LIER':
-      if(gamemode === '일반'){
+      if (gamemode === '일반') {
         content = <ShowLierBoard item={item} />;
       } else {
         content = <ShowKeywordBoard item={poorItem} />;
@@ -44,10 +47,19 @@ function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardSta
 
 export default GameBoard;
 
+function WaitJoinBoard() {
+  return (
+    <div className="stageReadyText fontLightBold">
+      <span>다른 유저의 참가를 기다리는 중 ...</span>
+      <span>( 최소 인원 3명 )</span>
+    </div>
+  );
+}
+
 function WaitStartBoard() {
   return (
     <div className="stageReadyText fontLightBold">
-      <span>게임을 준비해주세요.</span>
+      <span>방장의 시작을 기다리는 중 ...</span>
     </div>
   );
 }
