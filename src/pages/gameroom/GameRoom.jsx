@@ -136,8 +136,7 @@ function GameRoom() {
       .then((res) => {
         dispatch(setOwner(res.data.data.owner));
         setIsMaster(nickname === res.data.data.owner);
-        console.log('모드체크');
-        console.log(res.data.data.mode);
+
         setGamemode(res.data.data.mode);
       })
       .catch((error) => {
@@ -148,77 +147,66 @@ function GameRoom() {
 
   // stomp 구독
   const subscribe = () => {
-    client.current.subscribe(
-      `/sub/gameroom/${id}`,
-      ({ body }) => {
-        const data = JSON.parse(body)
+    client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
+      const data = JSON.parse(body);
 
-        switch (data.type) {
-          case 'JOIN':
-            setMemberCount(data.content.memberCnt);
-            if (data.content.memberCnt < MIN_MEMBER_COUNT) {
-              setGameboardStatus('WAIT_JOIN');
-            } else {
-              setGameboardStatus('WAIT_START');
-            }
-            break;
-          case 'LEAVE':
-            if (data.content.memberCnt < MIN_MEMBER_COUNT) {
-              setGameboardStatus('WAIT_JOIN');
-            } else {
-              setGameboardStatus('WAIT_START');
-            }
-            setMemberCount(data.content.memberCnt);
-            dispatch(removeMemberList(data.sender));
-            break;
-          case 'NEWOWNER':
-            dispatch(setOwner(data.sender));
-            setIsMaster(nickname === data.sender);
-            break;
-          case 'RESET':
-            alert(data.content);
-            initialize();
-            break;
-          case 'START':
-            setStageNumber(1);    // 함수로 연결
-            setItem({ category: data.content.category, keyword: data.content.keyword });
-            setIsLiar(nickname === data.content.lier);
-            setGameboardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD');
-            dispatch(setMemberLier(data.content.lier));
-            dispatch(setMemberList(data.content.memberlist));
+      switch (data.type) {
+        case 'JOIN':
+          setMemberCount(data.content.memberCnt);
+          if (data.content.memberCnt < MIN_MEMBER_COUNT) {
+            setGameboardStatus('WAIT_JOIN');
+          } else {
+            setGameboardStatus('WAIT_START');
+          }
+          break;
+        case 'LEAVE':
+          if (data.content.memberCnt < MIN_MEMBER_COUNT) {
+            setGameboardStatus('WAIT_JOIN');
+          } else {
+            setGameboardStatus('WAIT_START');
+          }
+          setMemberCount(data.content.memberCnt);
+          dispatch(removeMemberList(data.sender));
+          break;
+        case 'NEWOWNER':
+          dispatch(setOwner(data.sender));
+          setIsMaster(nickname === data.sender);
+          break;
+        case 'RESET':
+          alert(data.content);
+          initialize();
+          break;
+        case 'START':
+          setStageNumber(1); // 함수로 연결
+          setItem({
+            category: data.content.category,
+            keyword: data.content.keyword,
+          });
+          setIsLiar(nickname === data.content.lier);
+          setGameboardStatus(
+            nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD'
+          );
+          dispatch(setMemberLier(data.content.lier));
+          dispatch(setMemberList(data.content.memberlist));
 
-            if (data.content.liercategory) {
-              setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
-            }
-            break;
-          case 'READY':
-            dispatch(addReadyMemberList(data.sender));
-            break;
-          case 'ALLREADY':
-            dispatch(setReadyMemberList([]));
-            setStageNumber(3);
-            break;
-          case 'SPOTLIGHT':
-            dispatch(setSpotlightMember(data.sender));
-            if (data.sender === nickname) {
-              setStatusSpotlight(1);
-              setMuted(false);
-            } else {
-              setStatusSpotlight(2);
-              setMuted(true);
-            }
-            setTimer({ time: SPOTLIGHT_TIME, status: 1 });
-            break;
-          case 'COMPLETE':
-            setStageNumber(5);
-            setRound(data.content.round);
-            setStatusSpotlight(0);
-            setMuted(false);
-            break;
-          case 'ALLCOMPLETE':
-            setStageNumber(6);
-            setGameboardStatus('');
-            setStatusSpotlight(0);
+          if (data.content.liercategory) {
+            setPoorItem({
+              category: data.content.liercategory,
+              keyword: data.content.lierkeyword,
+            });
+          }
+          break;
+        case 'READY':
+          dispatch(addReadyMemberList(data.sender));
+          break;
+        case 'ALLREADY':
+          dispatch(setReadyMemberList([]));
+          setStageNumber(3);
+          break;
+        case 'SPOTLIGHT':
+          dispatch(setSpotlightMember(data.sender));
+          if (data.sender === nickname) {
+            setStatusSpotlight(1);
             setMuted(false);
           } else {
             setStatusSpotlight(2);
@@ -289,37 +277,22 @@ function GameRoom() {
             setStageNumber(9);
             setResultStatus('WIN_LIER');
             setIsPop(true);
-            dispatch(setPopupStatus('DRAWANDENDGAME'));
-            setGameboardStatus('');
+            dispatch(setPopupStatus('VICTORY_LIER'));
 
-            setTimer({ time: 3, status: 1 });
-            break;
-          case 'RESULT':
-            if (data.content) {
-              setStageNumber(9);
-              setResultStatus('WIN_LIER');
-              setIsPop(true);
-              dispatch(setPopupStatus('VICTORY_LIER'));
-
-              setTimer({ time: 10, status: 1 });
-            } else {
-              setStageNumber(9);
-              setIsPop(true);
-              setResultStatus('WIN_USER');
-              dispatch(setPopupStatus('VICTORY_USER'));
-
-              setTimer({ time: 10, status: 1 });
-            }
-            break;
-          case 'VICTORY':
+            setTimer({ time: 10, status: 1 });
+          } else {
             setStageNumber(9);
             setIsPop(true);
             setResultStatus('WIN_USER');
             dispatch(setPopupStatus('VICTORY_USER'));
 
             setTimer({ time: 10, status: 1 });
-            break;
-        }
+          }
+          break;
+        case 'VICTORY':
+          setStageNumber(9);
+          setTimer({ time: 10, status: 1 });
+          break;
       }
     });
   };
