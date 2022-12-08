@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import gameBoardFrame from '../../images/svg/gameBoardFrame.svg';
 import './style.scss';
 
-function GameBoard({ item, poorItem={}, govote, onemorevote, gameboardStatus }) {
+function GameBoard({ item, poorItem={category: '', keyword: ''}, govote, onemorevote, gameboardStatus }) {
   let content;
   // const status = useSelector((state) => state.game.gameBoardStatus);
   // const gamemode = useSelector((state) => state.rooms.room.mode);
 
+  useEffect(() => {
+    console.log(poorItem);
+  }, [poorItem])
   switch (gameboardStatus) {
     case 'WAIT_START':
       content = <WaitStartBoard />;
@@ -15,7 +19,7 @@ function GameBoard({ item, poorItem={}, govote, onemorevote, gameboardStatus }) 
       content = <ShowKeywordBoard item={item} />;
       break;
     case 'SHOW_LIER':
-      if(poorItem !== {} ){
+      if(poorItem.category === '' ){
         content = <ShowLierBoard item={item} />;
       } else {
         content = <ShowKeywordBoard item={poorItem} />;
