@@ -73,7 +73,7 @@ function CommentItem({ comment, setIsLoading, nickname }) {
           <div className="commentFirstLine">
             <div>
               <span className="commentAuthor">
-                {editValue.author}
+                {editValue.author.replace(/#\d*/, '')}
               </span>
               <span className="commentDate fontRegular">
                 &nbsp;&nbsp;|&nbsp;&nbsp;{editValue.createdAt}
