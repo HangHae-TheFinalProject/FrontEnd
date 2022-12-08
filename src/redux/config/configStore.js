@@ -8,7 +8,7 @@ const store = configureStore({
     game: game,
     rooms: rooms,
   },
-  devTools: false,
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export default store;
