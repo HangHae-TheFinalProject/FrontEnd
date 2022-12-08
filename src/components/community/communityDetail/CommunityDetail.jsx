@@ -78,7 +78,12 @@ export default function CommunityDetail() {
                       수정
                     </button>
                     {fix === true ? (
-                      <CommunityFix fixmodal={setFix} postfix={fix} />
+                      <CommunityFix
+                        postId={postId}
+                        postDetail={postDetail}
+                        fixmodal={setFix}
+                        postfix={fix}
+                      />
                     ) : (
                       ''
                     )}

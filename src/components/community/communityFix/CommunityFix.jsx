@@ -7,18 +7,19 @@ import SocialHeader from '../../socialHeader/SocialHeader';
 
 import './style.scss';
 
-export default function CommunityFix(fixmodal) {
-  const { postId } = useParams();
+export default function CommunityFix({ postId, postDetail, fixmodal }) {
   const navigate = useNavigate();
 
-  useEffect(() => {});
-
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [postsDetail, setPostsDetail] = useState({});
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   //수정 요청
   const fixOnClickHandler = () => {
+    if (title.trim() === '') {
+      return alert('수정할 제목을 입력해주세요');
+    } else if (content.trim() === '') {
+      return alert('수정할 내용을 입력해주세요');
+    }
     instance
       .put(`/lier/post/${postId}`, {
         title: title,
@@ -33,15 +34,6 @@ export default function CommunityFix(fixmodal) {
       });
   };
 
-  useEffect(() => {
-    instance
-      .get(`/lier/post/${postId}`)
-      .then((res) => {
-        setPostsDetail(res.data.data);
-      })
-      .catch((error) => {});
-  }, []);
-
   const postOnChangeHandler = (e) => {
     setContent(e.target.value);
   };
@@ -51,7 +43,7 @@ export default function CommunityFix(fixmodal) {
   };
 
   const cancelClickHandler = () => {
-    fixmodal.fixmodal(false);
+    fixmodal(false);
   };
 
   return (
@@ -67,16 +59,18 @@ export default function CommunityFix(fixmodal) {
         <div className="fixInputBox">
           <input
             className="fixTitleInput fontSemiBold"
-            onChange={postOnChangeHandler}
+            maxLength={100}
+            onChange={titleOnChangeHandler}
             placeholder="글제목을 입력해주세요."
-            defaultValue={postsDetail.title}
-          ></input>
+            defaultValue={postDetail.title}
+          />
           <textarea
             className="fixPostInput fontSemiBold"
-            onChange={titleOnChangeHandler}
+            maxLength={500}
+            onChange={postOnChangeHandler}
             placeholder="내용을 입력해주세요."
-            defaultValue={postsDetail.content}
-          ></textarea>
+            defaultValue={postDetail.content}
+          />
         </div>
         <div className="communityFixBtnBox">
           <button className="fixRegistrationBtn" onClick={fixOnClickHandler}>

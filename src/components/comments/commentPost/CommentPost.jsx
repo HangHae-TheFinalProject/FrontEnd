@@ -25,7 +25,7 @@ function CommentPost({ postId, setIsLoading }) {
     <div className="commentInputContainer">
       <textarea
         className="commentInput fontBold"
-        maxLength={200}
+        maxLength={150}
         placeholder="댓글 내용을 입력해주세요."
         value={comment}
         onKeyPress={(e) =>

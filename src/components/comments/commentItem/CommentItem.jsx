@@ -43,11 +43,12 @@ function CommentItem({ comment, setIsLoading, nickname }) {
         <div className="commentEditInputContainer">
           <textarea
             className="commentEditInput fontBold"
+            maxLength={150}
             value={editValue.content}
             onChange={(e) =>
               setEditValue({ ...editValue, content: e.target.value })
             }
-          ></textarea>
+          />
           <div className="commentEditBtn">
             <button
               className="editCancelBtn fontBold"
