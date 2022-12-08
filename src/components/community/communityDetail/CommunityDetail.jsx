@@ -8,7 +8,7 @@ import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
 
 import CommunityFix from '../communityFix/CommunityFix';
 import CommentsForm from '../../comments/commentsForm/CommentsForm';
-import SocialHeader from '../../socialHeader/SocialHeader';
+import DetailSocialHeader from '../../socialHeader/DetailSocialHeader';
 
 import './style.scss';
 
@@ -65,7 +65,7 @@ export default function CommunityDetail() {
           src={lobbyBackGround}
           alt="background"
         />
-        <SocialHeader />
+        <DetailSocialHeader />
         <div className="detailBoxImg">
           <div className="detailMainBox">
             <div className="detailPostBox">

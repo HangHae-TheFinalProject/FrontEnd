@@ -6,10 +6,11 @@ import instance from '../../shared/Request';
 
 import { setRoom } from '../../redux/modules/roomsSlice';
 import createRoomModal from '../../images/png/createRoomModalBackground.png';
+import { ReactComponent as CancelBtn } from '../../images/svg/icCancel.svg';
 
 import './style.scss';
 
-function CreateRoomForm() {
+function CreateRoomForm({ setOpenModal }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,6 +57,10 @@ function CreateRoomForm() {
         src={createRoomModal}
       />
       <div className="modalInput">
+        <CancelBtn
+          className="createRoomModalCancelBtn"
+          onClick={() => setOpenModal(false)}
+        />
         <h1 className="roomCreateTitle fontLightBold">방 만들기</h1>
         <div className="titlePasswordBox">
           <input

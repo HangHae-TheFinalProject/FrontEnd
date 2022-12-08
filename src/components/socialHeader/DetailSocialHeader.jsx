@@ -7,28 +7,28 @@ import MyPageForm from '../myPage/myPageForm/MyPageForm';
 
 import './style.scss';
 
-function LobbyHeader() {
+function SocialHeader() {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
-      <div className="lobbyHeaderBackground fontLightBold">
-        <header className="lobbyHeader">
-          <h1>로비</h1>
+      <div className="socialHeaderBackground fontLightBold">
+        <header className="socialHeader">
+          <h1>커뮤니티</h1>
         </header>
-        <div className="lobbyHeaderCommunityBox">
+        <div className="socialHeaderCommunityBox">
           <div
-            className="lobbyHeaderCommunityBtn"
+            className="socialHeaderCommunityBtn"
             onClick={() => navigate('/social')}
           >
             <img src={headerArrow} alt="headerArrow" />
-            <span>커뮤니티</span>
+            <span>뒤로가기</span>
           </div>
           {openModal && (
             <Modal
               onClose={() => setOpenModal(false)}
-              content={<MyPageForm setOpenModal={setOpenModal} />}
+              content={<MyPageForm />}
             />
           )}
           <span onClick={() => setOpenModal(true)}>마이페이지</span>
@@ -38,4 +38,4 @@ function LobbyHeader() {
   );
 }
 
-export default LobbyHeader;
+export default SocialHeader;

@@ -50,9 +50,7 @@ function ARoom({ roomInfo }) {
     navigate(`/gameroom/${roomInfo.id}`);
   };
 
-  useEffect(() => {
-
-  }, [])
+  useEffect(() => {}, []);
 
   return (
     <div className="roomBox fontBold">
@@ -81,6 +79,7 @@ function ARoom({ roomInfo }) {
             <PasswordModal
               roomId={roomInfo.id}
               password={roomInfo.roomPassword}
+              setOpenModal={setOpenModal}
             />
           }
         />
@@ -91,7 +90,7 @@ function ARoom({ roomInfo }) {
 
 export default ARoom;
 
-function PasswordModal({ roomId, password }) {
+function PasswordModal({ roomId, password, setOpenModal }) {
   const navigate = useNavigate();
   const [value, inputHandler] = useInput();
 
@@ -116,10 +115,16 @@ function PasswordModal({ roomId, password }) {
             onChange={inputHandler}
           />
           <input
-            className="passwordBtn"
+            className="passwordInputBtn"
             type="button"
             value="입력"
             onClick={confirm}
+          />
+          <input
+            className="passwordCloseBtn"
+            type="button"
+            value="닫기"
+            onClick={() => setOpenModal(false)}
           />
         </div>
       </div>

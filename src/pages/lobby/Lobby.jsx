@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 import Modal from '../../elements/modal/Modal';
 import RoomList from '../../components/roomList/RoomList';
 import CreateRoomForm from '../../components/createRoomForm/CreateRoomForm';
+import LobbyHeader from '../../components/lobbyHeader/LobbyHeader';
 import lobbyBackGround from '../../images/png/lobbyBackGround.png';
 import roomMakerBtn from '../../images/png/roomMakerBtn.png';
-import LobbyHeader from '../../components/lobbyHeader/LobbyHeader';
 
 import './style.scss';
 
 // import BGM from '../../audio/lobbyBGM.mp3';
 
 function Lobby() {
-  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const BGM = new Audio('../../audio/lobbyBGM.mp3');
 
@@ -33,7 +31,9 @@ function Lobby() {
       {openModal && (
         <Modal
           onClose={() => setOpenModal(false)}
-          content={<CreateRoomForm />}
+          content={
+            <CreateRoomForm openModal={openModal} setOpenModal={setOpenModal} />
+          }
         />
       )}
       <img
