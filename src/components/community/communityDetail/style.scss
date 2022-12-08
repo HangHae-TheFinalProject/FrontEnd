@@ -41,6 +41,27 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 20%;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background-clip: padding-box;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
+  }
 }
 
 .detailPostTitleBox {
@@ -87,6 +108,7 @@
   width: inherit;
   color: rgba(179, 179, 179, 1);
   margin-bottom: 40px;
+
   .postInfoAuthor {
     font-size: 16px;
   }
@@ -101,6 +123,9 @@
   width: inherit;
   height: 150px;
   color: white;
+  white-space: pre;
+  overflow-y: auto;
+
   .postContent {
     font-size: 16px;
   }
