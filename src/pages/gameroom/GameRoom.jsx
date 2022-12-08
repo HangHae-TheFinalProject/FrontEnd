@@ -146,7 +146,7 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
-
+        console.log(data);
         switch (data.type) {
           case 'JOIN':
             setMemberCount(data.content.memberCnt);
@@ -167,8 +167,12 @@ function GameRoom() {
             setStageNumber(1);    // 함수로 연결
             setItem({ category: data.content.category, keyword: data.content.keyword });
             setIsLiar(nickname === data.content.lier);
+            dispatch(setGameBoardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
+            console.log(data.content.lier)
+            console.log(nickname)
+            console.log(nickname === data.content.lier)
             if (gamemode === '바보') {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
             }
@@ -266,6 +270,10 @@ function GameRoom() {
               setTimer({ time: 10, status: 1 });
             }
             break;
+            case 'VICTROY':
+              setStageNumber(9);
+              setTimer({ time: 10, status: 1 });
+              break;
         }
       }
     );
@@ -451,7 +459,7 @@ function GameRoom() {
         break;
       case 1:
         // 게임시작 : 라이어 통보
-        dispatch(setGameBoardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
+        // dispatch(setGameBoardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
         break;
       case 2:
         // 게임레디 : 나 혼자
