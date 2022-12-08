@@ -9,6 +9,11 @@ import Video from '../video/Video';
 import UserModel from './userModel';
 // import ToolbarComponent from './toolbar/ToolbarComponent';
 
+import iconMicOff from '../../../images/png/iconMicOff.png';
+import iconMicOn from '../../../images/png/iconMicOn.png';
+import iconVideoOff from '../../../images/png/iconVideoOff.png';
+import iconVideoOn from '../../../images/png/iconVideoOn.png';
+
 const localUser = new UserModel();
 
 class VideoRoom extends Component {
@@ -27,12 +32,11 @@ class VideoRoom extends Component {
             session: undefined,
             localUser: undefined,
             subscribers: [],
-            chatDisplay: 'none',
             currentVideoDevice: undefined,
             isMute: this.props.isMute,
-            isMicOff: this.props.isMicOff,
-            isVideoOn: this.props.isVideoOn
-        };
+            micActive: this.props.micActive,
+            videoActive: this.props.videoActive
+        }
 
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
@@ -41,29 +45,24 @@ class VideoRoom extends Component {
         this.micStatusChanged = this.micStatusChanged.bind(this);
         this.micToggleMuted = this.micToggleMuted.bind(this);
         this.nicknameChanged = this.nicknameChanged.bind(this);
-        this.toggleFullscreen = this.toggleFullscreen.bind(this);
         this.switchCamera = this.switchCamera.bind(this);
-        this.screenShare = this.screenShare.bind(this);
-        this.stopScreenShare = this.stopScreenShare.bind(this);
-        this.closeDialogExtension = this.closeDialogExtension.bind(this);
-        this.toggleChat = this.toggleChat.bind(this);
         this.checkNotification = this.checkNotification.bind(this);
-        this.checkSize = this.checkSize.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.isMute !== prevProps.isMute) {
             this.setState({ isMute: this.props.isMute })
             this.micToggleMuted();
+            // this.micStatusChanged();
         }
 
-        if (this.props.isMicOff !== prevProps.isMicOff) {
-            this.setState({ isMicOff: this.props.isMicOff })
+        if (this.props.micActive !== prevProps.micActive) {
+            this.setState({ micActive: this.props.micActive })
             this.micStatusChanged();
         }
 
-        if (this.props.isVideoOn !== prevProps.isVideoOn) {
-            this.setState({ isVideoOn: this.props.isVideoOn })
+        if (this.props.videoActive !== prevProps.videoActive) {
+            this.setState({ videoActive: this.props.videoActive })
             this.camStatusChanged();
         }
     }
@@ -170,11 +169,9 @@ class VideoRoom extends Component {
         }
         localUser.setNickname(this.state.myUserName);
         localUser.setConnectionId(this.state.session.connection.connectionId);
-        localUser.setScreenShareActive(false);
         localUser.setStreamManager(publisher);
         this.subscribeToUserChanged();
         this.subscribeToStreamDestroyed();
-        this.sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
 
         this.setState({ currentVideoDevice: videoDevices[0], localUser: localUser }, () => {
             this.state.localUser.getStreamManager().on('streamPlaying', (e) => {
@@ -197,7 +194,6 @@ class VideoRoom extends Component {
                         isAudioActive: this.state.localUser.isAudioActive(),
                         isVideoActive: this.state.localUser.isVideoActive(),
                         nickname: this.state.localUser.getNickname(),
-                        isScreenShareActive: this.state.localUser.isScreenShareActive(),
                     });
                 }
             }
@@ -226,6 +222,8 @@ class VideoRoom extends Component {
     }
 
     camStatusChanged() {
+        if(!localUser.getStreamManager()) return;
+
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
         this.sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
@@ -233,6 +231,8 @@ class VideoRoom extends Component {
     }
 
     micStatusChanged() {
+        if(!localUser.getStreamManager()) return;
+        
         if (this.isMute) return;
         localUser.setAudioActive(!localUser.isAudioActive());
         localUser.getStreamManager().publishAudio(localUser.isAudioActive());
@@ -274,7 +274,6 @@ class VideoRoom extends Component {
         this.state.session.on('streamCreated', (event) => {
             const subscriber = this.state.session.subscribe(event.stream, undefined);
             subscriber.on('streamPlaying', (e) => {
-                this.checkSomeoneShareScreen();
                 subscriber.videos[0].video.parentElement.classList.remove(
                     'custom-class'
                 );
@@ -297,9 +296,6 @@ class VideoRoom extends Component {
         this.state.session.on('streamDestroyed', (event) => {
             // Remove the stream from 'subscribers' array
             this.deleteSubscriber(event.stream);
-            setTimeout(() => {
-                this.checkSomeoneShareScreen();
-            }, 20);
             event.preventDefault();
         });
     }
@@ -319,16 +315,12 @@ class VideoRoom extends Component {
                     if (data.nickname !== undefined) {
                         user.setNickname(data.nickname);
                     }
-                    if (data.isScreenShareActive !== undefined) {
-                        user.setScreenShareActive(data.isScreenShareActive);
-                    }
                 }
             });
             this.setState(
                 {
                     subscribers: remoteUsers,
-                },
-                () => this.checkSomeoneShareScreen()
+                }
             );
         });
     }
@@ -339,37 +331,6 @@ class VideoRoom extends Component {
             type: 'userChanged',
         };
         this.state.session.signal(signalOptions);
-    }
-
-    toggleFullscreen() {
-        const document = window.document;
-        const fs = document.getElementById('container');
-        if (
-            !document.fullscreenElement &&
-            !document.mozFullScreenElement &&
-            !document.webkitFullscreenElement &&
-            !document.msFullscreenElement
-        ) {
-            if (fs.requestFullscreen) {
-                fs.requestFullscreen();
-            } else if (fs.msRequestFullscreen) {
-                fs.msRequestFullscreen();
-            } else if (fs.mozRequestFullScreen) {
-                fs.mozRequestFullScreen();
-            } else if (fs.webkitRequestFullscreen) {
-                fs.webkitRequestFullscreen();
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
-        }
     }
 
     async switchCamera() {
@@ -408,91 +369,6 @@ class VideoRoom extends Component {
                 }
             }
         } catch (e) {
-            
-        }
-    }
-
-    screenShare() {
-        const videoSource =
-            navigator.userAgent.indexOf('Firefox') !== -1 ? 'window' : 'screen';
-        const publisher = this.OV.initPublisher(
-            undefined,
-            {
-                videoSource: videoSource,
-                publishAudio: localUser.isAudioActive(),
-                publishVideo: localUser.isVideoActive(),
-                mirror: false,
-            },
-            (error) => {
-                if (error && error.name === 'SCREEN_EXTENSION_NOT_INSTALLED') {
-                    this.setState({ showExtensionDialog: true });
-                } else if (error && error.name === 'SCREEN_SHARING_NOT_SUPPORTED') {
-                    alert('Your browser does not support screen sharing');
-                } else if (error && error.name === 'SCREEN_EXTENSION_DISABLED') {
-                    alert('You need to enable screen sharing extension');
-                } else if (error && error.name === 'SCREEN_CAPTURE_DENIED') {
-                    alert('You need to choose a window or application to share');
-                }
-            }
-        );
-
-        publisher.once('accessAllowed', () => {
-            this.state.session.unpublish(localUser.getStreamManager());
-            localUser.setStreamManager(publisher);
-            this.state.session.publish(localUser.getStreamManager()).then(() => {
-                localUser.setScreenShareActive(true);
-                this.setState({ localUser: localUser }, () => {
-                    this.sendSignalUserChanged({
-                        isScreenShareActive: localUser.isScreenShareActive(),
-                    });
-                });
-            });
-        });
-        publisher.on('streamPlaying', () => {
-            publisher.videos[0].video.parentElement.classList.remove('custom-class');
-        });
-    }
-
-    closeDialogExtension() {
-        this.setState({ showExtensionDialog: false });
-    }
-
-    stopScreenShare() {
-        this.state.session.unpublish(localUser.getStreamManager());
-        this.connectWebCam();
-    }
-
-    checkSomeoneShareScreen() {
-        let isScreenShared;
-        // return true if at least one passes the test
-        isScreenShared =
-            this.state.subscribers.some((user) => user.isScreenShareActive()) ||
-            localUser.isScreenShareActive();
-        const openviduLayoutOptions = {
-            maxRatio: 3 / 2,
-            minRatio: 9 / 16,
-            fixedRatio: isScreenShared,
-            bigClass: 'OV_big',
-            bigPercentage: 0.8,
-            bigFixedRatio: false,
-            bigMaxRatio: 3 / 2,
-            bigMinRatio: 9 / 16,
-            bigFirst: true,
-            animate: true,
-        };
-
-    }
-
-    toggleChat(property) {
-        let display = property;
-
-        if (display === undefined) {
-            display = this.state.chatDisplay === 'none' ? 'block' : 'none';
-        }
-        if (display === 'block') {
-            this.setState({ chatDisplay: display, messageReceived: false });
-        } else {
-            this.setState({ chatDisplay: display });
         }
     }
 
@@ -501,43 +377,41 @@ class VideoRoom extends Component {
             messageReceived: this.state.chatDisplay === 'none',
         });
     }
-    checkSize() {
-        if (
-            document.getElementById('layout').offsetWidth <= 700 &&
-            !this.hasBeenUpdated
-        ) {
-            this.toggleChat('none');
-            this.hasBeenUpdated = true;
-        }
-        if (
-            document.getElementById('layout').offsetWidth > 700 &&
-            this.hasBeenUpdated
-        ) {
-            this.hasBeenUpdated = false;
-        }
-    }
 
     render() {
-        const localUser = this.state.localUser;
+        const localUser0 = this.state.localUser;
+        if(!localUser.getStreamManager()) {
+            return;
+        }
 
         return (
-            <div className="videoContainer">
-                {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                    <div className="videoBox" id="localUser">
-                        <Video
-                            user={localUser}
-                            handleNickname={this.nicknameChanged}
-                        />
+            <div className='videoroomContainer'>
+                <div className="videoContainer">
+                    {localUser0 !== undefined && localUser0.getStreamManager() !== undefined && (
+                        <div className="videoBox" id="localUser">
+                            <Video
+                                user={localUser0}
+                                handleNickname={this.nicknameChanged}
+                            />
+                        </div>
+                    )}
+                    {this.state.subscribers.map((sub, i) => (
+                        <div className="videoBox" key={i} id="remoteUsers">
+                            <Video
+                                user={sub}
+                                streamId={sub.streamManager.stream.streamId}
+                            />
+                        </div>
+                    ))}
+                </div >
+                <div className='mvIconWrap'>
+                        <div className='mvIconBox' onClick={this.micStatusChanged}>
+                            {localUser.isAudioActive() ? <img src={iconMicOn} /> : <img src={iconMicOff} />}
+                        </div>
+                        <div className='mvIconBox' onClick={this.camStatusChanged}>
+                            {localUser.isVideoActive() ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}
+                        </div>
                     </div>
-                )}
-                {this.state.subscribers.map((sub, i) => (
-                    <div className="videoBox" key={i} id="remoteUsers">
-                        <Video
-                            user={sub}
-                            streamId={sub.streamManager.stream.streamId}
-                        />
-                    </div>
-                ))}
             </div>
         );
     }

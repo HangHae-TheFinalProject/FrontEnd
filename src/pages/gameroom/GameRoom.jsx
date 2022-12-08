@@ -59,8 +59,8 @@ function GameRoom() {
 
   const [stageNumber, setStageNumber] = useState(0);
   const [muted, setMuted] = useState(false);
-  const [micOff, setMicOff] = useState(false);
-  const [videoOn, setVideoOn] = useState(true);
+  const [micActive, setMicActive] = useState(true);
+  const [videoActive, setVideoActive] = useState(true);
   const nickname = sessionStorage.getItem('nickname');
 
   // gamestatus
@@ -78,6 +78,7 @@ function GameRoom() {
   const [isLiar, setIsLiar] = useState(false);
   const gamemode = useSelector(state => state.rooms.room.mode);
   const [memberCount, setMemberCount] = useState(1);
+  const [gameLoading, setGameLoading] = useState(true);
 
   const closePopup = () => { setIsPop(false); }
 
@@ -140,6 +141,7 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
+        console.log(body)
 
         switch (data.type) {
           case 'JOIN':
@@ -409,10 +411,17 @@ function GameRoom() {
 
   useEffect(() => {
 
-    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
       .then(res => {
         dispatch(setIsCamera(res.getVideoTracks()[0] || res.getAudioTracks()[0] ? true : false));
         isCantGetDevice = false;
+        setGameLoading(false);
+
+        enterRoom();
+        connect();
+        initialize();
+
+        window.addEventListener("beforeunload", leaveRoom);
       })
       .catch(err => {
         alert('마이크 또는 비디오를 사용이 어렵습니다. 게임방 입장이 어려울 수 있습니다.');
@@ -420,12 +429,6 @@ function GameRoom() {
         dispatch(setIsCantGetDevice(isCantGetDevice));
         navigate('/lobby');
       })
-
-    enterRoom();
-    connect();
-    initialize();
-
-    window.addEventListener("beforeunload", leaveRoom);
 
     return () => {
       return (
@@ -555,6 +558,13 @@ function GameRoom() {
     }
   }, [timer.status])
 
+  if (gameLoading)
+    return (
+      <div className="section">
+        <img src={gameRoomBackground} className='background' />
+      </div>
+    )
+
   return (
     <div className="section">
       <img src={gameRoomBackground} className='background' />
@@ -583,7 +593,7 @@ function GameRoom() {
         <div className="bodySectionTopSpace"> </div>
         <div className="bodySection">
           <div className='videoSection'>
-            <VideoRoom sessionName={id} isMute={muted} isMicOff={micOff} isVideoOn={videoOn} />
+            <VideoRoom sessionName={id} isMute={muted} micActive={micActive} videoActive={videoActive} />
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
@@ -596,10 +606,12 @@ function GameRoom() {
               <Chat id={id} />
             </div>
             <div className="btnBoard">
-              <div className='mvIconWrap'>
-                <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
-                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div>
-              </div>
+
+              {/* <div className='mvIconWrap'> */}
+              {/* <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
+                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div> */}
+              {/* </div> */}
+
               {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}
               {stageNumber === 1 ? <a href='#' onClick={gameReady}><BtnStartReady status='Ready' /></a> : ''}
