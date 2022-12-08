@@ -13,13 +13,14 @@ function MyPageSignOut() {
         onClick={() => {
           const result = window.confirm('정말로 탈퇴하시겠습니까?');
           if (result) {
-            instance.delete('lier/removal').then((res) => {
+            instance.delete('lier/removal')
+            .then((res) => {
               alert(res.data.data);
+              sessionStorage.clear();
+              new Cookies().remove('access_token');
+              new Cookies().remove('refresh_token');
+              navigate('/');
             });
-            sessionStorage.clear();
-            new Cookies().remove('access_token');
-            new Cookies().remove('refresh_token');
-            navigate('/');
           }
         }}
       >
