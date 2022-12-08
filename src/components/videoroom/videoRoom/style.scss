@@ -1,26 +1,32 @@
 $videoBoxGap: 24px;
 
-.videoContainer{
+.videoroomContainer {
   width: 448px;
   height: 791px;
+  position: relative;
+
+  // background-color: red;
+}
+
+.videoContainer {
+  width: 448px;
 
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  
+
   gap: 10px $videoBoxGap;
 
-  position: relative;
 }
 
-.video{
+.video {
   width: 170px;
   height: 130px;
 }
 
-.mvIconWrap{
+.mvIconWrap {
 
   display: flex;
   flex-direction: row;
@@ -31,7 +37,7 @@ $videoBoxGap: 24px;
   right: -150px;
 }
 
-.mvIconBox{
+.mvIconBox {
   width: 60px;
   height: 60px;
   border-radius: 10px;
