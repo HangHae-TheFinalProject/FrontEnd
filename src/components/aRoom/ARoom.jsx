@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setRoom } from '../../redux/modules/roomsSlice';
@@ -44,10 +44,15 @@ function ARoom({ roomInfo }) {
       setOpenModal(true);
       return;
     }
-
+    console.log('ARoom');
+    console.log(roomInfo);
     dispatch(setRoom(roomInfo));
     navigate(`/gameroom/${roomInfo.id}`);
   };
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <div className="roomBox fontBold">

@@ -6,7 +6,6 @@ import { useCookies } from 'react-cookie';
 import {
   setSpotlightMember,
   setPopupStatus,
-  setGameBoardStatus,
   setMemberList,
   removeMemberList,
   setMemberVoteResult,
@@ -77,9 +76,11 @@ function GameRoom() {
 
   const [isMaster, setIsMaster] = useState(useSelector(state => state.rooms.room.owner) === nickname);
   const [isLiar, setIsLiar] = useState(false);
-  const gamemode = useSelector(state => state.rooms.room.mode);
+  // const gamemode = useSelector(state => state.rooms.room.mode);
+  const [gamemode, setGamemode] = useState('초기값');
   const [memberCount, setMemberCount] = useState(1);
   const [gameLoading, setGameLoading] = useState(true);
+  const [gameboardStatus, setGameboardStatus] = useState('');
 
   const closePopup = () => { setIsPop(false); }
 
@@ -133,6 +134,9 @@ function GameRoom() {
       .then((res) => {
         dispatch(setOwner(res.data.data.owner));
         setIsMaster(nickname === res.data.data.owner);
+        console.log('모드체크')
+        console.log(res.data.data.mode);
+        setGamemode(res.data.data.mode);
       })
       .catch((error) => {
         alert('잘못된 입장입니다.');
@@ -146,7 +150,7 @@ function GameRoom() {
       `/sub/gameroom/${id}`,
       ({ body }) => {
         const data = JSON.parse(body)
-
+        console.log(data);
         switch (data.type) {
           case 'JOIN':
             setMemberCount(data.content.memberCnt);
@@ -167,10 +171,16 @@ function GameRoom() {
             setStageNumber(1);    // 함수로 연결
             setItem({ category: data.content.category, keyword: data.content.keyword });
             setIsLiar(nickname === data.content.lier);
+            setGameboardStatus(nickname === data.content.lier ? 'SHOW_LIER' : 'SHOW_KEYWORD');
             dispatch(setMemberLier(data.content.lier));
             dispatch(setMemberList(data.content.memberlist));
-            if (gamemode === '바보') {
+            console.log('여기는')
+            console.log(gamemode)
+            console.log(gamemode === '바보');
+            if (data.content.liercategory) {
               setPoorItem({ category: data.content.liercategory, keyword: data.content.lierkeyword });
+              console.log('여기ㅣㅣ')
+              console.log(poorItem)
             }
             break;
           case 'READY':
@@ -199,7 +209,7 @@ function GameRoom() {
             break;
           case 'ALLCOMPLETE':
             setStageNumber(6);
-            setGameBoardStatus('');
+            setGameboardStatus('');
             setStatusSpotlight(0);
             setMuted(false);
             break;
@@ -214,7 +224,7 @@ function GameRoom() {
             // 시민 : 라이어가 맞습니다 / 라이어 : 키워드 입력
             dispatch(setMemberVoteResult(data.content[0]));
             setResultStatus('LIER');
-            dispatch(setGameBoardStatus(''));
+            setGameboardStatus('');
             dispatch(setPopupStatus('VOTE_RESULT'));
             setIsPop(true);
 
@@ -226,7 +236,7 @@ function GameRoom() {
             // 시민/라이어 : 라이어가 아닙니다.
             dispatch(setMemberVoteResult(data.content[0]));
             setResultStatus('NLIER');
-            dispatch(setGameBoardStatus(''));
+            setGameboardStatus('');
             dispatch(setPopupStatus('VOTE_RESULT'));
             setIsPop(true);
 
@@ -236,7 +246,7 @@ function GameRoom() {
             setStageNumber(3)
             setResultStatus('DRAW');
             dispatch(setPopupStatus('DRAW'));
-            dispatch(setGameBoardStatus(''));
+            setGameboardStatus('');
             setIsPop(true);
 
             break;
@@ -245,7 +255,7 @@ function GameRoom() {
             setResultStatus('DRAWANDENDGAME');
             setIsPop(true);
             dispatch(setPopupStatus('DRAWANDENDGAME'));
-            setGameBoardStatus('');
+            setGameboardStatus('');
 
             setTimer({ time: 3, status: 1 });
             break;
@@ -265,6 +275,10 @@ function GameRoom() {
 
               setTimer({ time: 10, status: 1 });
             }
+            break;
+          case 'VICTROY':
+            setStageNumber(9);
+            setTimer({ time: 10, status: 1 });
             break;
         }
       }
@@ -390,6 +404,10 @@ function GameRoom() {
     });
   }
 
+  useEffect(() => {
+    console.log('게임모드 변경시점 체크')
+    console.log(gamemode)
+  }, [gamemode])
   // need to : 아직 test 안함
   const initialize = () => {
     setStageNumber(0);
@@ -406,7 +424,7 @@ function GameRoom() {
     dispatch(setMemberLier(''));
     dispatch(setSpotlightMember(''));
     dispatch(setPopupStatus('WAIT_START'));
-    dispatch(setGameBoardStatus('WAIT_START'));
+    setGameboardStatus('WAIT_START');
     dispatch(setMemberVoteResult(''));
     dispatch(setReadyMemberList([]));
   }
@@ -451,14 +469,14 @@ function GameRoom() {
         break;
       case 1:
         // 게임시작 : 라이어 통보
-        dispatch(setGameBoardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
+        // dispatch(setGameBoardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
         break;
       case 2:
         // 게임레디 : 나 혼자
         break;
       case 3:
         // 게임레디 : 모두 다
-        dispatch(setGameBoardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD'));
+        setGameboardStatus(isLiar ? 'SHOW_LIER' : 'SHOW_KEYWORD');
         setTimer({ time: 5, status: 1 });
         break;
       case 4:
@@ -467,7 +485,7 @@ function GameRoom() {
         break;
       case 5:
         // 한번 더 투표
-        dispatch(setGameBoardStatus(isMaster ? 'VOTE_ONEMORE' : ''));
+        setGameboardStatus(isMaster ? 'VOTE_ONEMORE' : '');
         break;
       case 6:
         // 라이어 투표
@@ -571,6 +589,7 @@ function GameRoom() {
 
   return (
     <div className="section">
+      {gamemode}
       <img src={gameRoomBackground} className='background' />
       <div className='gameRoomSection'>
         <div className='headerSection'>
@@ -601,20 +620,12 @@ function GameRoom() {
           </div>
           <div className='boardSection'>
             <div className="gameBoard">
-              {
-                gamemode === '일반' ? <GameBoard item={item} govote={govote} onemorevote={onemorevote} />
-                  : <GameBoard item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} />
-              }
+              <GameBoard gamemode={gamemode} item={item} poorItem={poorItem} govote={govote} onemorevote={onemorevote} gameboardStatus={gameboardStatus} />
             </div>
             <div className="chatBoard">
               <Chat id={id} />
             </div>
             <div className="btnBoard">
-
-              {/* <div className='mvIconWrap'> */}
-              {/* <div className='mvIconBox' onClick={() => setMicOff(!micOff)}>{micOff ? <img src={iconMicOff} /> : <img src={iconMicOn} />}</div>
-                <div className='mvIconBox' onClick={() => setVideoOn(!videoOn)}>{videoOn ? <img src={iconVideoOn} /> : <img src={iconVideoOff} />}</div> */}
-              {/* </div> */}
 
               {stageNumber === 0 && isMaster && memberCount >= MIN_MEMBER_COUNT ? <a href='#' onClick={gameStart}><BtnStartReady status='Start' /></a> : ''}
               {stageNumber === 0 && isMaster && memberCount < MIN_MEMBER_COUNT ? <BtnStartReady status='StartInert' /> : ''}

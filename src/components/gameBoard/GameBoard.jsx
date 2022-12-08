@@ -1,13 +1,17 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import gameBoardFrame from '../../images/svg/gameBoardFrame.svg';
 import './style.scss';
 
-function GameBoard({ item, poorItem={}, govote, onemorevote }) {
+function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardStatus }) {
   let content;
-  const status = useSelector((state) => state.game.gameBoardStatus);
-  const gamemode = useSelector((state) => state.rooms.room.mode);
+  // const status = useSelector((state) => state.game.gameBoardStatus);
+  // const gamemode = useSelector((state) => state.rooms.room.mode);
 
-  switch (status) {
+  useEffect(() => {
+    console.log(poorItem);
+  }, [])
+  switch (gameboardStatus) {
     case 'WAIT_START':
       content = <WaitStartBoard />;
       break;
@@ -15,7 +19,7 @@ function GameBoard({ item, poorItem={}, govote, onemorevote }) {
       content = <ShowKeywordBoard item={item} />;
       break;
     case 'SHOW_LIER':
-      if(gamemode === '일반' ){
+      if(gamemode === '일반'){
         content = <ShowLierBoard item={item} />;
       } else {
         content = <ShowKeywordBoard item={poorItem} />;
