@@ -104,6 +104,7 @@ function GameRoom() {
       onConnect: () => {
         subscribe();
         subscribePersonal();
+        enterRoom();
       },
       onStompError: (frame) => {
         console.log(`Broker reported error: ${frame.headers['message']}`);
@@ -149,7 +150,7 @@ function GameRoom() {
   const subscribe = () => {
     client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
       const data = JSON.parse(body);
-console.log(data)
+      console.log(data)
       switch (data.type) {
         case 'JOIN':
           setMemberCount(data.content.memberCnt);
@@ -444,7 +445,7 @@ console.log(data)
         isCantGetDevice = false;
         setGameLoading(false);
 
-        enterRoom();
+        // enterRoom();
         connect();
         initialize();
 
