@@ -50,10 +50,6 @@ function ARoom({ roomInfo }) {
     navigate(`/gameroom/${roomInfo.id}`);
   };
 
-  useEffect(() => {
-
-  }, [])
-
   return (
     <div className="roomBox fontBold">
       <div className="roomInfoBox">
@@ -61,11 +57,18 @@ function ARoom({ roomInfo }) {
         <span>{ARR_MODE[roomInfo.mode]}</span>
       </div>
       <a href="#" onClick={joinRoom}>
-        <img
-          className="doorImg"
-          src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
-          alt="doorImg"
-        />
+        <div className="gameRoomImg">
+          <img
+            className="doorImg"
+            src={ARR_ROOM_IMAGE_LIST[roomInfo.id % ARR_ROOM_IMAGE_LIST.length]}
+            alt="doorImg"
+          />
+          {roomInfo.status === 'start' ? (
+            <>
+              <span className="roomInfoStart">게임중</span>
+            </>
+          ) : null}
+        </div>
       </a>
       <div className="roomName">
         <p>{roomInfo.roomPassword ? <IcLock /> : ''}</p>
@@ -81,6 +84,7 @@ function ARoom({ roomInfo }) {
             <PasswordModal
               roomId={roomInfo.id}
               password={roomInfo.roomPassword}
+              setOpenModal={setOpenModal}
             />
           }
         />
@@ -91,7 +95,7 @@ function ARoom({ roomInfo }) {
 
 export default ARoom;
 
-function PasswordModal({ roomId, password }) {
+function PasswordModal({ roomId, password, setOpenModal }) {
   const navigate = useNavigate();
   const [value, inputHandler] = useInput();
 
@@ -116,10 +120,16 @@ function PasswordModal({ roomId, password }) {
             onChange={inputHandler}
           />
           <input
-            className="passwordBtn"
+            className="passwordInputBtn"
             type="button"
             value="입력"
             onClick={confirm}
+          />
+          <input
+            className="passwordCloseBtn"
+            type="button"
+            value="닫기"
+            onClick={() => setOpenModal(false)}
           />
         </div>
       </div>

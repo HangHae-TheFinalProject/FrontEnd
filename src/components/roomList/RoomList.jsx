@@ -1,12 +1,16 @@
-import ARoom from '../aRoom/ARoom';
-import './style.scss';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { __getRooms } from '../../redux/modules/roomsSlice';
 import { useSelector } from 'react-redux';
+
+import ARoom from '../aRoom/ARoom';
+import { __getRooms } from '../../redux/modules/roomsSlice';
+
 import { ReactComponent as IcArrowLeft } from '../../images/svg/icArrowLeft.svg';
 import { ReactComponent as IcArrowRight } from '../../images/svg/icArrowRight.svg';
 import { ReactComponent as DropBoxDown } from '../../images/svg/DropBoxIconDown.svg';
+import { ReactComponent as Refresh } from '../../images/svg/refresh.svg';
+
+import './style.scss';
 // need to : API connection & redux
 
 function RoomList() {
@@ -35,7 +39,7 @@ function RoomList() {
 
   const loadRooms = () => {
     dispatch(__getRooms({ page: page, view: view }));
-  }
+  };
 
   useEffect(() => {
     loadRooms();
@@ -70,6 +74,15 @@ function RoomList() {
 
   return (
     <>
+      <button
+        className="gameRoomRefreshBtn fontSemiBold"
+        onClick={() => {
+          dispatch(__getRooms({ page: page, view: view }));
+        }}
+      >
+        <Refresh />
+        새로고침
+      </button>
       <div className="selectBox fontSemiBold">
         <ul
           className="selectMain"
@@ -107,9 +120,10 @@ function RoomList() {
           <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
         </a>
         <div className="roomListBox">
-          {!isLoading && rooms?.map((aroom) => {
-            return <ARoom key={aroom.id} roomInfo={aroom} />;
-          })}
+          {!isLoading &&
+            rooms?.map((aroom) => {
+              return <ARoom key={aroom.id} roomInfo={aroom} />;
+            })}
         </div>
         <a href="#" onClick={pageDown}>
           <div className="arrowBoxR">

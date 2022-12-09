@@ -7,10 +7,7 @@ function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardSta
   let content;
   // const status = useSelector((state) => state.game.gameBoardStatus);
   // const gamemode = useSelector((state) => state.rooms.room.mode);
-
-  useEffect(() => {
-    console.log(poorItem);
-  }, [])
+  
   switch (gameboardStatus) {
     case 'WAIT_JOIN':
       content = <WaitJoinBoard />;
@@ -28,8 +25,11 @@ function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardSta
         content = <ShowKeywordBoard item={poorItem} />;
       }
       break;
+    case 'VOTE_ONEMORE_OWNER':
+      content = <OnemoreVoteOwnerBoard onemorevote={onemorevote} govote={govote} />;
+      break;
     case 'VOTE_ONEMORE':
-      content = <OnemoreVoteBoard onemorevote={onemorevote} govote={govote} />;
+      content = <OnemoreVoteBoard />;
       break;
   }
 
@@ -82,7 +82,7 @@ function ShowLierBoard({ item }) {
   );
 }
 
-function OnemoreVoteBoard({ onemorevote, govote }) {
+function OnemoreVoteOwnerBoard({ onemorevote, govote }) {
   return (
     <div className="stageBtn fontLightBold">
       <a href="#" onClick={onemorevote}>
@@ -91,6 +91,14 @@ function OnemoreVoteBoard({ onemorevote, govote }) {
       <a href="#" onClick={govote}>
         <div className="btnOnemore">바로 투표하기</div>
       </a>
+    </div>
+  );
+}
+
+function OnemoreVoteBoard() {
+  return (
+    <div className="stageReadyText fontLightBold">
+      <span>방장의 선택을 기다리는 중 ...</span>
     </div>
   );
 }

@@ -28,6 +28,22 @@
   @include myPageFrame(800px, 457px);
 
   background-image: url(../../../images/png/myPage_Frame.png);
+  .myPageCloseBtn:hover {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 25.9%;
+    left: 92.4%;
+  }
+}
+
+.myPageCloseBtn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 26%;
+  left: 92.5%;
+  cursor: pointer;
 }
 
 .myInfoSection {
@@ -95,6 +111,9 @@
     display: flex;
     margin-top: 25px;
     gap: 10px;
+    :hover {
+      background-color: rgba(160, 55, 55, 1);
+    }
   }
 }
 

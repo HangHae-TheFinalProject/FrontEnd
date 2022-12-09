@@ -33,6 +33,25 @@
   background-color: #d9d9d9;
 }
 
+.gameRoomImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roomInfoStart {
+  width: 100px;
+  height: 40px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
 .roomName {
   margin-top: 25px;
   margin-bottom: 5px;
@@ -67,6 +86,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  cursor: default;
   :focus {
     outline: none;
   }
@@ -75,12 +95,6 @@
     font-size: 16px;
     font-weight: bold;
   }
-  .passwordBtn:hover {
-    color: #1a1a1a;
-    background-color: rgba(255, 196, 46, 1);
-
-    cursor: pointer;
-  }
   h2 {
     color: white;
     font-size: 24px;
@@ -88,8 +102,25 @@
   }
 }
 
+.passwordInputSet {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+  .passwordInputBtn:hover {
+    color: #1a1a1a;
+    background-color: rgba(255, 196, 46, 1);
+    cursor: pointer;
+  }
+  .passwordCloseBtn:hover {
+    color: #1a1a1a;
+    background-color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+  }
+}
+
 .passwordInput {
-  width: 400px;
+  width: 340px;
   height: 50px;
   background-color: rgba(255, 255, 255, 0.45);
   color: #3e3e3e;
@@ -97,11 +128,10 @@
   font-weight: bold;
   border: none;
   border-radius: 10px;
-  margin-right: 10px;
   padding: 0 0 0 15px;
 }
 
-.passwordBtn {
+.passwordInputBtn {
   width: 50px;
   height: 50px;
   border-radius: 10px;
@@ -109,13 +139,16 @@
   font-size: 14px;
   font-weight: bold;
   color: white;
-  background-color: rgba(0, 0, 0, 1);
-  display: inline-block;
-  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-.passwordInputSet {
-  text-align: center;
-  margin-right: 45px;
-  margin-top: 20px;
+.passwordCloseBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
 }

@@ -1,8 +1,35 @@
+@mixin gameRoomRefresh {
+  width: 100px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+  border: none;
+  border-radius: 10px;
+}
+
 .sectionRoomList {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.gameRoomRefreshBtn {
+  @include gameRoomRefresh;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.gameRoomRefreshBtn:hover {
+  @include gameRoomRefresh;
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
 }
 
 .selectBox {
