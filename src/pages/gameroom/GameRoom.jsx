@@ -47,7 +47,7 @@ import './style.scss';
 import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
-  const MIN_MEMBER_COUNT = 3;
+  const MIN_MEMBER_COUNT = 1;
   const SPOTLIGHT_TIME = 10;
 
   const { id } = useParams();
@@ -530,13 +530,15 @@ function GameRoom() {
     }
 
     if (stageNumber === 4 && timer.status === 2) {
-      dispatch(setSpotlightMember(''));
-      // 내 턴이 끝났을 때
       if (statusSpotlight === 1) {
-        setTimer({ ...timer, status: 0 });
-        setStatusSpotlight(0);
+        // 내 턴이 끝났을 때
         spotlight();
       }
+      
+      dispatch(setSpotlightMember(''));
+      setTimer({ ...timer, status: 0 });
+      setStatusSpotlight(0);
+
     }
 
     if (stageNumber === 7 && timer.status === 2 && resultStatus === 'DRAW') {
