@@ -7,10 +7,7 @@ function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardSta
   let content;
   // const status = useSelector((state) => state.game.gameBoardStatus);
   // const gamemode = useSelector((state) => state.rooms.room.mode);
-
-  useEffect(() => {
-    console.log(poorItem);
-  }, [])
+  
   switch (gameboardStatus) {
     case 'WAIT_JOIN':
       content = <WaitJoinBoard />;
