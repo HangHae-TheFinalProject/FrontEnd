@@ -137,7 +137,6 @@ function GameRoom() {
       .then((res) => {
         dispatch(setOwner(res.data.data.owner));
         setIsMaster(nickname === res.data.data.owner);
-
         setGamemode(res.data.data.mode);
       })
       .catch((error) => {
@@ -150,7 +149,7 @@ function GameRoom() {
   const subscribe = () => {
     client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
       const data = JSON.parse(body);
-      console.log(data)
+      
       switch (data.type) {
         case 'JOIN':
           setMemberCount(data.content.memberCnt);
