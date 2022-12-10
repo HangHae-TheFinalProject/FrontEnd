@@ -149,7 +149,7 @@ function GameRoom() {
   const subscribe = () => {
     client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
       const data = JSON.parse(body);
-      console.log(data);
+      // console.log(data);
       switch (data.type) {
         case 'JOIN':
           setMemberCount(data.content.memberCnt);
