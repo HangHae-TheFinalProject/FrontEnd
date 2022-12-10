@@ -23,6 +23,7 @@ import * as StompJs from '@stomp/stompjs';
 
 // component
 import instance from '../../shared/Request';
+import { noheaderInstance } from '../../shared/Request';
 import VideoRoom from '../../components/videoroom/videoRoom/VideoRoom';
 import Chat from '../../components/chat/Chat';
 import GameBoard from '../../components/gameBoard/GameBoard';
@@ -123,14 +124,14 @@ function GameRoom() {
 
   const leaveRoom = async () => {
     disconnect();
-    try {
-      instance.delete(`/lier/room/${Number(id)}/exit`).then((res) => {
+    noheaderInstance.delete(`/lier/room/${Number(id)}/exit`, { data: { value: nickname } })
+      .then((res) => {
         navigate('/lobby');
-      });
-    } catch (error) {
-      alert(error.data.message);
-      navigate('/lobby');
-    }
+      })
+      .catch((error) => {
+        alert(error.data.message);
+        navigate('/lobby');
+      })
   };
 
   const enterRoom = () => {
