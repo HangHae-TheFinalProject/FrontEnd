@@ -10,7 +10,7 @@ import { setClientHeaders } from '../../../shared/Request';
 import { ReactComponent as Redicon } from '../../../images/svg/Redicon.svg';
 import gameRoomBackground from '../../../images/png/gameRoomBackground.png';
 import gameTitleBackground from '../../../images/png/gameTitleBakcground.png';
-import gameTitle from '../../../images/svg/gameTitle.svg';
+import gameTitle from '../../../images/png/gameTitle.png';
 
 import './style.scss';
 

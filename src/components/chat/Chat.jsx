@@ -3,7 +3,7 @@ import * as SockJs from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
 import { Cookies } from 'react-cookie';
 import './style.scss';
-import chatOutputBox from '../../images/svg/chatOutputBox.svg';
+import chatOutputBox from '../../images/png/chatOutputBox.png';
 import btn_send2 from '../../images/svg/btn_send2.svg';
 
 function Chat({ id }) {

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import './style.scss';
 
 import ready from '../../../images/png/ready.png';
-import crown from '../../../images/svg/crown.svg';
+import crown from '../../../images/png/crown.png';
 import nicknameBackground from '../../../images/svg/nicknameBackground.svg';
 
 import elliot from '../../../images/png/characters/elliot.png';
