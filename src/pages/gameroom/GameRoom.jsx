@@ -43,7 +43,7 @@ import { ReactComponent as BtnCircle } from '../../images/svg/btnCircle.svg';
 import './style.scss';
 
 function GameRoom() {
-  const MIN_MEMBER_COUNT = 1;
+  const MIN_MEMBER_COUNT = 3;
   const SPOTLIGHT_TIME = 10;
   const REWARD_ALERT_SHOWTIME = 10;
 
