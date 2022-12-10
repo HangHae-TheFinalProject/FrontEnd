@@ -149,7 +149,7 @@ function GameRoom() {
   const subscribe = () => {
     client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
       const data = JSON.parse(body);
-      
+      // console.log(data);
       switch (data.type) {
         case 'JOIN':
           setMemberCount(data.content.memberCnt);
@@ -218,6 +218,7 @@ function GameRoom() {
           setRound(data.content.round);
           setStatusSpotlight(0);
           setMuted(false);
+          dispatch(setSpotlightMember(''));
           break;
         case 'ALLCOMPLETE':
           setStageNumber(6);
@@ -530,13 +531,15 @@ function GameRoom() {
     }
 
     if (stageNumber === 4 && timer.status === 2) {
-      dispatch(setSpotlightMember(''));
-      // 내 턴이 끝났을 때
       if (statusSpotlight === 1) {
-        setTimer({ ...timer, status: 0 });
-        setStatusSpotlight(0);
+        // 내 턴이 끝났을 때
         spotlight();
       }
+
+      dispatch(setSpotlightMember(''));
+      setTimer({ ...timer, status: 0 });
+      setStatusSpotlight(0);
+
     }
 
     if (stageNumber === 7 && timer.status === 2 && resultStatus === 'DRAW') {
