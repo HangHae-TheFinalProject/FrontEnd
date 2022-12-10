@@ -222,8 +222,11 @@ class VideoRoom extends Component {
     }
 
     camStatusChanged() {
-        if(!localUser.getStreamManager()) return;
-
+        if(!localUser.getStreamManager())  {
+            alert('디바이스 로딩중')
+            return;
+        }
+        
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
         this.sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
@@ -231,7 +234,10 @@ class VideoRoom extends Component {
     }
 
     micStatusChanged() {
-        if(!localUser.getStreamManager()) return;
+        if(!localUser.getStreamManager()) {
+            alert('디바이스 로딩중')
+            return;
+        }
         
         if (this.isMute) return;
         localUser.setAudioActive(!localUser.isAudioActive());
