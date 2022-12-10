@@ -149,7 +149,7 @@ function GameRoom() {
   const subscribe = () => {
     client.current.subscribe(`/sub/gameroom/${id}`, ({ body }) => {
       const data = JSON.parse(body);
-      
+      console.log(data);
       switch (data.type) {
         case 'JOIN':
           setMemberCount(data.content.memberCnt);
@@ -218,6 +218,7 @@ function GameRoom() {
           setRound(data.content.round);
           setStatusSpotlight(0);
           setMuted(false);
+          dispatch(setSpotlightMember(''));
           break;
         case 'ALLCOMPLETE':
           setStageNumber(6);
