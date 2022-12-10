@@ -4,7 +4,7 @@ import instance from '../../../shared/Request';
 import useInput from '../../../hooks/useInput';
 
 import lobbyBackGround from '../../../images/png/lobbyBackGround.png';
-import SocialHeader from '../../socialHeader/SocialHeader';
+import DetailSocialHeader from '../../socialHeader/DetailSocialHeader';
 
 import './style.scss';
 
@@ -45,7 +45,7 @@ export default function CommunityFix({ postId, postDetail, fixmodal }) {
         src={lobbyBackGround}
         alt="background"
       />
-      <SocialHeader />
+      <DetailSocialHeader />
       <div className="fixBoxImg">
         <div className="fixTitle">글 수정하기</div>
         <div className="fixInputBox">

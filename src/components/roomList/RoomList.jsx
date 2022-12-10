@@ -10,6 +10,7 @@ import { ReactComponent as IcArrowRight } from '../../images/svg/icArrowRight.sv
 import { ReactComponent as DropBoxDown } from '../../images/svg/DropBoxIconDown.svg';
 import { ReactComponent as Refresh } from '../../images/svg/refresh.svg';
 
+import Modal from '../../elements/modal/Modal';
 import './style.scss';
 // need to : API connection & redux
 
@@ -18,9 +19,11 @@ function RoomList() {
   const [page, setPage] = useState(1);
   const [view, setView] = useState('total');
   const { maxPage, rooms, isLoading } = useSelector((state) => state.rooms);
+
   const [dropName, setDropName] = useState('전체');
 
   const [show, setShow] = useState(false);
+  const [openGameRule, setOpenGameRule] = useState(false);
 
   const pageUp = () => {
     if (page <= 1) return;
@@ -40,16 +43,6 @@ function RoomList() {
   const loadRooms = () => {
     dispatch(__getRooms({ page: page, view: view }));
   };
-
-  useEffect(() => {
-    loadRooms();
-  }, [page, view]);
-
-  useEffect(() => {
-    loadRooms();
-    window.addEventListener('load', loadRooms);
-    return window.removeEventListener('load', loadRooms);
-  }, []);
 
   const totalClickHandler = () => {
     setView('total');
@@ -72,17 +65,32 @@ function RoomList() {
     setDropName('진행중');
   };
 
+  useEffect(() => {
+    loadRooms();
+  }, [page, view]);
+
+  useEffect(() => {
+    loadRooms();
+    window.addEventListener('load', loadRooms);
+    return window.removeEventListener('load', loadRooms);
+  }, []);
+
+  console.log('룸리스트', maxPage);
+  console.log('룸리스트', rooms);
+
   return (
     <>
-      <button
-        className="gameRoomRefreshBtn fontSemiBold"
-        onClick={() => {
-          dispatch(__getRooms({ page: page, view: view }));
-        }}
-      >
-        <Refresh />
-        새로고침
-      </button>
+      <div className="lobbyFunctionBtn fontSemiBold">
+        <button
+          className="gameRoomRefreshBtn"
+          onClick={() => {
+            dispatch(__getRooms({ page: page, view: view }));
+          }}
+        >
+          <Refresh />
+          새로고침
+        </button>
+      </div>
       <div className="selectBox fontSemiBold">
         <ul
           className="selectMain"
@@ -116,20 +124,28 @@ function RoomList() {
         </ul>
       </div>
       <div className="sectionRoomList">
-        <a href="#" onClick={pageUp}>
-          <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
-        </a>
-        <div className="roomListBox">
-          {!isLoading &&
-            rooms?.map((aroom) => {
-              return <ARoom key={aroom.id} roomInfo={aroom} />;
-            })}
-        </div>
-        <a href="#" onClick={pageDown}>
-          <div className="arrowBoxR">
-            {page < maxPage ? <IcArrowRight /> : ''}
-          </div>
-        </a>
+        {!rooms.length ? (
+          <>
+            <div className="roomListBox">생성된 방이 없습니다.</div>
+          </>
+        ) : (
+          <>
+            <a href="#" onClick={pageUp}>
+              <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
+            </a>
+            <div className="roomListBox">
+              {!isLoading &&
+                rooms?.map((aroom) => {
+                  return <ARoom key={aroom.id} roomInfo={aroom} />;
+                })}
+            </div>
+            <a href="#" onClick={pageDown}>
+              <div className="arrowBoxR">
+                {page < maxPage ? <IcArrowRight /> : ''}
+              </div>
+            </a>
+          </>
+        )}
       </div>
     </>
   );

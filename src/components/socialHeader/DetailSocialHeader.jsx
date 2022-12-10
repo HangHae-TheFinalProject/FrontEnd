@@ -1,15 +1,11 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../../elements/modal/Modal';
 
 import headerArrow from '../../images/png/headerArrow.png';
-import MyPageForm from '../myPage/myPageForm/MyPageForm';
 
 import './style.scss';
 
 function SocialHeader() {
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
@@ -25,13 +21,6 @@ function SocialHeader() {
             <img src={headerArrow} alt="headerArrow" />
             <span>뒤로가기</span>
           </div>
-          {openModal && (
-            <Modal
-              onClose={() => setOpenModal(false)}
-              content={<MyPageForm />}
-            />
-          )}
-          <span onClick={() => setOpenModal(true)}>마이페이지</span>
         </div>
       </div>
     </>

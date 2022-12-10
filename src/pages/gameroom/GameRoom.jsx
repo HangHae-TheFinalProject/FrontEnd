@@ -23,11 +23,13 @@ import * as StompJs from '@stomp/stompjs';
 
 // component
 import instance from '../../shared/Request';
+import { noheaderInstance } from '../../shared/Request';
 import VideoRoom from '../../components/videoroom/videoRoom/VideoRoom';
 import Chat from '../../components/chat/Chat';
 import GameBoard from '../../components/gameBoard/GameBoard';
 import GameTimer from '../../components/gameTimer/GameTimer';
 import GamePopup from '../../components/gamePopup/GamePopup';
+import RewardAlert from '../../components/rewardAlert/RewardAlert';
 
 // image
 import btnStart from '../../images/png/btnStart.png';
@@ -36,19 +38,15 @@ import btnReady from '../../images/png/btnReady.png';
 import btnReadyInert from '../../images/png/btnReadyInert.png';
 import btnExit from '../../images/png/btnExit.png';
 import gameRoomBackground from '../../images/png/gameRoomBackground.png';
-import iconMicOff from '../../images/png/iconMicOff.png';
-import iconMicOn from '../../images/png/iconMicOn.png';
-import iconVideoOff from '../../images/png/iconVideoOff.png';
-import iconVideoOn from '../../images/png/iconVideoOn.png';
 import { ReactComponent as BtnCircle } from '../../images/svg/btnCircle.svg';
 
 // style
 import './style.scss';
-import { getByDisplayValue } from '@testing-library/react';
 
 function GameRoom() {
   const MIN_MEMBER_COUNT = 3;
   const SPOTLIGHT_TIME = 10;
+  const REWARD_ALERT_SHOWTIME = 10;
 
   const { id } = useParams();
   const [cookie] = useCookies();
@@ -60,6 +58,11 @@ function GameRoom() {
   const [micActive, setMicActive] = useState(true);
   const [videoActive, setVideoActive] = useState(true);
   const nickname = sessionStorage.getItem('nickname');
+  const [alertRewardItem, setAlertRewardItem] = useState({
+    isAlert: false,
+    rewardName: '',
+    mentation: ''
+  });
 
   // gamestatus
   const [round, setRound] = useState(0);
@@ -121,14 +124,14 @@ function GameRoom() {
 
   const leaveRoom = async () => {
     disconnect();
-    try {
-      instance.delete(`/lier/room/${Number(id)}/exit`).then((res) => {
+    noheaderInstance.delete(`/lier/room/${Number(id)}/exit`, { data: { value: nickname } })
+      .then((res) => {
         navigate('/lobby');
-      });
-    } catch (error) {
-      alert(error.data.message);
-      navigate('/lobby');
-    }
+      })
+      .catch((error) => {
+        alert(error.data.message);
+        navigate('/lobby');
+      })
   };
 
   const enterRoom = () => {
@@ -303,7 +306,11 @@ function GameRoom() {
       const data = JSON.parse(body);
       switch (data.type) {
         case 'REWARD':
-          // Reward 알림
+          setAlertRewardItem({
+            isAlert: true,
+            rewardName: data.content.rewardName,
+            mentation: data.content.mentation
+          })
           break;
       }
     });
@@ -430,6 +437,14 @@ function GameRoom() {
     dispatch(setMemberVoteResult(''));
     dispatch(setReadyMemberList([]));
   };
+
+  const closeRewardAlert = () => {
+    // console.log('end');
+    setAlertRewardItem({
+      ...alertRewardItem,
+      isAlert: false
+    })
+  }
 
   let isCantGetDevice = false;
 
@@ -592,7 +607,6 @@ function GameRoom() {
 
   return (
     <div className="section">
-      {gamemode}
       <img src={gameRoomBackground} className="background" />
       <div className="gameRoomSection">
         <div className="headerSection">
@@ -625,6 +639,7 @@ function GameRoom() {
               micActive={micActive}
               videoActive={videoActive}
             />
+
           </div>
           <div className="boardSection">
             <div className="gameBoard">
@@ -680,6 +695,7 @@ function GameRoom() {
       ) : (
         ''
       )}
+      {alertRewardItem.isAlert ? <RewardAlert item={alertRewardItem} closeAlert={closeRewardAlert} showtime={REWARD_ALERT_SHOWTIME} /> : ''}
     </div>
   );
 }

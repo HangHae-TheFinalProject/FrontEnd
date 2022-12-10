@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import gameBoardFrame from '../../images/svg/gameBoardFrame.svg';
+import gameBoardFrame from '../../images/png/gameBoardFrame.png';
 import './style.scss';
 
 function GameBoard({ gamemode, item, poorItem, govote, onemorevote, gameboardStatus }) {
