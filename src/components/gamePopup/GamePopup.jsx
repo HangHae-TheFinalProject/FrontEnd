@@ -23,7 +23,7 @@ function GamePopup({ closePopup, round, isAnswer, liarVote }) {
     case 'DRAW':
       content = <VoteDrawPopup closePopup={closePopup} round={round} />;
       break;
-    case 'DRAW_AND_ENDGAME':
+    case 'DRAWANDENDGAME':
       content = <VoteDrawEndPopup closePopup={closePopup} />;
       break;
     case 'LIER_LIER':
