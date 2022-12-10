@@ -1,10 +1,10 @@
 import CommunityWrite from '../../components/community/communityWrite/CommunityWrite';
-import SocialHeader from '../../components/socialHeader/SocialHeader';
+import DetailSocialHeader from '../../components/socialHeader/DetailSocialHeader';
 
 function Write() {
   return (
     <>
-      <SocialHeader />
+      <DetailSocialHeader />
       <CommunityWrite />
     </>
   );

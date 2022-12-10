@@ -1,4 +1,4 @@
-@mixin gameRoomRefresh {
+@mixin LobbyFunctionBtn {
   width: 100px;
   height: 35px;
   display: flex;
@@ -11,6 +11,16 @@
   border-radius: 10px;
 }
 
+.lobbyFunctionBtn {
+  width: 1180px;
+  position: absolute;
+  top: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
 .sectionRoomList {
   display: flex;
   flex-direction: row;
@@ -19,15 +29,12 @@
 }
 
 .gameRoomRefreshBtn {
-  @include gameRoomRefresh;
-  position: absolute;
-  top: 15%;
-  left: 15%;
+  @include LobbyFunctionBtn;
   background-color: rgba(255, 255, 255, 0.2);
 }
 
 .gameRoomRefreshBtn:hover {
-  @include gameRoomRefresh;
+  @include LobbyFunctionBtn;
   background-color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
 }

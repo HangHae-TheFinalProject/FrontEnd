@@ -1,0 +1,112 @@
+@mixin settingFrame($width-size, $height-size) {
+  width: $width-size;
+  height: $height-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingBoardFrame {
+  @include settingFrame(620px, 320px);
+  flex-direction: column;
+  background-image: url(../../images/png/settingFrame.png);
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.settingBoardCloseBtn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 15%;
+  left: 90.5%;
+  cursor: pointer;
+}
+
+.settingBoardCloseBtn:hover {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 14.7%;
+  left: 90.3%;
+  cursor: pointer;
+}
+
+.settingCheckBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  gap: 35px;
+}
+
+.settingRadioBtn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  span {
+    margin-right: 20px;
+  }
+}
+
+.btn {
+  width: 190px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #4d4d4d;
+  font-size: 16px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.btn.active {
+  color: rgba(26, 26, 26, 1);
+  background-color: rgba(255, 196, 46, 1);
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+// 볼륨 조절 참고하려고 긁어온 css
+
+input[type='range'] {
+  -webkit-appearance: none;
+  margin-right: 15px;
+  width: 200px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  background-image: linear-gradient(#ff4500, #ff4500);
+  background-size: 70% 100%;
+  background-repeat: no-repeat;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ff4500;
+  cursor: ew-resize;
+  box-shadow: 0 0 2px 0 #555;
+  transition: background 0.3s ease-in-out;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}

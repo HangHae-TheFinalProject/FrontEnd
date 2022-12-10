@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import { ReactComponent as CoomentsIcon } from '../../../images/svg/icCommentsIcon.svg';
+
 import './style.scss';
 
 function CommunityCard({ postDetail }) {
@@ -17,6 +19,10 @@ function CommunityCard({ postDetail }) {
               }}
             >
               <div className="communityCardBoxTitle">{post.title}</div>
+              <div className="communityCardBoxCommentCount fontSemiBold">
+                <CoomentsIcon className="commentCountIcon" />
+                {post.commentCount}
+              </div>
               <div className="communityCardBoxViewcnt fontSemiBold">
                 {post.viewcnt}
               </div>
