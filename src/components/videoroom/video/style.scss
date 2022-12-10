@@ -27,14 +27,39 @@ $totalHeight: 185px;
 
     .crownBox {
       position: absolute;
-      top: 35px;
-      left: -30px;
-      width: 170px;
-      height: 20px;
+      top: 33px;
+      left: 40px;
+
+      width: 32px;
+      height: 24px;
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
+
+    }
+
+    .videoMuteBox {
+      position: absolute;
+      top: 123px;
+      left: 150px;
+
+      width: 20px;
+      height: 20px;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     .imageBox {
