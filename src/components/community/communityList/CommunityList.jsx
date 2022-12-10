@@ -52,7 +52,7 @@ export default function CommunityList({ post }) {
         setPostsCnt(res.data.data.postsCnt);
         setShow(false);
         setIsLoading(false);
-      })
+      });
   };
 
   const searchOnChangeHandler = (e) => {
@@ -152,6 +152,7 @@ export default function CommunityList({ post }) {
             <div className="communityListBox">
               <div className="communityTitleBox">
                 <h3 className="communityTitle">제목</h3>
+                <h3 className="communityCommentsNum">댓글</h3>
                 <h3 className="communityNum">조회수</h3>
                 <h3 className="communityDate">작성일</h3>
               </div>

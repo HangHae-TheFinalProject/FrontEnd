@@ -10,6 +10,7 @@ import { ReactComponent as IcArrowRight } from '../../images/svg/icArrowRight.sv
 import { ReactComponent as DropBoxDown } from '../../images/svg/DropBoxIconDown.svg';
 import { ReactComponent as Refresh } from '../../images/svg/refresh.svg';
 
+import Modal from '../../elements/modal/Modal';
 import './style.scss';
 // need to : API connection & redux
 
@@ -21,6 +22,7 @@ function RoomList() {
   const [dropName, setDropName] = useState('전체');
 
   const [show, setShow] = useState(false);
+  const [openGameRule, setOpenGameRule] = useState(false);
 
   const pageUp = () => {
     if (page <= 1) return;
@@ -74,15 +76,17 @@ function RoomList() {
 
   return (
     <>
-      <button
-        className="gameRoomRefreshBtn fontSemiBold"
-        onClick={() => {
-          dispatch(__getRooms({ page: page, view: view }));
-        }}
-      >
-        <Refresh />
-        새로고침
-      </button>
+      <div className="lobbyFunctionBtn fontSemiBold">
+        <button
+          className="gameRoomRefreshBtn"
+          onClick={() => {
+            dispatch(__getRooms({ page: page, view: view }));
+          }}
+        >
+          <Refresh />
+          새로고침
+        </button>
+      </div>
       <div className="selectBox fontSemiBold">
         <ul
           className="selectMain"
