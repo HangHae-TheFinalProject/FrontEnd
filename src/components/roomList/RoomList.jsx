@@ -19,6 +19,7 @@ function RoomList() {
   const [page, setPage] = useState(1);
   const [view, setView] = useState('total');
   const { maxPage, rooms, isLoading } = useSelector((state) => state.rooms);
+
   const [dropName, setDropName] = useState('전체');
 
   const [show, setShow] = useState(false);
@@ -43,16 +44,6 @@ function RoomList() {
     dispatch(__getRooms({ page: page, view: view }));
   };
 
-  useEffect(() => {
-    loadRooms();
-  }, [page, view]);
-
-  useEffect(() => {
-    loadRooms();
-    window.addEventListener('load', loadRooms);
-    return window.removeEventListener('load', loadRooms);
-  }, []);
-
   const totalClickHandler = () => {
     setView('total');
     setDropName('전체');
@@ -73,6 +64,19 @@ function RoomList() {
     setView('start');
     setDropName('진행중');
   };
+
+  useEffect(() => {
+    loadRooms();
+  }, [page, view]);
+
+  useEffect(() => {
+    loadRooms();
+    window.addEventListener('load', loadRooms);
+    return window.removeEventListener('load', loadRooms);
+  }, []);
+
+  console.log('룸리스트', maxPage);
+  console.log('룸리스트', rooms);
 
   return (
     <>
@@ -120,20 +124,28 @@ function RoomList() {
         </ul>
       </div>
       <div className="sectionRoomList">
-        <a href="#" onClick={pageUp}>
-          <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
-        </a>
-        <div className="roomListBox">
-          {!isLoading &&
-            rooms?.map((aroom) => {
-              return <ARoom key={aroom.id} roomInfo={aroom} />;
-            })}
-        </div>
-        <a href="#" onClick={pageDown}>
-          <div className="arrowBoxR">
-            {page < maxPage ? <IcArrowRight /> : ''}
-          </div>
-        </a>
+        {!rooms.length ? (
+          <>
+            <div className="roomListBox">생성된 방이 없습니다.</div>
+          </>
+        ) : (
+          <>
+            <a href="#" onClick={pageUp}>
+              <div className="arrowBoxL">{page > 1 ? <IcArrowLeft /> : ''}</div>
+            </a>
+            <div className="roomListBox">
+              {!isLoading &&
+                rooms?.map((aroom) => {
+                  return <ARoom key={aroom.id} roomInfo={aroom} />;
+                })}
+            </div>
+            <a href="#" onClick={pageDown}>
+              <div className="arrowBoxR">
+                {page < maxPage ? <IcArrowRight /> : ''}
+              </div>
+            </a>
+          </>
+        )}
       </div>
     </>
   );
