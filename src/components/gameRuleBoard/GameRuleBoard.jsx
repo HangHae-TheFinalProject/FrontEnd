@@ -44,7 +44,7 @@ function GameRuleBoard({ setOpenGameRuleModal }) {
             진행합니다! 최대 세 바퀴 진행 가능
           </p>
           <p>
-            <span className="gameSceneNumber">#5-A</span>
+            <span className="gameSceneNumber">#5-B</span>
             바로 투표 : 라이어를 찾는 투표를 진행합니다!
           </p>
           <p>
