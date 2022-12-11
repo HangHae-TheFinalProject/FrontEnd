@@ -56,8 +56,11 @@ function LobbyHeader() {
           )}
           <div className="lobbyHeaderBtn">
             <span onClick={() => setOpenModal(true)}>마이페이지</span>
-            <div className="gameRuleBtn">
-              <BtnQuestion onClick={() => setOpenGameRuleModal(true)} />
+            <div
+              className="gameRuleBtn"
+              onClick={() => setOpenGameRuleModal(true)}
+            >
+              <BtnQuestion />
             </div>
             <div className="settingBtn">
               <BtnCircle onClick={() => alert('배경음악 준비 중이에요.')} />
