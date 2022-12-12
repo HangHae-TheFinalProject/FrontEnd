@@ -62,9 +62,9 @@ function LobbyHeader() {
             >
               <BtnQuestion />
             </div>
-            <div className="settingBtn">
+            {/* <div className="settingBtn">
               <BtnCircle onClick={() => alert('배경음악 준비 중이에요.')} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
