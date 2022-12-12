@@ -62,8 +62,12 @@
 전체 트러블 슈팅 <노션 링크> ▶ https://www.notion.so/Trouble-shooting-ea14209f725342b68610b5c0fa77728a
 
 ### 🗂️ 기술스택
-<img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/> <img src="https://img.shields.io/badge/Redux Toolkit-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/openVidu-06d362?style=for-the-badge&logo=oepnVidu&logoColor=white"/> <img src="https://img.shields.io/badge/sockjs-333333?style=for-the-badge&logo=sockjs&logoColor=white"/> <img src="https://img.shields.io/badge/stomp-333333?style=for-the-badge&logo=stomp&logoColor=white"/>
-
+#### 프론트엔드
+<img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/> <img src="https://img.shields.io/badge/Redux Toolkit-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/openVidu-06d362?style=for-the-badge&logo=oepnVidu&logoColor=white"/> <img src="https://img.shields.io/badge/sockjs-333333?style=for-the-badge&logo=sockjs&logoColor=white"/> <img src="https://img.shields.io/badge/stomp-333333?style=for-the-badge&logo=stomp&logoColor=white"/>
+#### 백엔드
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white"/> <img src="https://img.shields.io/badge/JWT Token-333333?style=for-the-badge&logo=JWT Token&logoColor=white"/>  
+<img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white"/> <img src="https://img.shields.io/badge/QueryDSL-0769AD?style=for-the-badge&logo=QueryDSL&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"/>  
+<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/openVidu-06d362?style=for-the-badge&logo=oepnVidu&logoColor=white"/> <img src="https://img.shields.io/badge/sockjs-333333?style=for-the-badge&logo=sockjs&logoColor=white"/> <img src="https://img.shields.io/badge/stomp-333333?style=for-the-badge&logo=stomp&logoColor=white"/>
 
 ### 🏗️ 프로젝트 아키텍처
 ![서비스 아키텍쳐 #중간발표](https://user-images.githubusercontent.com/112993031/204065939-8d25f487-30cb-43d0-ab3a-1a663ccf8335.png)
@@ -80,17 +84,3 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |![Screenshot 2022-12-12 at 11 44](https://user-images.githubusercontent.com/112993031/206950033-8610fec1-2a85-46d8-9283-a18e110e32c2.png)|![Screenshot 2022-12-12 at 11 38-1](https://user-images.githubusercontent.com/112993031/206950056-e90ba3e7-d3e7-40f2-9cb4-ff7a0d77c939.png)|![Screenshot 2022-12-12 at 11 38-2](https://user-images.githubusercontent.com/112993031/206950052-99318217-626e-4f68-8815-e1f5e1f316e5.png)|![Screenshot 2022-12-12 at 11 38](https://user-images.githubusercontent.com/112993031/206950045-de2696fd-ccae-4431-8ac9-26b724727c56.png)|![Screenshot 2022-12-12 at 11 41](https://user-images.githubusercontent.com/112993031/206950040-b38b2b2d-5da1-4ad9-9e6a-f31658635e17.png)|![Screenshot 2022-12-12 at 11 38-1](https://user-images.githubusercontent.com/112993031/206950056-e90ba3e7-d3e7-40f2-9cb4-ff7a0d77c939.png)|
 |FRONT-END|FRONT-END|FRONT-END|BECK-END|BECK-END|DESIGN|
-
-
-
-
-
-
-
-
-
-
-
-
-
-
