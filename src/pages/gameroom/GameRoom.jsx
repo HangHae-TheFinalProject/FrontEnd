@@ -61,7 +61,7 @@ function GameRoom() {
   const [alertRewardItem, setAlertRewardItem] = useState({
     isAlert: false,
     rewardName: '',
-    mentation: ''
+    mentation: '',
   });
 
   // gamestatus
@@ -103,7 +103,7 @@ function GameRoom() {
       webSocketFactory: () =>
         new SockJs(`${process.env.REACT_APP_API_URL}/ws-stomp`),
       connectHeaders,
-      debug: function (str) { },
+      debug: function (str) {},
       onConnect: () => {
         subscribe();
         subscribePersonal();
@@ -124,14 +124,15 @@ function GameRoom() {
 
   const leaveRoom = async () => {
     disconnect();
-    noheaderInstance.delete(`/lier/room/${Number(id)}/exit`, { data: { value: nickname } })
+    noheaderInstance
+      .delete(`/lier/room/${Number(id)}/exit`, { data: { value: nickname } })
       .then((res) => {
         navigate('/lobby');
       })
       .catch((error) => {
         alert(error.data.message);
         navigate('/lobby');
-      })
+      });
   };
 
   const enterRoom = () => {
@@ -166,7 +167,10 @@ function GameRoom() {
           setMemberCount(data.content.memberCnt);
           dispatch(removeMemberList(data.sender));
 
-          if (gameboardStatus === 'WAIT_JOIN' && data.content.memberCnt < MIN_MEMBER_COUNT) {
+          if (
+            gameboardStatus === 'WAIT_JOIN' &&
+            data.content.memberCnt < MIN_MEMBER_COUNT
+          ) {
             setGameboardStatus('WAIT_START');
           }
           break;
@@ -309,8 +313,8 @@ function GameRoom() {
           setAlertRewardItem({
             isAlert: true,
             rewardName: data.content.rewardName,
-            mentation: data.content.mentation
-          })
+            mentation: data.content.mentation,
+          });
           break;
       }
     });
@@ -442,9 +446,9 @@ function GameRoom() {
     // console.log('end');
     setAlertRewardItem({
       ...alertRewardItem,
-      isAlert: false
-    })
-  }
+      isAlert: false,
+    });
+  };
 
   let isCantGetDevice = false;
 
@@ -554,7 +558,6 @@ function GameRoom() {
       dispatch(setSpotlightMember(''));
       setTimer({ ...timer, status: 0 });
       setStatusSpotlight(0);
-
     }
 
     if (stageNumber === 7 && timer.status === 2 && resultStatus === 'DRAW') {
@@ -624,9 +627,9 @@ function GameRoom() {
           </div>
           <div className="headerBox">
             <a href="#">
-              <div className="btncircle">
+              {/* <div className="btncircle">
                 <BtnCircle />
-              </div>
+              </div> */}
             </a>
           </div>
         </div>
@@ -639,7 +642,6 @@ function GameRoom() {
               micActive={micActive}
               videoActive={videoActive}
             />
-
           </div>
           <div className="boardSection">
             <div className="gameBoard">
@@ -657,8 +659,8 @@ function GameRoom() {
             </div>
             <div className="btnBoard">
               {stageNumber === 0 &&
-                isMaster &&
-                memberCount >= MIN_MEMBER_COUNT ? (
+              isMaster &&
+              memberCount >= MIN_MEMBER_COUNT ? (
                 <a href="#" onClick={gameStart}>
                   <BtnStartReady status="Start" />
                 </a>
@@ -666,8 +668,8 @@ function GameRoom() {
                 ''
               )}
               {stageNumber === 0 &&
-                isMaster &&
-                memberCount < MIN_MEMBER_COUNT ? (
+              isMaster &&
+              memberCount < MIN_MEMBER_COUNT ? (
                 <BtnStartReady status="StartInert" />
               ) : (
                 ''
@@ -695,7 +697,15 @@ function GameRoom() {
       ) : (
         ''
       )}
-      {alertRewardItem.isAlert ? <RewardAlert item={alertRewardItem} closeAlert={closeRewardAlert} showtime={REWARD_ALERT_SHOWTIME} /> : ''}
+      {alertRewardItem.isAlert ? (
+        <RewardAlert
+          item={alertRewardItem}
+          closeAlert={closeRewardAlert}
+          showtime={REWARD_ALERT_SHOWTIME}
+        />
+      ) : (
+        ''
+      )}
     </div>
   );
 }
