@@ -41,9 +41,11 @@ $mainWidth: 1180px;
   border-radius: 10px;
   gap: 10px;
   background-color: rgba(255, 255, 255, 0.2);
+
   :focus {
     outline: none;
   }
+
   input {
     width: 300px;
     height: 40px;
@@ -52,10 +54,12 @@ $mainWidth: 1180px;
     color: rgba(255, 255, 255, 1);
     background: transparent;
   }
+
   .searchIcon {
     width: 25px;
     height: 25px;
   }
+
   .searchIcon:hover {
     width: 30px;
     height: 30px;
@@ -112,6 +116,7 @@ $mainWidth: 1180px;
   display: flex;
   align-items: center;
   justify-content: center;
+
   .dropBoxArrow {
     margin-left: 5px;
   }
@@ -129,6 +134,7 @@ $mainWidth: 1180px;
   border: 1.5px solid #808080;
   border-radius: 5px;
   background-color: #4d4d4d;
+
   :hover {
     width: 90px;
     height: 40px;
@@ -221,6 +227,7 @@ h3 {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+
   .writeBtn:hover {
     color: #000;
     background-color: #fff;
@@ -238,11 +245,13 @@ h3 {
   border-radius: 10px;
   color: white;
   background-color: rgba(0, 0, 0, 0.6);
+
   .penIcon {
     width: 18px;
     height: 18px;
     margin-right: 5px;
   }
+
   p {
     font-size: 14px;
     font-weight: 600;
@@ -256,7 +265,6 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
 }
 
 .communityListarrowBoxL {
@@ -271,10 +279,18 @@ h3 {
 
 .pageListNum {
   min-width: 131px;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 17px;
+}
+
+.pageListNumAPage {
+  width: 15px;
   color: rgba(255, 255, 255, 1);
   font-size: 17px;
+
+  text-align: center;
+  cursor: pointer;
 }
