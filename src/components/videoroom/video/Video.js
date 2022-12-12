@@ -15,6 +15,7 @@ import jaina from '../../../images/png/characters/jaina.png';
 import oliver from '../../../images/png/characters/oliver.png';
 import serena from '../../../images/png/characters/serena.png';
 import susan from '../../../images/png/characters/susan.png';
+import iconMicOff from '../../../images/png/iconMicOff.png';
 
 export default function Video(props) {
     const nickname = props.user.getNickname();
@@ -67,29 +68,32 @@ export default function Video(props) {
                 props.user.getStreamManager() !== undefined ? (
                 <div>
                     <div className='videoBox'>
-                        {isMaster ? <div className='crownBox'>
-                            <img src={crown} />
-                        </div> : ''}
                         <video
                             autoPlay={true}
                             id={'video-' + props.user.getStreamManager().stream.streamId}
                             ref={videoRef}
                             muted={props.mutedSound}
                         />
-                        <VideoFrame myTurn={myTurn} />
-                          {props.user.videoActive ? '' : <div className='imageBox'>
+                        {props.user.videoActive ? '' : <div className='imageBox'>
                             <img src={myCharacter} />
                         </div>}
-
+                        {isMaster ? <div className='crownBox'>
+                            <img src={crown} />
+                        </div> : ''}
+                        {props.user.audioActive ? '' : <div className='videoMuteBox'>
+                            <img src={iconMicOff} />
+                        </div>}
                         {isReady ? <div className='imageBox'>
                             <img src={ready} />
                         </div> : ''}
                     </div>
+                    <VideoFrame myTurn={myTurn} />
                     <div className="nicknameBox">
                         <NickNameFrame myTurn={myTurn} />
                         <img src={nicknameBackground} className="nicknameBackground" />
                         <div className="nickname boldfont">{nickname.replace(/#\d*/, '')}</div>
                     </div>
+
                 </div>
             ) : null
             }

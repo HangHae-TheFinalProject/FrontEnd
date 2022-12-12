@@ -13,6 +13,7 @@ import { ReactComponent as PageBtnIconL } from '../../../images/svg/PageBtnIconL
 import './style.scss';
 
 export default function CommunityList({ post }) {
+  const START_PAGE_NUM = 1;
   const MAX_PAGE_NUM = 5;
 
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function CommunityList({ post }) {
   const [currentSortBase, setCurrentSortBase] = useState('recent');
   const [currentPageNum, setCurrentPageNum] = useState(1);
   const [searchCurrentPageNum, setSearchCurrentPageNum] = useState(1);
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(0);
   const [maxPage, setMaxPage] = useState(1);
   const [data, setData] = useState([]);
   const [postsCnt, setPostsCnt] = useState();
@@ -35,24 +36,19 @@ export default function CommunityList({ post }) {
   };
 
   const pageUp = () => {
-    setPageNum((pageNum) => pageNum - 1);
+    const num = pageNum - 1;
+    const pagenum = num * MAX_PAGE_NUM + START_PAGE_NUM;
+
+    setPageNum(num);
+    setCurrentPageNum(pagenum);
   };
 
   const pageDown = () => {
-    setPageNum((pageNum) => pageNum + 1);
-  };
+    const num = pageNum + 1;
+    const pagenum = num * MAX_PAGE_NUM + START_PAGE_NUM;
 
-  const showList = () => {
-    setIsLoading(true);
-    instance
-      .get(`/lier/posts/${currentPageNum}/sort/${currentSortBase}`)
-      .then((res) => {
-        setMaxPage(res.data.data.pageCnt);
-        setData(res.data.data.pageInPosts);
-        setPostsCnt(res.data.data.postsCnt);
-        setShow(false);
-        setIsLoading(false);
-      });
+    setPageNum(num);
+    setCurrentPageNum(pagenum);
   };
 
   const searchOnChangeHandler = (e) => {
@@ -73,17 +69,32 @@ export default function CommunityList({ post }) {
       });
   };
 
-  const showPageNumbers = () => {
-    let arr = [];
-    const start = (pageNum - 1) * MAX_PAGE_NUM;
+  const showList = () => {
 
-    for (let i = 1 + start; i <= 5 + start; i++) {
-      if (i > maxPage) break;
-      arr.push(i);
+    setIsLoading(true);
+    instance
+      .get(`/lier/posts/${currentPageNum}/sort/${currentSortBase}`)
+      .then((res) => {
+        setMaxPage(res.data.data.pageCnt);
+        setData(res.data.data.pageInPosts);
+        setPostsCnt(res.data.data.postsCnt);
+        setShow(false);
+        setIsLoading(false);
+        showPageNumbers(res.data.data.pageCnt);
+      });
+  };
+
+  const showPageNumbers = (maxPage) => {
+
+    let arr = [];
+    const start = (pageNum) * MAX_PAGE_NUM;
+
+    for (let i = start; i < 5 + start; i++) {
+      if (i + START_PAGE_NUM > maxPage) break;
+      arr.push(i + START_PAGE_NUM);
     }
 
     setArrPage([...arr]);
-    setCurrentPageNum(start + 1);
   };
 
   useEffect(() => {
@@ -91,8 +102,9 @@ export default function CommunityList({ post }) {
   }, [currentPageNum, currentSortBase]);
 
   useEffect(() => {
+    if (isLoading) return
     showPageNumbers();
-  }, [pageNum, isLoading]);
+  }, [pageNum, currentSortBase]);
 
   return (
     <div className="communityBackground fontBold">
@@ -170,7 +182,7 @@ export default function CommunityList({ post }) {
               </button>
               <div className="pageListBox">
                 <div className="communityListarrowBoxL">
-                  {pageNum > 1 ? (
+                  {pageNum + START_PAGE_NUM > 1 ? (
                     <a href="#" onClick={pageUp}>
                       <PageBtnIconL />
                     </a>
@@ -178,22 +190,17 @@ export default function CommunityList({ post }) {
                     ''
                   )}
                 </div>
-                <div className="pageListNum">
+                <div className="pageListNum" >
                   {arrPage.map((val) => (
-                    <div
-                      key={val}
-                      onClick={() => {
-                        setCurrentPageNum(val);
-                      }}
-                    >
+                    <div className="pageListNumAPage" key={val} onClick={() => { setCurrentPageNum(val) }}>
                       {val}
                     </div>
                   ))}
                 </div>
                 <div className="communityListarrowBoxR">
                   {maxPage > MAX_PAGE_NUM &&
-                  pageNum < maxPage / MAX_PAGE_NUM ? (
-                    <a href="#" onClick={pageDown}>
+                    pageNum + START_PAGE_NUM < maxPage / MAX_PAGE_NUM ? (
+                    <a href="#" onClick={pageDown} >
                       <PageBtnIconR />
                     </a>
                   ) : (
