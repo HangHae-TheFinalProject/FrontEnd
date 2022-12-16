@@ -1,20 +1,17 @@
 @mixin recordBox($width-size, $height-size) {
   width: $width-size;
   height: $height-size;
-
   display: flex;
   align-items: center;
-
   font-size: 20px;
   color: rgba(255, 255, 255, 1);
-
   border-radius: 10px;
-
   cursor: default;
 }
 
 .myPageRecordContainer {
   margin-top: 40px;
+  font-family: Pretendard-SemiBold;
 }
 
 .myPageRecordWrap {
@@ -32,7 +29,6 @@
 .myPageInfoWrap {
   @include recordBox(410px, 64px);
   background-color: rgba(46, 46, 46, 1);
-
   .myPageInfoTitle {
     @include recordBox(100px, 64px);
     justify-content: flex-start;
@@ -43,6 +39,7 @@
     justify-content: flex-end;
     padding-right: 25px;
     font-size: 24px;
+    font-family: Pretendard-Bold;
   }
 }
 
@@ -70,6 +67,7 @@
   justify-content: flex-end;
   padding-right: 25px;
   font-size: 24px;
+  font-family: Pretendard-Bold;
 }
 
 .recordTitle {
@@ -83,4 +81,5 @@
   justify-content: flex-end;
   padding-right: 25px;
   font-size: 24px;
+  font-family: Pretendard-Bold;
 }
