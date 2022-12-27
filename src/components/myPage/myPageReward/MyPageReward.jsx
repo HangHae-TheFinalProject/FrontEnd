@@ -1,12 +1,8 @@
 import { useState } from 'react';
-
 import MyPageRewardItem from '../myPageRewardItem/MyPageRewardItem';
-// import rewardList from './rewardList';
-
-import icArrowLeft2 from '../../../images/svg/icArrowLeft2.svg';
-import icArrowRight2 from '../../../images/svg/icArrowRight2.svg';
-
-import './style.scss';
+import RewardLeftBtn from '../../../images/svg/icArrowLeft2.svg';
+import RewardRightBtn from '../../../images/svg/icArrowRight2.svg';
+import myPageReward from './style.module.scss';
 
 function MyPageReward({ maxPage = 1, rewardList = [] }) {
   const [page, setPage] = useState(1);
@@ -22,20 +18,20 @@ function MyPageReward({ maxPage = 1, rewardList = [] }) {
   };
 
   return (
-    <div className="myPageRewardContainer">
+    <div className={myPageReward.myPageRewardContainer}>
       <div onClick={rewardPageUp}>
-        <div className="rewardIcArrowLeft">
-          {page > 1 ? <img src={icArrowLeft2} alt="LeftButton" /> : ''}
+        <div className={myPageReward.rewardIcArrowLeft}>
+          {page > 1 ? <img src={RewardLeftBtn} alt="LeftButton" /> : ''}
         </div>
       </div>
-      <div className="myPageRewardItemBox">
+      <div className={myPageReward.myPageRewardItemBox}>
         {rewardList.map((reward) => {
-          return <MyPageRewardItem key={reward.rewardId} rewardData={reward} />
+          return <MyPageRewardItem key={reward.rewardId} rewardData={reward} />;
         })}
       </div>
       <div onClick={rewardPageDown}>
-        <div className="rewardIcArrowRight">
-          {page < maxPage ? <img src={icArrowRight2} alt="RightButton" /> : ''}
+        <div className={myPageReward.rewardIcArrowRight}>
+          {page < maxPage ? <img src={RewardRightBtn} alt="RightButton" /> : ''}
         </div>
       </div>
     </div>

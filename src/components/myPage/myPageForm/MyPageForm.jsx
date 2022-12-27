@@ -1,14 +1,13 @@
-import myPage_ActiveBtn from '../../../images/png/myPage_ActiveBtn.png';
-import myPage_InActiveBtn from '../../../images/png/myPage_InActiveBtn.png';
-import { ReactComponent as CancelBtn } from '../../../images/svg/icCancel.svg';
-
-import './style.scss';
 import { useEffect, useState } from 'react';
-import instance from '../../../shared/Request';
 import MyPageRecord from '../myPageRecord/MyPageRecord';
 import MyPageReward from '../myPageReward/MyPageReward';
 import MyPageSignOff from '../myPageSignOff/MyPageSignOff';
 import MyPageSignOut from '../myPageSignOut/MyPageSignOut';
+import instance from '../../../shared/Request';
+import myPage_ActiveBtn from '../../../images/png/myPage_ActiveBtn.png';
+import myPage_InActiveBtn from '../../../images/png/myPage_InActiveBtn.png';
+import { ReactComponent as CancelBtn } from '../../../images/svg/icCancel.svg';
+import myPageForm from './style.module.scss';
 
 function MyPageForm({ setOpenModal }) {
   const [active, setActive] = useState(false);
@@ -36,67 +35,63 @@ function MyPageForm({ setOpenModal }) {
   }, []);
 
   return (
-    <>
-      <div className="myInfoSection fontLightBold">
-        {!active ? (
-          <>
-            <div className="myInfoBtnSection">
-              <span className="activeMyPage">마이페이지</span>
-              <span className="inActiveReward" onClick={() => setActive(true)}>
-                리워드
-              </span>
-              <img
-                className="activeBtn"
-                src={myPage_ActiveBtn}
-                alt="myPageActiveBtn"
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="myInfoBtnSection">
-              <span className="inActiveMyPage" onClick={() => setActive(false)}>
-                마이페이지
-              </span>
-              <span className="activeReward">리워드</span>
-              <img
-                className="inActiveBtn"
-                src={myPage_InActiveBtn}
-                alt="rewardInActiveBtn"
-                onClick={() => setActive(false)}
-              />
-            </div>
-          </>
-        )}
-        <div className="myPageFrame">
-          {!active ? (
-            <>
-              <div className="myPageRecord">
-                <CancelBtn
-                  className="myPageCloseBtn"
-                  onClick={() => setOpenModal(false)}
-                />
-                <MyPageRecord allRecord={recordData} />
-                <div className="myPageSignBtn">
-                  <MyPageSignOff />
-                  <MyPageSignOut />
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="myPageReward">
-                <CancelBtn
-                  className="myPageCloseBtn"
-                  onClick={() => setOpenModal(false)}
-                />
-                <MyPageReward rewardList={rewardData} />
-              </div>
-            </>
-          )}
+    <div className={myPageForm.myInfoSection}>
+      {!active ? (
+        <div className={myPageForm.myInfoBtnSection}>
+          <span className={myPageForm.activeMyPage}>마이페이지</span>
+          <span
+            className={myPageForm.inActiveReward}
+            onClick={() => setActive(true)}
+          >
+            리워드
+          </span>
+          <img
+            className={myPageForm.activeBtn}
+            src={myPage_ActiveBtn}
+            alt="myPageActiveBtn"
+          />
         </div>
+      ) : (
+        <div className={myPageForm.myInfoBtnSection}>
+          <span
+            className={myPageForm.inActiveMyPage}
+            onClick={() => setActive(false)}
+          >
+            마이페이지
+          </span>
+          <span className={myPageForm.activeReward}>리워드</span>
+          <img
+            className={myPageForm.inActiveBtn}
+            src={myPage_InActiveBtn}
+            alt="rewardInActiveBtn"
+            onClick={() => setActive(false)}
+          />
+        </div>
+      )}
+      <div className={myPageForm.myPageFrame}>
+        {!active ? (
+          <div className={myPageForm.myPageRecord}>
+            <CancelBtn
+              className={myPageForm.myPageCloseBtn}
+              onClick={() => setOpenModal(false)}
+            />
+            <MyPageRecord allRecord={recordData} />
+            <div className={myPageForm.myPageSignBtn}>
+              <MyPageSignOff />
+              <MyPageSignOut />
+            </div>
+          </div>
+        ) : (
+          <div className={myPageForm.myPageReward}>
+            <CancelBtn
+              className={myPageForm.myPageCloseBtn}
+              onClick={() => setOpenModal(false)}
+            />
+            <MyPageReward rewardList={rewardData} />
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

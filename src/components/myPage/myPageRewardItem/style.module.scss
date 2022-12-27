@@ -1,61 +1,45 @@
 @mixin rewardItem($width-size, $height-size) {
   width: $width-size;
   height: $height-size;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-image: url('../../../images/png/rewardBackground.png');
-
   font-size: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: default;
 }
 
-@mixin rewardItemBefore{
+@mixin rewardItemBefore {
   content: attr(description);
-
   width: 180px;
-
   position: absolute;
   text-align: center;
-
   padding: 10px;
-
   bottom: 100%;
-
   border-radius: 10px;
-
   font-size: 18px;
-  word-break: break-all;
-
+  word-break: keep-all;
   color: rgba(255, 255, 255, 1);
   background-color: rgba(0, 0, 0, 0.6);
-
   transition: opacity 0.3s ease-in-out;
-
   opacity: 0;
   visibility: hidden;
-
   z-index: 1;
 }
 
-.rewardDescription{
+.rewardDescription {
   width: 125px;
   height: 155px;
   position: relative;
   left: 0px;
   top: 0px;
-  
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:before{
+  &:before {
     @include rewardItemBefore;
   }
-
   &:hover:before {
     opacity: 1;
     visibility: visible;
@@ -71,7 +55,7 @@
   @include rewardItem(125px, 155px);
 }
 
-.goldRewardItem{
+.goldRewardItem {
   background-image: url('../../../images/png/rewardBackgroundGold.png');
   color: rgba(255, 196, 46, 1);
 }
